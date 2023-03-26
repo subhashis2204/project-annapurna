@@ -1,0 +1,49 @@
+<% layout('layouts/boilerplate') %>
+    <div class="flex flex-col w-[40rem]">
+        <form action="/restaurants/<%= restaurant._id %>/edit?_method=PUT" method="POST">
+            <div class="w-full">
+                <label for="name">Hotel Name : </label>
+                <input type="text" id="name" name="restaurantName" value="<%= restaurant.restaurantName %>">
+            </div>
+            <div class="w-full">
+                <label for="zip">zip</label>
+                <input type="number" id="zip" name="restaurantAddress[zip]" value="<%= restaurant.restaurantAddress.zip %>">
+            </div>
+            <div class="w-full">
+                <label for="city">city</label>
+                <input type="text" id="city" name="restaurantAddress[city]" value="<%= restaurant.restaurantAddress.city %>">
+            </div>
+
+            <div class="w-full">
+                <label for="state">State</label>
+                <input type="text" id="state" name="restaurantAddress[state]" value="<%= restaurant.restaurantAddress.state %>">
+            </div>
+
+            <div class="w-full">
+                <label for="street">Street</label>
+                <input type="text" id="street" name="restaurantAddress[street]" value="<%= restaurant.restaurantAddress.street %>">
+            </div>
+
+            <div class="w-full">
+                <label for="country">Country</label>
+                <input type="text" id="country" name="restaurantAddress[country]" value="<%= restaurant.restaurantAddress.country %>">
+            </div>
+
+            <div class="w-full">
+                <label for="desc">Description</label>
+                <textarea name="restaurantDescription" id="desc" cols="30" rows="10"><%= restaurant.restaurantDescription %></textarea>
+            </div>
+
+            <div class="w-full">
+                <label for="email">Email</label>
+                <input type="text" name="restaurantContact[email]" id="email" value="<%= restaurant.restaurantContact.email %>">
+            </div>
+
+            <div class="w-full">
+                <label for="phone">Phone</label>
+                <input type="text" name="restaurantContact[phone]" id="phone" value="<%= restaurant.restaurantContact.phone %>">
+            </div>
+
+            <button>Submit</button>
+        </form>
+    </div>

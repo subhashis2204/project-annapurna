@@ -1,0 +1,172 @@
+<% layout('layouts/boilerplate') %>
+
+
+    <!-- <div class="flex flex-col w-[40rem]">
+        <form action="/restaurants/new" method="POST">
+            <div class="w-full">
+                <label for="name">Hotel Name : </label>
+                <input type="text" id="name" name="restaurantName">
+            </div>
+            <div class="w-full">
+                <label for="zip">zip</label>
+                <input type="number" id="zip" name="restaurantAddress[zip]">
+            </div>
+            <div class="w-full">
+                <label for="city">city</label>
+                <input type="text" id="city" name="restaurantAddress[city]">
+            </div>
+
+            <div class="w-full">
+                <label for="state">State</label>
+                <input type="text" id="state" name="restaurantAddress[state]">
+            </div>
+
+            <div class="w-full">
+                <label for="street">Street</label>
+                <input type="text" id="street" name="restaurantAddress[street]">
+            </div>
+
+            <div class="w-full">
+                <label for="country">Country</label>
+                <input type="text" id="country" name="restaurantAddress[country]">
+            </div>
+
+            <div class="w-full">
+                <label for="desc">Description</label>
+                <textarea name="restaurantDescription" id="desc" cols="30" rows="10"></textarea>
+            </div>
+
+            <div class="w-full">
+                <label for="email">Email</label>
+                <input type="text" name="restaurantContact[email]" id="email">
+            </div>
+
+            <div class="w-full">
+                <label for="phone">Phone</label>
+                <input type="text" name="restaurantContact[phone]" id="phone">
+            </div>
+
+            <button>Submit</button>
+        </form>
+    </div> -->
+
+
+    <div class="bg-slate-800 min-h-screen">
+        <div class="max-w-max mx-auto md:py-7 py-4">
+            <form class="p-7 rounded-lg bg-white max-w-[40rem] mx-2" action="/restaurants/new" method="POST">
+                <span class="block w-full text-2xl font-bold mb-5">Register Your Restaurant</span>
+                <div class="mb-4">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 " for="name">
+                            Restaurant Name <span  style="color:red"> *</span>
+                        </label>
+                    <input class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="name" type="text" name="restaurantName" placeholder="Annapurna Foundation">
+                </div>
+
+                <!-- <div class="mb-4">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 " for="email">
+                        Email
+                    </label>
+                    <input class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="email" type="email" name="receiverContactDetails[email]" placeholder="restaurant-name@gmail.com">
+                </div> -->
+
+                <div class="mb-4">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 " for="email">
+                        Email <span  style="color:red"> *</span>
+                    </label>
+                    <input class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="email" type="email" name="restaurantContactDetails[email]" placeholder="restaurant-name@gmail.com">
+                </div>
+
+                <!-- <div class="mb-4">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 " for="regno">
+                        Registration Number <span  style="color:red"> *</span>
+                    </label>
+                    <input class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="regno" type="text" name="receiverRegistrationNo" placeholder="R08300VN2022GKW019769">
+                </div> -->
+
+                <div class="mb-4">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 " for="weblink">
+                        Website Link 
+                    </label>
+                    <input class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="weblink" type="text" name="restaurantWebsite" placeholder="https://annapurna.com">
+                </div>
+
+                <div class="md:mb-4 flex flex-wrap md:gap-4">
+                    <div class="mb-4 md:mb-0 w-full md:w-1/3 md:flex-grow">
+                        <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 ">Contact Number 1 <span  style="color:red"> *</span></label>
+                        <input type="text" class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="phone" name="restaurantContactDetails[contact1]" placeholder="911234567890">
+                    </div>
+                    <div class="mb-4 md:mb-0 w-full md:w-1/3 md:flex-grow">
+                        <label for="mobile" class="block mb-2 text-sm font-medium text-gray-900 ">Contact Number 2</label>
+                        <input type="text" class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="mobile" name="restaurantContactDetails[contact2]" placeholder="911234567890">
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 " for="area-of-work">
+                        Restaurant Description <span  style="color:red"> *</span>
+                        <div class="relative inline-block group border-[1px] border-b-black border-x-transparent border-t-transparent border-dotted"><i class="fas fa-info-circle"></i>
+                            <span class="shadow-lg capitalize hidden min-w-max bg-slate-800 text-white text-center py-[5px] px-[10px] absolute -top-1 left-6 group-hover:block rounded-md after:content-[''] after:absolute after:top-[85%] after:right-full after:-mt-4 after:border-[5px] after:border-solid after:border-y-transparent after:border-r-slate-800 after:border-l-transparent">Use comma separated values</span>
+                        </div>
+                    </label>
+                    <textarea class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" oninput="autoAdjustTextarea()" id="area-of-work" name="restaurantDescription" type="text" placeholder="We Serve Good Food"></textarea>
+                </div>
+
+                <span class="block mb-4 mt-2 text-md font-bold text-gray-900"> Location Details </span>
+                <div class="mb-4">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 " for="address-line-1">
+                        Address Line 1 <span  style="color:red"> *</span>
+                    </label>
+                    <input class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="address-line-1" name="restaurantAddress[street]" type="text" placeholder="86, new sitaramdera">
+                </div>
+                <div class="md:mb-4 flex flex-wrap md:gap-4">
+                    <div class="mb-4 md:mb-0 w-full md:w-1/3 md:flex-grow">
+                        <label for="country" class="block mb-2 text-sm font-medium text-gray-900 ">Country <span  style="color:red"> *</span> </label>
+                        <input type="text" class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="country" name="restaurantAddress[country]" placeholder="India">
+                    </div>
+                    <div class="mb-4 md:mb-0 w-full md:w-1/3 md:flex-grow">
+                        <label for="state" class="block mb-2 text-sm font-medium text-gray-900 ">State <span  style="color:red"> *</span> </label>
+                        <input type="text" class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="state" name="restaurantAddress[state]" placeholder="Jharkhand">
+                    </div>
+                </div>
+                <div class="md:mb-4 flex flex-wrap md:gap-4">
+                    <div class="mb-4 md:mb-0 w-full md:w-1/3 md:flex-grow">
+                        <label for="city" class="block mb-2 text-sm font-medium text-gray-900 ">City <span  style="color:red"> *</span> </label>
+                        <input type="text" class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="city" name="restaurantAddress[city]" placeholder="Jamshedpur">
+                    </div>
+
+                    <div class="mb-4 md:mb-0 w-full md:w-1/3 md:flex-grow">
+                        <label for="zip" class="block mb-2 text-sm font-medium text-gray-900 ">Zip Code <span  style="color:red"> *</span> </label>
+                        <input type="text" class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="zip" name="restaurantAddress[zip]" placeholder="831009">
+                    </div>
+                </div>
+
+
+                <div class="mb-4">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 " for="password">
+                            Password <span  style="color:red"> *</span>
+                        </label>
+                    <input class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="password" type="password" name="password" placeholder="••••••••">
+                </div>
+
+
+                <div class="mb-4">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 " for="confirm-password">
+                            Confirm Password <span  style="color:red"> *</span>
+                        </label>
+                    <input class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="confirm-password" name="confirmPassword" type="password" placeholder="••••••••">
+                </div>
+
+                <!-- <div class="mb-4">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload a valid ID proof bearing the name of your organization <span  style="color:red"> *</span> </label>
+                    <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file" name="image">
+                </div> -->
+
+
+                <div class="mt-5 flex items-center justify-between w-100">
+                    <button class="bg-blue-500 w-full hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                            Register
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>

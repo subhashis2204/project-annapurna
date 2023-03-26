@@ -1,0 +1,16 @@
+<% if(success && success.length) { %>
+    <div class="partial px-3 py-2 rounded-md bg-black min-w-max flex items-center justify-between">
+        <span class="capitalize text-sm font-medium text-white "><%= success %></span>
+        <img src="images/cross.svg" alt="" class="cross h-4 w-4 ml-2">
+        <!-- <img src="./public/images/cross.svg" alt="" class="ml-2"> -->
+    </div>
+    <% } %>
+
+
+        <% if(error && error.length) { %>
+            <div class="partial px-3 py-2 rounded-md bg-black min-w-max flex items-center justify-between">
+                <span class="capitalize text-sm font-medium text-white "><%= error %></span>
+                <img src="images/cross.svg" alt="" class="cross h-4 w-4 ml-2">
+                <!-- <img src="./public/images/cross.svg" alt="" class="ml-2"> -->
+            </div>
+            <% } %>

@@ -1,0 +1,74 @@
+<% layout('layouts/boilerplate') %>
+    <div class="p-3 md:p-5 bg-red-200 min-h-screen">
+        <h1 class="text-3xl text-bold text-center py-5">
+            <%= restaurant.restaurantName %>
+        </h1>
+        <div class="w-full flex flex-wrap flex-row gap-3 mb-3 justify-center contents-center">
+            <a href="/restaurants/<%= restaurant._id %>/edit" class="px-3 py-2 rounded-md bg-blue-600 hover:drop-shadow-lg hover:bg-blue-700 text-white font-medium text-lg">Edit Details</a>
+            <form action="/restaurants/<%= restaurant._id %>?_method=DELETE" method="POST">
+                <button class="px-3 py-2 rounded-md bg-red-600 hover:drop-shadow-lg hover:bg-red-700 text-white font-medium text-lg">Delete Restaurant</button>
+            </form>
+        </div>
+
+        <p class="text-md pb-5 text-justify">
+            <%= restaurant.restaurantDescription %>
+        </p>
+
+        <% if(donationToday == null) { %>
+            <div class="mx-auto p-3 mb-5 bg-white flex flex-col md:flex-row max-w-fit justify-between align-center gap-3 rounded-md border-2 border-gray-700">
+                <p class="my-auto text-2xl font-medium text-center">Do you want to donate today ?
+                </p>
+                <form action="/restaurants/<%= restaurant._id %>/donate" method="POST">
+                    <button class="py-1 px-2 bg-blue-600 rounded-md text-white font-bold text-xl text-center">Let's Go</button>
+                </form>
+                <!-- <button class="bg"></button> -->
+            </div>
+            <% } else { %>
+                <div class="mx-auto p-3 mb-5 bg-white flex flex-row max-w-fit justify-between align-center gap-3 rounded-md border-2 border-gray-700">
+                    <p class="my-auto text-2xl font-medium text-center">Thank you for Donating Food !
+                    </p>
+                    <!-- <button class="bg"></button> -->
+                </div>
+                <div class="w-full text-center flex flex-col mb-3 justify-center align-center gap-3">
+                    <p class="text-xl">
+                        If you feel that there is some problem then you can cancel the donation
+                    </p>
+                    <form action="/restaurants/<%= restaurant._id %>/cancelDonate" method="POST">
+                        <button class="py-2 px-3 bg-red-600 rounded-md text-white font-bold text-xl text-center max-w-max mx-auto">Cancel Donation</button>
+                    </form>
+                </div>
+                <% } %>
+
+                    <div class="overflow-x-auto">
+                        <table class="table w-full border-2 rounded-full">
+                            <thead>
+                                <tr class="bg-gray-50 border-b border-gray-200">
+                                    <th class="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                    <th class="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Claimed Status</th>
+                                    <th class="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Donated To</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-x divide-gray-200">
+                                <% for(let donation of donations) { %>
+                                    <tr class="bg-white border-b border-gray-200">
+                                        <td class="pl-12 py-3 whitespace-nowrap text-gray-800">
+                                            <%= new Date(donation.date).toDateString() %>
+                                        </td>
+                                        <td class="px-4 py-3 whitespace-nowrap">
+                                            <% if(donation.fulfilled) { %>
+                                                <span class="px-2 py-1 rounded-md text-green-600 bg-green-200 text-bold">
+                                    Claimed</span>
+                                                <% } else { %>
+                                                    <span class="px-2 py-1 rounded-md text-yellow-600 bg-yellow-200 text-bold">
+                                    Unclaimed</span>
+                                                    <% } %>
+                                        </td>
+                                        <td class="px-4 py-3 whitespace-nowrap text-center">
+
+                                        </td>
+                                    </tr>
+                                    <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+    </div>

@@ -1,0 +1,43 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="flex gap-4 flex-wrap p-5 min-h-screen justify-center align-center bg-slate-800">
+    <% for(let restaurant of donatingRestaurants) { %>
+
+        <div class="flex flex-col min-w-[20rem] max-w-[22rem] w-2/3 p-6 rounded-md bg-red-200 hover:drop-shadow-lg justify-between">
+            <h1 class="pb-3 text-2xl font-bold italic border-b-2 border-slate-800 text-center">
+                <%= restaurant.restaurantId.restaurantName %>
+            </h1>
+            <div class="flex flex-col">
+                <p class="w-100 text-justify line-clamp-7 pr-3 pt-3 line-clamp-3 border-slate-700">
+                    <%= restaurant.restaurantId.restaurantDescription %>
+                </p>
+
+                <div class="flex flex-col p-1 mt-2 bg-white divide-y divide-gray-200 rounded-md">
+                    <div class="flex flex-row justify-between align-center m-2">
+                        <span class="px-2 py-1 text-bold">
+                            Donating
+                        </span>
+                        <span class="px-2 py-1 rounded-md text-green-600 bg-green-200 text-bold">
+                            Available</span>
+                    </div>
+                    <div class="flex flex-row justify-between align-center m-2 pt-2">
+                        <span class="px-2 py-1 text-bold">
+                            Claimed
+                        </span>
+                        <% if(restaurant.fulfilled) { %>
+                            <span class="px-2 py-1 rounded-md text-green-600 bg-green-200 text-bold">
+                                Claimed</span>
+                        <% } else { %>
+                            <span class="px-2 py-1 rounded-md text-yellow-600 bg-yellow-200 text-bold">
+                                Unclaimed</span>
+                        <% } %>
+                    </div>
+                </div>
+
+
+                <a href="/restaurants/<%= restaurant.restaurantId._id %>" class="w-100 p-2 mt-5 font-bold text-lg text-white rounded-md bg-blue-500 text-center">Show More</a>
+
+            </div>
+        </div>
+    <% } %>
+</div>

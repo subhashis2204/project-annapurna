@@ -1,0 +1,35 @@
+<% layout('layouts/boilerplate') %>
+
+
+    <div class="overflow-x-auto">
+        <table class="table w-full border-2 rounded-full">
+            <thead>
+                <tr class="bg-gray-50 border-b border-gray-200">
+                    <th class="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                    <th class="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Claimed Status</th>
+                    <th class="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Donated To</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-x divide-gray-200">
+                <% for(let donation of donations) { %>
+                    <tr class="bg-white border-b border-gray-200">
+                        <td class="pl-12 py-3 whitespace-nowrap text-gray-800">
+                            <%= new Date(donation.date).toDateString() %>
+                        </td>
+                        <td class="px-4 py-3 whitespace-nowrap">
+                            <% if(donation.fulfilled) { %>
+                                <span class="px-2 py-1 rounded-md text-green-600 bg-green-200 text-bold">
+                Claimed</span>
+                                <% } else { %>
+                                    <span class="px-2 py-1 rounded-md text-yellow-600 bg-yellow-200 text-bold">
+                Unclaimed</span>
+                                    <% } %>
+                        </td>
+                        <td class="px-4 py-3 whitespace-nowrap text-center">
+
+                        </td>
+                    </tr>
+                    <% } %>
+            </tbody>
+        </table>
+    </div>

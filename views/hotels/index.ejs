@@ -1,0 +1,26 @@
+<% layout('layouts/boilerplate') %>
+
+
+    <div class="flex gap-4 flex-wrap p-5 min-h-screen justify-center align-center bg-slate-800">
+
+        <div class="w-full flex justify-center">
+            <a href="/restaurants/donating" class="p-3 bg-white rounded-md font-bold">Donating Today</a>
+        </div>
+
+        <% for(let restaurant of restaurants) { %>
+
+            <div class="flex flex-col min-w-[20rem] max-w-[22rem] w-2/3 p-6 rounded-md bg-red-200 hover:drop-shadow-lg justify-between">
+                <h1 class="pb-3 text-2xl font-bold italic border-b-2 border-slate-800 text-center">
+                    <%= restaurant.restaurantName %>
+                </h1>
+                <div class="flex flex-col">
+                    <p class="w-100 text-justify line-clamp-7 pr-3 pt-3 line-clamp-3 border-slate-700">
+                        <%= restaurant.restaurantDescription %>
+                    </p>
+
+                    <a href="/restaurants/<%= restaurant._id %>" class="w-100 p-2 mt-5 font-bold text-lg text-white rounded-md bg-blue-500 text-center">Show More</a>
+
+                </div>
+            </div>
+            <% } %>
+    </div>

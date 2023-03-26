@@ -1,0 +1,58 @@
+<% layout('layouts/boilerplate') %>
+
+    <div class="bg-slate-800 min-h-screen">
+        <div class="max-w-max mx-auto md:py-7 py-4">
+            <form class="p-7 rounded-lg bg-white max-w-[28rem]">
+                <span class="block w-full text-2xl font-bold mb-5">Register Your Restaurant</span>
+                <div class="md:mb-4 flex flex-wrap md:gap-4">
+                    <div class="mb-4 md:mb-0 w-full md:w-1/3 md:flex-grow">
+                        <label for="firstname" class="block mb-2 text-sm font-medium text-gray-900 ">First name</label>
+                        <input type="text" class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="firstname" name="firstname" placeholder="John">
+                    </div>
+                    <div class="mb-4 md:mb-0 w-full md:w-1/3 md:flex-grow">
+                        <label for="lastname" class="block mb-2 text-sm font-medium text-gray-900 ">Last name</label>
+                        <input type="text" class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="lastname" name="lastname" placeholder="Doe">
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 " for="email">
+                            Email
+                        </label>
+                    <input class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="email" type="email" placeholder="restaurant-name@gmail.com">
+                </div>
+                <div class="mb-4">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 " for="password">
+                            Password
+                        </label>
+                    <input class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" type="password" placeholder="••••••••">
+                </div>
+                <div class="mb-4">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 " for="confirm-password">
+                            Confirm Password
+                        </label>
+                    <input class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="confirm-password" type="password" placeholder="••••••••">
+                </div>
+                <div class="mb-4">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 " for="confirm-password">
+                            Phone Number
+                        </label>
+                    <input class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="confirm-password" type="password" placeholder="123456789">
+                </div>
+
+                <span class="block mb-2 text-sm font-medium text-gray-900">Location Details</span>
+
+
+                <div class="mb-4">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 " for="confirm-password">
+                        Location Details
+                        </label>
+                    <textarea class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="confirm-password" type="text" placeholder="Enter your location here"></textarea>
+                </div>
+                <div class="mt-5 flex items-center justify-between w-100">
+                    <button class="bg-blue-500 w-full hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+                            Register
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
