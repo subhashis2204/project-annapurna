@@ -39,7 +39,7 @@
         "@faker-js/faker": "^7.6.0"
     },
     "scripts": {
-        "run": "node index.js"
+        "run": "nodemon index.js"
     },
     "author": "",
     "license": "ISC"
