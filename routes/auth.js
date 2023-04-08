@@ -9,6 +9,7 @@ const Receiver = require('../models/Receiver')
 const upload = require('../utils/imageUpload')
 const catchAsync = require('../utils/CatchAsync')
 const AuthCredential = require('../models/auth')
+const { setReturnUrl } = require('../middleware')
 
 const passport = require('passport')
 const User = require('../models/User')
@@ -17,8 +18,10 @@ router.get('/login', (req, res) => {
     res.render('auth/login')
 })
 
-router.post('/login', passport.authenticate('local', { failureFlash: true, failureRedirect: '/auth/login' }), catchAsync(async (req, res) => {
+router.post('/login', setReturnUrl, passport.authenticate('local', { failureFlash: true, failureMessage: true, failureRedirect: '/auth/login' }), catchAsync(async (req, res) => {
 
+    const redirectUrl = res.locals.returnTo || '/'
+    console.log(redirectUrl)
     const { email } = req.body
 
     await User.findOne({ email })
@@ -30,9 +33,13 @@ router.post('/login', passport.authenticate('local', { failureFlash: true, failu
             console.log(foundObject)
         })
 
-    console.log(req)
+    // delete req.redirectTo
+    // console.log(req)
+
+    // console.log(req.user)
+
     req.flash('success', 'Logged in successfully')
-    res.redirect('/')
+    res.redirect(redirectUrl)
 }))
 
 router.get('/roles', (req, res) => {
@@ -40,9 +47,12 @@ router.get('/roles', (req, res) => {
 })
 
 router.get('/logout', catchAsync(async (req, res) => {
-    req.session.uid = null
-    req.session.role = null
-    req.flash('success', 'logout successful')
+    req.logout(err => {
+        if (err) return next(err)
+        req.flash('success', 'logged out successfully')
+
+        res.redirect('/')
+    })
 }))
 
 module.exports = router

@@ -25,9 +25,16 @@ const receiverSchema = new mongoose.Schema({
         city: String,
         zip: String,
         street: String,
-        location: {
-            lat: Number,
-            lng: Number
+        geometry: {
+            type: {
+                type: String,
+                enum: ['Point'],
+                required: true
+            },
+            coordinates: {
+                type: [Number],
+                required: true
+            }
         }
     },
     receiverRegistrationNo: String,

@@ -1,13 +1,20 @@
 const mongoose = require('mongoose')
 const Donor = require('./Donor')
 
+const axios = require('axios')
+const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding')
+
+const mapBoxToken = 'pk.eyJ1Ijoic3ViaGFzaGlzMjIwNCIsImEiOiJjbDhiNG9rYmcwbjRhM3ZvNXc0cnV6ODdqIn0.naaVIZeyq2jGvjtUlFZINA'
+const geocoder = mbxGeocoding({ accessToken: mapBoxToken })
+
+
 const restaurantSchema = new mongoose.Schema({
     username: String,
     restaurantName: String,
     restaurantContactDetails: {
         email: {
             type: String,
-            requried: true,
+            required: true,
             validate: {
                 validator: (value) => {
                     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value); // Validate email address format
@@ -18,29 +25,76 @@ const restaurantSchema = new mongoose.Schema({
         contact1: String,
         contact2: String
     },
-    restaurantWebsite: String,
+    restaurantWebsite: {
+        type: String,
+        required: true
+    },
     restaurantAddress: {
-        zip: String,
+        postalCode: String,
         city: String,
         state: String,
         street: String,
         country: String,
-        location: {
-            lat: Number,
-            lng: Number
+        zip: String,
+        geometry: {
+            type: {
+                type: String,
+                enum: ['Point'],
+                required: true
+            },
+            coordinates: {
+                type: [Number],
+                required: true
+            }
         }
     },
-    restaurantDescription: String,
-})
+    restaurantDescription: String
+});
 
-// restaurantSchema.post('findOneAndDelete', async function (doc) {
-//     if (doc) {
-//         await Donor.remove({ restaurantId: { $in: doc } })
-//     }
+
+// restaurantSchema.pre('save', function (next) {
+//     // this.restaurantWebsite = null
+
+//     console.log(this)
+//     // next()
+//     next(new Error('some error occured'))
 // })
 
-restaurantSchema.pre('save', function () {
-    console.log(this)
+restaurantSchema.pre('findOneAndUpdate', async function () {
+    console.log(this._update)
+    const address = this._update.restaurantAddress
+
+    const options = {
+        address: `${this.restaurantName},${address.street}, ${address.city}, ${address.state},${address.zip}, ${address.country}`,
+        key: process.env.GOOGLEMAP_TOKEN
+    }
+    const response = await axios.get('https://maps.googleapis.com/maps/api/geocode/json', { params: options })
+    // .then(function (request) {
+    //     console.log(request.data)
+    //     const { lat, lng } = request.data.results[0].geometry.location
+    //     const geometry = {
+    //         type: 'Point',
+    //         coordinates: [lng, lat]
+    //     }
+    //     console.log(this)
+    //     this._update.restaurantAddress.geometry = geometry
+    // })
+    // .catch(err => console.log(err))
+
+    const { lat, lng } = response.data.results[0].geometry.location
+    const geometry = {
+        type: 'Point',
+        coordinates: [lng, lat]
+    }
+    // console.log(this)
+    this._update.restaurantAddress.geometry = geometry
+
+    // const geodata = await geocoder.forwardGeocode({
+    //     query: `${address.street}, ${address.city}, ${address.state}, ${address.country}, ${address.zip}`,
+    //     limit: 1
+    // }).send()
+
+    // this._update.restaurantAddress.geometry = geodata.body.features[0].geometry
 })
 
 const Restaurant = mongoose.model('Restaurant', restaurantSchema)

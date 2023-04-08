@@ -16,62 +16,82 @@
     <title>Document</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.4/flowbite.min.css" rel="stylesheet" />
 
-    <style>
-        * {
-            font-family: 'Inter', sans-serif;
-        }
-        
-        textarea::-webkit-scrollbar {
-            display: none;
-        }
-        /* For Firefox */
-        
-        textarea {
-            scrollbar-width: none;
-        }
-    </style>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
-    <script src="https://kit.fontawesome.com/6a302bbec6.js" crossorigin="anonymous"></script>
+    <%- block('styles'); %>
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    lineClamp: {
-                        7: '7',
-                        8: '8',
-                        9: '9',
-                        10: '10'
-                    },
-                    colors: {
-                        primary: {
-                            clifford: '#da373d',
-                            "50": "#eff6ff",
-                            "100": "#dbeafe",
-                            "200": "#bfdbfe",
-                            "300": "#93c5fd",
-                            "400": "#60a5fa",
-                            "500": "#3b82f6",
-                            "600": "#2563eb",
-                            "700": "#1d4ed8",
-                            "800": "#1e40af",
-                            "900": "#1e3a8a"
+        <style>
+            * {
+                font-family: 'Inter', sans-serif;
+            }
+            
+            textarea::-webkit-scrollbar {
+                display: none;
+            }
+            /* For Firefox */
+            
+            textarea {
+                scrollbar-width: none;
+            }
+            
+            .emoji-404 {
+                position: relative;
+                animation: mymove 2.5s infinite;
+            }
+            
+            @keyframes mymove {
+                33% {
+                    top: 0px;
+                }
+                66% {
+                    top: 10px;
+                }
+                100% {
+                    top: 0px
+                }
+            }
+        </style>
+        <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+        <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+        <script src="https://kit.fontawesome.com/6a302bbec6.js" crossorigin="anonymous"></script>
+
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        lineClamp: {
+                            7: '7',
+                            8: '8',
+                            9: '9',
+                            10: '10'
+                        },
+                        colors: {
+                            primary: {
+                                clifford: '#da373d',
+                                "50": "#eff6ff",
+                                "100": "#dbeafe",
+                                "200": "#bfdbfe",
+                                "300": "#93c5fd",
+                                "400": "#60a5fa",
+                                "500": "#3b82f6",
+                                "600": "#2563eb",
+                                "700": "#1d4ed8",
+                                "800": "#1e40af",
+                                "900": "#1e3a8a"
+                            }
+                        },
+                        fontFamily: {
+                            'timmana': [
+                                'Timmana', 'sans-serif'
+                            ],
+                            'trocchi': [
+                                'Trocchi', 'serif'
+                            ],
+                            'inika': ['Inika', 'serif']
                         }
-                    },
-                    fontFamily: {
-                        'timmana': [
-                            'Timmana', 'sans-serif'
-                        ],
-                        'trocchi': [
-                            'Trocchi', 'serif'
-                        ],
-                        'inika': ['Inika', 'serif']
                     }
                 }
             }
-        }
-    </script>
+        </script>
 </head>
 
 <body>
@@ -95,7 +115,9 @@
                             textarea.style.height = textarea.scrollHeight + "px";
                         }
                     </script>
+
                     <script src="javascripts/flash.js"></script>
+                    <%- block('javascript'); %>
 </body>
 
 </html>

@@ -1,0 +1,13 @@
+input.code[type=number] {
+    -moz-appearance: textfield;
+}
+
+.code::-webkit-outer-spin-button,
+.code::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.code {
+    caret-color: transparent;
+}

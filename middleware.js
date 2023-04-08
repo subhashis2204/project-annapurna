@@ -19,3 +19,8 @@ module.exports.isDonor = (req, res, next) => {
     }
     next()
 }
+
+module.exports.setReturnUrl = (req, res, next) => {
+    res.locals.returnTo = req.session.returnTo
+    next()
+}

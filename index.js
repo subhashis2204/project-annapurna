@@ -6,15 +6,7 @@ const ejsMate = require('ejs-mate')
 const session = require('express-session')
 const flash = require('connect-flash')
 const passport = require('passport')
-const LocalStratergy = require('passport-local')
-
-const sessionConfig = {
-    secret: 'thisisabadsecret',
-    resave: false,
-    saveUninitialized: false
-}
-
-mongoose.set('strictQuery', false);
+const MongoStore = require('connect-mongo');
 
 // importing all the routes
 const authRouter = require('./routes/auth')
@@ -22,9 +14,14 @@ const restaurantRouter = require('./routes/restaurants')
 const receiverRouter = require('./routes/receivers')
 
 const methodOverride = require('method-override')
-// const AuthCredential = require('./models/auth')
 const User = require('./models/User')
 const CatchAsync = require('./utils/CatchAsync')
+const sendVerifyEmail = require('./email')
+const { otpGen } = require('otp-gen-agent');
+const { sendMessage } = require('./email')
+
+
+mongoose.set('strictQuery', false);
 
 mongoose.connect('mongodb://localhost:27017/restaurants')
     .then(() => {
@@ -34,6 +31,20 @@ mongoose.connect('mongodb://localhost:27017/restaurants')
         console.log('CONNECTION FAILED')
     })
 
+const sessionStore = MongoStore.create({
+    mongoUrl: 'mongodb://localhost:27017/restaurants',
+    ttl: 1000 * 60 * 60 * 24
+});
+
+const sessionConfig = {
+    secret: 'thisisabadsecret',
+    resave: false,
+    saveUninitialized: false,
+    store: sessionStore,
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 24
+    }
+}
 
 app.engine('ejs', ejsMate)
 app.use(express.static('public'))
@@ -53,40 +64,60 @@ passport.deserializeUser(User.deserializeUser());
 
 
 app.use((req, res, next) => {
+    // console.log(req.user)
+    // res.locals.role = req.user.role
+    res.locals.user = req.user || null
+    res.locals.role = req.user && req.user.role ? req.user.role : null;
     res.locals.success = req.flash('success')
     res.locals.error = req.flash('error')
     next()
 })
 
 app.use((req, res, next) => {
-    res.locals.uid = req.session.uid || false
-    res.locals.uid = req.session.uid || false
+    const originalUrl = req.originalUrl
+    if (!originalUrl.startsWith('/auth/') || !originalUrl === '/') {
+        req.session.returnTo = req.originalUrl || '/'
+    }
     next()
 })
+
 
 restaurantRouter.use(express.static(path.join(__dirname, 'public')))
 authRouter.use(express.static(path.join(__dirname, 'public')))
 receiverRouter.use(express.static(path.join(__dirname, 'public')))
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
     res.render('home')
 })
 
-// app.get('/fakeUser', CatchAsync(async (req, res) => {
-//     const user = new User({ email: 'subhashispaul2207@gmail.com', role: 'receiver' })
-//     const newUser = await User.register(user, 'password')
-//     console.log(newUser)
-//     res.send('good choice successfull')
-// }))
+app.get('/about', (req, res) => {
+    res.render('about')
+})
+
+app.get('/contacts', (req, res) => {
+    res.render('contacts')
+})
+
+app.post('/contacts', CatchAsync(async (req, res) => {
+    const { name, email, message } = req.body
+    await sendMessage('project.annapurna@outlook.com', 'subhashispaul2204@gmail.com', email, name, message)
+
+    req.flash('success', 'Message has been delivered successfully')
+    res.redirect('/')
+}))
 
 app.use('/restaurants', restaurantRouter)
 app.use('/receivers', receiverRouter)
 app.use('/auth', authRouter)
 
+app.get('*', (req, res) => {
+    res.render('error')
+})
+
 app.use((err, req, res, next) => {
     const { statusCode = 500 } = err
     if (!err.message) err.message = 'Oh No ! Something went wrong'
-    console.log(err.message, 'HELLO WORLD')
+    console.log(err)
     res.status(statusCode).send(err)
 })
 app.listen(3000, () => {

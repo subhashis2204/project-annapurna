@@ -12,6 +12,14 @@ const donorSchema = new mongoose.Schema({
     donatedTo: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Receiver'
+    },
+    otpGenerated: {
+        type: Boolean,
+        default: false
+    },
+    otpVerified: {
+        type: Boolean,
+        default: false
     }
 })
 

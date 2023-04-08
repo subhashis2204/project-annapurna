@@ -1,0 +1,54 @@
+<% layout('layouts/boilerplate') %>
+
+    <div class="bg-slate-800 p-4 overflow-hidden">
+        <div class="font-mono bg-slate-600 min-h-max mx-2 sm:mx-4 p-1 sm:p-3 rounded-md max-w-[50rem] sm:mx-auto">
+            <h1 class="text-4xl text-center text-white text-medium my-3 font-bold">Contact Us</h1>
+            <div class="font-sans grid grid-cols-1 sm:grid-cols-2 justify-center items-center gap-4 p-2">
+                <div class="bg-gray-800 sm:p-7 p-3 rounded-md text-white sm:h-full flex flex-col justify-around items-start gap-4">
+                    <div>
+                        <h1 class="text-2xl mb-5">Contact Information</h1>
+                        <p class="mt-2">Let's Connect! - We value your feedback, suggestions, and questions. Our team is always ready to assist you with any concerns you may have.</p>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <div class="flex flex-row gap-4 items-center justify-start py-1">
+                            <i class="fa-solid fa-phone"></i>
+                            <span>9334323384</span>
+                        </div>
+                        <div class="flex flex-row gap-4 items-center justify-start py-1">
+                            <i class="fa-sharp fa-solid fa-location-dot"></i>
+                            <span>Agrico, Jamshedpur</span>
+                        </div>
+                        <div class="flex flex-row gap-4 items-center justify-start py-1">
+                            <i class="fa-solid fa-envelope"></i>
+                            <span>subhashispaul2204@gmail.com</span>
+                        </div>
+                    </div>
+                    <div class="w-full flex justify-center mt-2">
+                        <div class="flex flex-row gap-8">
+                            <a href=""><i class="fa-xl fa-brands fa-facebook"></i></a>
+                            <a href=""><i class="fa-xl fa-brands fa-instagram"></i></a>
+                            <a href=""><i class="fa-xl fa-brands fa-linkedin"></i></a>
+                            <a href=""><i class="fa-xl fa-brands fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <form action="/contacts" method="POST" class="bg-gray-800 p-4 rounded-md flex flex-col gap-4">
+                    <div>
+                        <label for="name" class="block text-white">Name</label>
+                        <input type="text" id="name" name="name" class="mt-2 w-full p-2 rounded-sm focus:ring-0 focus:outline-none">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-white">Email</label>
+                        <input type="email" id="email" name="email" class="mt-2 w-full p-2 rounded-sm focus:ring-0 focus:outline-none">
+                    </div>
+                    <div>
+                        <label for="message" class="block text-white">Message</label>
+                        <!-- <input type="text" class="mt-2 w-full p-2 capitalize rounded-sm focus:ring-0 focus:outline-none"> -->
+                        <textarea name="message" id="message" rows="5" class="mt-2 w-full p-2 rounded-sm focus:ring-0 focus:outline-none"></textarea>
+                    </div>
+                    <button class="bg-gray-300 py-2 rounded-sm">Submit</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
