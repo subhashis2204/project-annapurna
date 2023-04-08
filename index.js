@@ -23,7 +23,7 @@ const { sendMessage } = require('./email')
 
 mongoose.set('strictQuery', false);
 
-mongoose.connect('mongodb://localhost:27017/restaurants')
+mongoose.connect(process.env.MONGODB_URL)
     .then(() => {
         console.log('CONNECTION SUCCESSFUL')
     })
@@ -32,7 +32,7 @@ mongoose.connect('mongodb://localhost:27017/restaurants')
     })
 
 const sessionStore = MongoStore.create({
-    mongoUrl: 'mongodb://localhost:27017/restaurants',
+    mongoUrl: process.env.MONGODB_URL,
     ttl: 1000 * 60 * 60 * 24
 });
 
@@ -86,7 +86,7 @@ restaurantRouter.use(express.static(path.join(__dirname, 'public')))
 authRouter.use(express.static(path.join(__dirname, 'public')))
 receiverRouter.use(express.static(path.join(__dirname, 'public')))
 
-app.get('/', async (req, res) => {
+app.get('/', async(req, res) => {
     res.render('home')
 })
 
@@ -98,7 +98,7 @@ app.get('/contacts', (req, res) => {
     res.render('contacts')
 })
 
-app.post('/contacts', CatchAsync(async (req, res) => {
+app.post('/contacts', CatchAsync(async(req, res) => {
     const { name, email, message } = req.body
     await sendMessage('project.annapurna@outlook.com', 'subhashispaul2204@gmail.com', email, name, message)
 
