@@ -22,7 +22,10 @@ const { sendMessage } = require('./email')
 
 mongoose.set('strictQuery', false);
 
-mongoose.connect(process.env.MONGODB_URL)
+const db_url = 'mongodb://localhost:27017/restaurants'
+
+// mongoose.connect(process.env.MONGODB_URL)
+mongoose.connect(db_url)
     .then(() => {
         console.log('CONNECTION SUCCESSFUL')
     })
@@ -30,8 +33,12 @@ mongoose.connect(process.env.MONGODB_URL)
         console.log('CONNECTION FAILED')
     })
 
+// const sessionStore = MongoStore.create({
+//     mongoUrl: process.env.MONGODB_URL,
+//     ttl: 1000 * 60 * 60 * 24
+// });
 const sessionStore = MongoStore.create({
-    mongoUrl: process.env.MONGODB_URL,
+    mongoUrl: db_url,
     ttl: 1000 * 60 * 60 * 24
 });
 
@@ -100,9 +107,16 @@ app.get('/contacts', (req, res) => {
 app.post('/contacts', CatchAsync(async (req, res) => {
     const { name, email, message } = req.body
     await sendMessage('project.annapurna@outlook.com', 'subhashispaul2204@gmail.com', email, name, message)
-
-    req.flash('success', 'Message has been delivered successfully')
-    res.redirect('/')
+        .then(() => {
+            console.log('Send Successfully')
+            req.flash('success', 'Message has been delivered successfully')
+            res.redirect('/')
+        })
+        .catch((err) => {
+            console.log(err)
+            req.flash('error', 'Could not deliver message')
+            res.redirect('/contacts')
+        })
 }))
 
 app.use('/restaurants', restaurantRouter)
