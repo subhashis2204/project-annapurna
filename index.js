@@ -16,15 +16,17 @@ const receiverRouter = require('./routes/receivers')
 const methodOverride = require('method-override')
 const User = require('./models/User')
 const CatchAsync = require('./utils/CatchAsync')
-const sendVerifyEmail = require('./email')
-const { otpGen } = require('otp-gen-agent');
 const { sendMessage } = require('./email')
 
 mongoose.set('strictQuery', false);
 
-const db_url = 'mongodb://localhost:27017/restaurants'
+const db_url = ''
 
-// mongoose.connect(process.env.MONGODB_URL)
+if (process.env.NODE_ENV == "development")
+    db_url = process.env.MONGODB_URL
+else
+    db_url = 'mongodb://localhost:27017/restaurants'
+
 mongoose.connect(db_url)
     .then(() => {
         console.log('CONNECTION SUCCESSFUL')
@@ -33,10 +35,6 @@ mongoose.connect(db_url)
         console.log('CONNECTION FAILED')
     })
 
-// const sessionStore = MongoStore.create({
-//     mongoUrl: process.env.MONGODB_URL,
-//     ttl: 1000 * 60 * 60 * 24
-// });
 const sessionStore = MongoStore.create({
     mongoUrl: db_url,
     ttl: 1000 * 60 * 60 * 24
