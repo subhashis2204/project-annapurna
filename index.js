@@ -20,7 +20,7 @@ const { sendMessage } = require('./email')
 
 mongoose.set('strictQuery', false);
 
-const db_url = ''
+let db_url = ''
 
 if (process.env.NODE_ENV == "development")
     db_url = process.env.MONGODB_URL
