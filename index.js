@@ -19,7 +19,6 @@ const CatchAsync = require('./utils/CatchAsync')
 const sendVerifyEmail = require('./email')
 const { otpGen } = require('otp-gen-agent');
 const { sendMessage } = require('./email')
-const port = process.env.PORT || 3000
 
 mongoose.set('strictQuery', false);
 
@@ -120,6 +119,6 @@ app.use((err, req, res, next) => {
     console.log(err)
     res.status(statusCode).send(err)
 })
-app.listen(port, () => {
+app.listen(process.env.PORT || 3000, () => {
     console.log('LISTENING ON PORT 3000')
 })

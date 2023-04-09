@@ -15,7 +15,7 @@ const User = require('../models/User')
 const axios = require('axios')
 const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding')
 
-const mapBoxToken = process.env.MABOX_TOKEN
+const mapBoxToken = process.env.MAPBOX_TOKEN
 const geocoder = mbxGeocoding({ accessToken: mapBoxToken })
 
 const validateReceiver = (req, res, next) => {
@@ -36,11 +36,11 @@ router.get('/new', (req, res) => {
     res.render('receivers/new')
 })
 
-router.post('/new', upload.single('image'), validateReceiver, catchAsync(async(req, res) => {
+router.post('/new', upload.single('image'), validateReceiver, catchAsync(async (req, res) => {
     const { receiverContactDetails, password } = req.body
     const receiverEmail = receiverContactDetails.email
     const receiver = new Receiver({ username: receiverEmail, ...req.body })
-        // const auth = new AuthCredential({ _id: receiverEmail, role: 'receiver', password: password })
+    // const auth = new AuthCredential({ _id: receiverEmail, role: 'receiver', password: password })
 
     const address = req.body.receiverAddress
 
@@ -75,7 +75,7 @@ router.post('/new', upload.single('image'), validateReceiver, catchAsync(async(r
 
     const user = new User({ email: receiverEmail, role: 'receiver', documentReferenceId: receiver._id })
     await User.register(user, password)
-        .then(async(doc) => {
+        .then(async (doc) => {
             console.log(doc)
 
             await receiver.save()
