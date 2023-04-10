@@ -16,12 +16,12 @@ const axios = require('axios')
 const mapBoxToken = process.env.MAPBOX_TOKEN
 const geocoder = mbxGeocoding({ accessToken: mapBoxToken })
 
-const removeInvalidCredentialInsertion = async(req, res, user) => {
+const removeInvalidCredentialInsertion = async (req, res, user) => {
     if (user)
         await User.findByIdAndDelete(user._id)
 }
 
-const sendOTP = async(id) => {
+const sendOTP = async (id) => {
     const restaurant = await Restaurant.findById(id)
     const secret = speakeasy.generateSecret();
     const code = speakeasy.totp({ secret: secret.base32, encoding: 'base32' });
@@ -29,7 +29,7 @@ const sendOTP = async(id) => {
     await otp.save()
         .then(() => {
             sendVerifyEmail('project.annapurna@outlook.com', 'subhashispaul2204@gmail.com', code)
-                // sendVerifyEmail('project.annapurna@outlook.com', restaurant.restaurantContactDetails.email, code)
+            // sendVerifyEmail('project.annapurna@outlook.com', restaurant.restaurantContactDetails.email, code)
             console.log(`OTP ${code} created and saved for user ${restaurant._id}}`);
         })
         .catch(err => {
@@ -43,7 +43,7 @@ const validateRestaurant = (req, res, next) => {
     if (error) {
         // console.log(error)
         const message = error.details.map(detail => detail.message).join(',')
-            // const message = 'there is some error here'
+        // const message = 'there is some error here'
         throw new ExpressError(message, 400)
     } else {
         next()
@@ -55,14 +55,14 @@ const validateRestaurantUpdate = (req, res, next) => {
     if (error) {
         // console.log(error)
         const message = error.details.map(detail => detail.message).join(',')
-            // const message = 'there is some error here'
+        // const message = 'there is some error here'
         throw new ExpressError(message, 400)
     } else {
         next()
     }
 }
 
-router.get('/', catchAsync(async(req, res) => {
+router.get('/', catchAsync(async (req, res) => {
     const restaurants = await Restaurant.find({})
     res.render('hotels/index', { restaurants })
 }))
@@ -71,7 +71,7 @@ router.get('/new', (req, res) => {
     res.render('hotels/new')
 })
 
-router.post('/new', validateRestaurant, catchAsync(async(req, res) => {
+router.post('/new', validateRestaurant, catchAsync(async (req, res) => {
     const { restaurantContactDetails, password } = req.body
     const restaurantEmail = restaurantContactDetails.email
     const restaurant = new Restaurant({ username: restaurantEmail, ...req.body })
@@ -100,28 +100,34 @@ router.post('/new', validateRestaurant, catchAsync(async(req, res) => {
 
     await User.register(newcredential, password)
         .then(async user => {
-            console.log('User created successfully')
+
+            await req.login(user, (err) => {
+                if (err) {
+                    // req.flash('error', 'Failed to Log You In')
+                    res.redirect('/auth/login')
+                }
+                // req.flash('success', 'Successfully Logged You In')
+            })
 
             await restaurant.save()
                 .then(restaurant => {
-                    console.log('Restaurant created successfully', restaurant)
-
-                    req.flash('success', 'Successfully created a Restaurant')
+                    req.flash('success', 'Successfully Created Your Profile')
                     res.redirect(`/restaurants/${restaurant._id}`)
                 })
                 .catch(async err => {
+                    delete req.user
                     await removeInvalidCredentialInsertion(req, res, user)
                     throw err
                 })
         })
         .catch(err => {
-            req.flash('error', 'Failed to create a Restaurant')
+            req.flash('error', 'Failed to Create Your Profile')
             res.redirect('/restaurants/new')
             throw err
         })
 }))
 
-router.get('/donating', catchAsync(async(req, res) => {
+router.get('/donating', catchAsync(async (req, res) => {
     const presentDate = new Date().toISOString().slice(0, 10);
     const donatingRestaurants = await Donor.find({ donating: true, date: new Date(presentDate).toISOString() }).populate({ path: 'restaurantId', select: 'restaurantName restaurantDescription' })
 
@@ -129,7 +135,7 @@ router.get('/donating', catchAsync(async(req, res) => {
     res.render('hotels/donating', { donatingRestaurants })
 }))
 
-router.post('/:id/donate', async(req, res) => {
+router.post('/:id/donate', async (req, res) => {
     const { id } = req.params
     const restaurant = await Restaurant.findById(id)
     const presentDate = new Date().toISOString().slice(0, 10);
@@ -145,7 +151,7 @@ router.post('/:id/donate', async(req, res) => {
     res.redirect(`/restaurants/${id}`)
 })
 
-router.post('/:id/claimed', isLoggedIn, catchAsync(async(req, res) => {
+router.post('/:id/claimed', isLoggedIn, catchAsync(async (req, res) => {
     const { id } = req.params
     const presentDate = new Date().toISOString().slice(0, 10);
     const donatingRestaurant = await Donor.findOne({ restaurantId: id, date: new Date(presentDate).toISOString() })
@@ -162,7 +168,7 @@ router.post('/:id/claimed', isLoggedIn, catchAsync(async(req, res) => {
     res.redirect(`/restaurants/${id}`)
 }))
 
-router.post('/:id/cancelDonate', catchAsync(async(req, res) => {
+router.post('/:id/cancelDonate', catchAsync(async (req, res) => {
     const { id } = req.params
     const presentDate = new Date().toISOString().slice(0, 10);
     await Donor.findOneAndDelete({ restaurantId: id, date: new Date(presentDate).toISOString() })
@@ -173,7 +179,7 @@ router.post('/:id/cancelDonate', catchAsync(async(req, res) => {
     res.redirect(`/restaurants/${id}`)
 }))
 
-router.post('/:id/verify', catchAsync(async(req, res) => {
+router.post('/:id/verify', catchAsync(async (req, res) => {
     const { id } = req.params
     const otp = await OTP.findOne({ user: id })
     const receivedOtp = req.body.otp.join('')
@@ -194,10 +200,15 @@ router.post('/:id/verify', catchAsync(async(req, res) => {
     res.redirect(`/restaurants/${id}`)
 }))
 
-router.get('/:id', isLoggedIn, catchAsync(async(req, res) => {
+router.get('/:id', isLoggedIn, catchAsync(async (req, res) => {
     const { id } = req.params
-    const presentDate = new Date().toISOString().slice(0, 10);
     const restaurant = await Restaurant.findById(id)
+
+    if (!restaurant) {
+        req.flash('error', 'Could Not Find Restaurant')
+        throw new ExpressError('Could not find page', 404)
+    }
+    const presentDate = new Date().toISOString().slice(0, 10);
     const donations = await Donor.find({ restaurantId: restaurant._id }).sort({ date: -1 }).populate('donatedTo', 'receiverName')
 
     const donationToday = await Donor.findOne({ restaurantId: id, date: presentDate }) || null
@@ -208,7 +219,7 @@ router.get('/:id', isLoggedIn, catchAsync(async(req, res) => {
     res.render('hotels/show', { restaurant, donations, donationToday, fulfilled })
 }))
 
-router.get('/:id/edit', catchAsync(async(req, res, next) => {
+router.get('/:id/edit', catchAsync(async (req, res, next) => {
     const { id } = req.params
     const restaurant = await Restaurant.findById(id)
 
@@ -220,10 +231,10 @@ router.get('/:id/edit', catchAsync(async(req, res, next) => {
     res.render('hotels/edit', { restaurant })
 }))
 
-router.put('/:id/edit', validateRestaurantUpdate, catchAsync(async(req, res, next) => {
+router.put('/:id/edit', validateRestaurantUpdate, catchAsync(async (req, res, next) => {
     const { id } = req.params
 
-    await Restaurant.findByIdAndUpdate(id, {...req.body }, { runValidators: true })
+    await Restaurant.findByIdAndUpdate(id, { ...req.body }, { runValidators: true })
         .then(restaurant => {
             console.log(restaurant)
             return res.redirect(`/restaurants/${restaurant._id}`)
@@ -234,15 +245,47 @@ router.put('/:id/edit', validateRestaurantUpdate, catchAsync(async(req, res, nex
         })
 }))
 
-router.delete('/:id', catchAsync(async(req, res) => {
+router.delete('/:id', catchAsync(async (req, res) => {
     const { id } = req.params
-    const restaurant = await Restaurant.findById(id)
 
-    await Restaurant.findByIdAndDelete(id)
-    await User.findByUsername(restaurant.username)
+    const restaurant = await Restaurant.findByIdAndDelete(id)
+    if (!restaurant) {
+        req.flash('error', 'No restaurant Found')
+        throw new Error('No restaurant Found')
+    }
 
+    await User.findOneAndDelete({ email: restaurant.username })
+
+    req.logout(err => {
+        if (err)
+            console.log(err)
+        console.log('Logged Out Successfully')
+    })
     req.flash('success', 'Deleted a Restaurant')
-    res.redirect('/restaurants')
+    res.redirect('/')
+
+    // await Restaurant.findByIdAndDelete(id)
+    //     .then(async restaurant => {
+    //         if (!restaurant) throw new Error('No restaurant Found')
+
+    //         await User.findOneAndDelete({ email: restaurant.username })
+    //             .then(() => {
+    //                 console.log('hello')
+    //                 req.logout(err => { if (err) console.log(err) })
+    //                 req.flash('success', 'Deleted a Restaurant')
+    //             })
+    //             .catch(async err => {
+    //                 console.log(err)
+    //                 req.flash('error', 'Could not delete Restaurant')
+    //                 await restaurant.save()
+    //                 throw err
+    //             })
+    //         res.redirect('/')
+    //     })
+    //     .catch(err => {
+    //         console.log(err)
+    //         res.redirect('/restaurants/' + id)
+    //     })
 }))
 
 module.exports = router

@@ -15,10 +15,16 @@
             <a href="/" class="block sm:inline-block font-medium text-md sm:text-sm text-gray-700 px-3 py-2 rounded-md hover:bg-gray-100 hover:text-gray-800 sm:mx-2 sm:my-0">Home</a>
             <a href="/about" class="block sm:inline-block font-medium text-md sm:text-sm text-gray-700 px-3 py-2 rounded-md hover:bg-gray-100 hover:text-gray-800 sm:mx-2 sm:my-0">About</a>
             <a href="/contacts" class="block sm:inline-block font-medium text-md sm:text-sm text-gray-700 px-3 py-2 rounded-md hover:bg-gray-100 hover:text-gray-800 sm:mx-2 sm:my-0">Contacts</a>
-            <a href="/restaurants" class="block sm:inline-block font-medium text-md sm:text-sm text-gray-700 px-3 py-2 rounded-md hover:bg-gray-100 hover:text-gray-800 sm:mx-2 sm:my-0">My Profile</a>
-            <% if(role === 'receiver') { %>
-                <a href="/restaurants" class="block sm:inline-block font-medium text-md sm:text-sm text-gray-700 px-3 py-2 rounded-md hover:bg-gray-100 hover:text-gray-800 sm:mx-2 sm:my-0">Restaurants</a>
-                <% } %>
+
+            <% if(user && role == 'receiver') {%>
+                <a href="/receivers/<%= user.documentReferenceId %>" class="block sm:inline-block font-medium text-md sm:text-sm text-gray-700 px-3 py-2 rounded-md hover:bg-gray-100 hover:text-gray-800 sm:mx-2 sm:my-0">My Profile</a>
+                <% } else if(user && role == 'donor') { %>
+                    <a href="/restaurants/<%= user.documentReferenceId %>" class="block sm:inline-block font-medium text-md sm:text-sm text-gray-700 px-3 py-2 rounded-md hover:bg-gray-100 hover:text-gray-800 sm:mx-2 sm:my-0">My Profile</a>
+                    <% } %>
+
+                        <% if(role === 'receiver') { %>
+                            <a href="/restaurants" class="block sm:inline-block font-medium text-md sm:text-sm text-gray-700 px-3 py-2 rounded-md hover:bg-gray-100 hover:text-gray-800 sm:mx-2 sm:my-0">Restaurants</a>
+                            <% } %>
         </div>
         <% if(user) { %>
             <a href="/auth/logout" class="hidden sm:block">

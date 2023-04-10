@@ -16,16 +16,16 @@ const receiverRouter = require('./routes/receivers')
 const methodOverride = require('method-override')
 const User = require('./models/User')
 const CatchAsync = require('./utils/CatchAsync')
-const { sendMessage } = require('./email')
+const { sendMessage, sendMessageNodemailer } = require('./email')
 
 mongoose.set('strictQuery', false);
 
 let db_url = ''
 
-if (process.env.NODE_ENV == "development")
-    db_url = process.env.MONGODB_URL
-else
-    db_url = 'mongodb://localhost:27017/restaurants'
+// if (process.env.NODE_ENV == "development")
+db_url = process.env.MONGODB_URL
+// else
+// db_url = 'mongodb://localhost:27017/restaurants'
 
 mongoose.connect(db_url)
     .then(() => {
@@ -68,8 +68,6 @@ passport.deserializeUser(User.deserializeUser());
 
 
 app.use((req, res, next) => {
-    // console.log(req.user)
-    // res.locals.role = req.user.role
     res.locals.user = req.user || null
     res.locals.role = req.user && req.user.role ? req.user.role : null;
     res.locals.success = req.flash('success')
@@ -104,7 +102,7 @@ app.get('/contacts', (req, res) => {
 
 app.post('/contacts', CatchAsync(async (req, res) => {
     const { name, email, message } = req.body
-    await sendMessage('project.annapurna@outlook.com', 'subhashispaul2204@gmail.com', email, name, message)
+    await sendMessageNodemailer('the.annapurna.project@outlook.com', 'subhashispaul2204@gmail.com', email, name, message)
         .then(() => {
             console.log('Send Successfully')
             req.flash('success', 'Message has been delivered successfully')
@@ -129,6 +127,7 @@ app.use((err, req, res, next) => {
     const { statusCode = 500 } = err
     if (!err.message) err.message = 'Oh No ! Something went wrong'
     console.log(err)
+    // res.render('error')
     res.status(statusCode).send(err)
 })
 app.listen(process.env.PORT || 3000, () => {
