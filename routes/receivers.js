@@ -75,4 +75,11 @@ router.post('/new', upload.single('image'), validateReceiver, catchAsync(async (
         })
 }))
 
+router.get('/:id', catchAsync(async (req, res) => {
+    const { id } = req.params
+
+    const receiver = await Receiver.findById(id)
+    res.render('receivers/show', { receiver })
+}))
+
 module.exports = router

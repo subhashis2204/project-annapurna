@@ -25,6 +25,11 @@
                         <% if(role === 'receiver') { %>
                             <a href="/restaurants" class="block sm:inline-block font-medium text-md sm:text-sm text-gray-700 px-3 py-2 rounded-md hover:bg-gray-100 hover:text-gray-800 sm:mx-2 sm:my-0">Restaurants</a>
                             <% } %>
+                                <% if(user) { %>
+                                    <a href="/auth/logout" class="block sm:hidden font-medium text-md sm:text-sm text-gray-700 px-3 py-2 rounded-md hover:bg-gray-100 hover:text-gray-800 sm:mx-2 sm:my-0">Sign Out</a>
+                                    <% } else { %>
+                                        <a href="/auth/login" class="block sm:hidden font-medium text-md sm:text-sm text-gray-700 px-3 py-2 rounded-md hover:bg-gray-100 hover:text-gray-800 sm:mx-2 sm:my-0">Sign In</a>
+                                        <% } %>
         </div>
         <% if(user) { %>
             <a href="/auth/logout" class="hidden sm:block">

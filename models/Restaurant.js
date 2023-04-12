@@ -89,6 +89,7 @@ restaurantSchema.pre('findOneAndUpdate', async function () {
     // console.log(this)
     this._update.restaurantAddress.geometry = geometry
 
+    console.log(response.data.results[0].geometry)
     // const geodata = await geocoder.forwardGeocode({
     //     query: `${address.street}, ${address.city}, ${address.state}, ${address.country}, ${address.zip}`,
     //     limit: 1

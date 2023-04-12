@@ -1,6 +1,8 @@
 const codes = document.querySelectorAll('.code')
 
-codes[0].focus()
+window.addEventListener("load", function () {
+    window.scrollTo(0, 0)
+});
 
 codes.forEach((code, idx) => {
     code.addEventListener('keydown', (e) => {

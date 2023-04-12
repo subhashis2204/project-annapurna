@@ -38,7 +38,7 @@ const sendOTP = async (id) => {
 }
 
 const validateRestaurant = (req, res, next) => {
-    console.log(req.body)
+    // console.log(req.body)
     const { error } = restaurantSchema.validate(req.body)
     if (error) {
         // console.log(error)
@@ -50,7 +50,7 @@ const validateRestaurant = (req, res, next) => {
     }
 }
 const validateRestaurantUpdate = (req, res, next) => {
-    console.log(req.body)
+    // console.log(req.body)
     const { error } = restaurantUpdateSchema.validate(req.body)
     if (error) {
         // console.log(error)
@@ -131,7 +131,7 @@ router.get('/donating', catchAsync(async (req, res) => {
     const presentDate = new Date().toISOString().slice(0, 10);
     const donatingRestaurants = await Donor.find({ donating: true, date: new Date(presentDate).toISOString() }).populate({ path: 'restaurantId', select: 'restaurantName restaurantDescription' })
 
-    console.log(donatingRestaurants)
+    // console.log(donatingRestaurants)
     res.render('hotels/donating', { donatingRestaurants })
 }))
 
@@ -156,7 +156,7 @@ router.post('/:id/claimed', isLoggedIn, catchAsync(async (req, res) => {
     const presentDate = new Date().toISOString().slice(0, 10);
     const donatingRestaurant = await Donor.findOne({ restaurantId: id, date: new Date(presentDate).toISOString() })
 
-    console.log(donatingRestaurant)
+    // console.log(donatingRestaurant)
 
     donatingRestaurant.fulfilled = true
     donatingRestaurant.donatedTo = req.user.documentReferenceId
@@ -182,6 +182,12 @@ router.post('/:id/cancelDonate', catchAsync(async (req, res) => {
 router.post('/:id/verify', catchAsync(async (req, res) => {
     const { id } = req.params
     const otp = await OTP.findOne({ user: id })
+
+    if (!otp) {
+        req.flash('error', 'This donation has not been claimed')
+        res.redirect('/restaurants/' + id)
+    }
+
     const receivedOtp = req.body.otp.join('')
     console.log(otp.code, receivedOtp)
 
@@ -236,8 +242,8 @@ router.put('/:id/edit', validateRestaurantUpdate, catchAsync(async (req, res, ne
 
     await Restaurant.findByIdAndUpdate(id, { ...req.body }, { runValidators: true })
         .then(restaurant => {
-            console.log(restaurant)
-            return res.redirect(`/restaurants/${restaurant._id}`)
+            console.log(restaurant.restaurantAddress.geometry)
+            return res.redirect('/restaurants/' + restaurant._id)
         })
         .catch(err => {
             req.flash('error', 'Restaurant Could Not be Updated')

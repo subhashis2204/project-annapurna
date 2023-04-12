@@ -17,6 +17,7 @@ const methodOverride = require('method-override')
 const User = require('./models/User')
 const CatchAsync = require('./utils/CatchAsync')
 const { sendMessage, sendMessageNodemailer } = require('./email')
+const port = process.env.PORT || 3000;
 
 mongoose.set('strictQuery', false);
 
@@ -130,6 +131,6 @@ app.use((err, req, res, next) => {
     // res.render('error')
     res.status(statusCode).send(err)
 })
-app.listen(process.env.PORT || 3000, () => {
+app.listen(port, () => {
     console.log('LISTENING ON PORT 3000')
 })

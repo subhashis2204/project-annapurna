@@ -22,8 +22,8 @@
 // const nav = new mapboxgl.NavigationControl();
 // map.addControl(nav, 'top-left');
 
-// const restaurantDetails = JSON.parse(restaurant)
-const address = restaurantDetails.restaurantAddress
+// const receiverDetails = JSON.parse(receiver)
+const address = receiverDetails.receiverAddress
 const [lng, lat] = address.geometry.coordinates
 console.log(lng, lat)
 const myLatLng = { lat, lng };
@@ -31,7 +31,7 @@ const myLatLng = { lat, lng };
 const div = document.createElement('div')
 const h1 = document.createElement('h1')
 const p = document.createElement('p')
-h1.innerText = restaurantDetails.restaurantName
+h1.innerText = receiverDetails.receiverName
 
 p.innerHTML = `${address.street} <br> ${address.city}, ${address.state} <br> ${address.zip} <br> ${address.country} <br>`
 

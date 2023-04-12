@@ -1,4 +1,0 @@
-{
-    "appService.defaultWebAppToDeploy": "/subscriptions/50cd0bc3-0015-44e5-9c90-d1ecd81afdcc/resourceGroups/FinalYearProject/providers/Microsoft.Web/sites/projectAnnapurna",
-    "appService.deploySubpath": "."
-}
