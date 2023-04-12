@@ -25,8 +25,8 @@ let db_url = ''
 
 // if (process.env.NODE_ENV == "development")
 db_url = process.env.MONGODB_URL
-// else
-// db_url = 'mongodb://localhost:27017/restaurants'
+    // else
+    // db_url = 'mongodb://localhost:27017/restaurants'
 
 mongoose.connect(db_url)
     .then(() => {
@@ -89,7 +89,7 @@ restaurantRouter.use(express.static(path.join(__dirname, 'public')))
 authRouter.use(express.static(path.join(__dirname, 'public')))
 receiverRouter.use(express.static(path.join(__dirname, 'public')))
 
-app.get('/', async (req, res) => {
+app.get('/', async(req, res) => {
     res.render('home')
 })
 
@@ -101,7 +101,7 @@ app.get('/contacts', (req, res) => {
     res.render('contacts')
 })
 
-app.post('/contacts', CatchAsync(async (req, res) => {
+app.post('/contacts', CatchAsync(async(req, res) => {
     const { name, email, message } = req.body
     await sendMessageNodemailer('the.annapurna.project@outlook.com', 'subhashispaul2204@gmail.com', email, name, message)
         .then(() => {
@@ -128,7 +128,7 @@ app.use((err, req, res, next) => {
     const { statusCode = 500 } = err
     if (!err.message) err.message = 'Oh No ! Something went wrong'
     console.log(err)
-    // res.render('error')
+        // res.render('error')
     res.status(statusCode).send(err)
 })
 app.listen(port, () => {
