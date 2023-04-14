@@ -4,45 +4,95 @@
         <% block('styles', `<script src='https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.js'></script>`) %>
             <% block('styles', `<link href='https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.css' rel='stylesheet' />`) %>
 
-                <div class="p-3 md:p-5 bg-red-200 min-h-screen">
-                    <h1 class="text-3xl text-bold text-center py-5">
-                        <%= receiver.receiverName %>
-                    </h1>
+                <div class="bg-red-100">
 
-                    <div class="mb-5 flex flex-col sm:flex-row items-center justify-center gap-4">
-                        <span><i class="fa-solid fa-envelope"></i> <%= receiver.receiverContactDetails.email %></span>
-                        <div class="flex flex-row gap-4">
-                            <span><i class="fa-solid fa-phone"></i><%= receiver.receiverContactDetails.contact1 %></span>
-                            <% if(receiver.receiverContactDetails.contact2) { %>
-                                <span><i class="fa-solid fa-phone"></i><%= receiver.receiverContactDetails.contact2 %></span>
-                                <% } %>
+                    <div class="grid grid-cols-1 md:grid-cols-2 p-2">
+                        <div id="map" class="rounded-md order-2 h-80 md:h-full md:order-1 mx-1"></div>
+                        <div class="order-1 md:order-2 min-h-40 flex flex-col gap-4 p-3 md:px-5 sm-micro:text-center md:col-start-2 md:col-span-1 md:text-left md:gap-6">
+                            <h1 class="text-2xl font-bold md:text-4xl">
+                                <%= receiver.receiverName %>
+                            </h1>
+                            <div class="flex flex-col gap-2">
+                                <h2 class="text-xl font-bold md:text-2xl">Address Details</h2>
+                                <div>
+                                    <p>
+                                        <%= receiver.receiverAddress.street %>
+                                    </p>
+                                    <p>
+                                        <%= receiver.receiverAddress.city %>
+                                    </p>
+                                    <p>
+                                        <%= receiver.receiverAddress.state %> ,
+                                            <%= receiver.receiverAddress.country %> -
+                                                <%= receiver.receiverAddress.zip %>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <h2 class="text-xl font-bold md:text-2xl">Contact Details</h2>
+                                <div class="flex flex-col gap-2">
+                                    <div>
+                                        <i class="fa-solid fa-envelope"></i>
+                                        <span><%= receiver.receiverContactDetails.email %></span>
+                                    </div>
+                                    <div class="flex flex-row gap-4 sm-micro:justify-center md:justify-start">
+                                        <div>
+                                            <i class="fa-solid fa-phone"></i>
+                                            <span><%= receiver.receiverContactDetails.contact1 %></span>
+                                        </div>
+
+                                        <% if(receiver.receiverContactDetails.contact2) { %>
+                                            <div>
+                                                <i class="fa-solid fa-phone"></i>
+                                                <span><%= receiver.receiverContactDetails.contact2 %></span>
+                                            </div>
+                                            <% } %>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 gap-4 sm-micro:grid-cols-2 sm-micro:gap-2">
+                                <a href="" class="px-3 py-2 text-white text-center font-medium rounded-md bg-blue-600">Edit Details</a>
+                                <a href="" class="px-3 py-2 text-white text-center font-medium rounded-md bg-red-600">Delete Account</a>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="w-full flex flex-wrap flex-row gap-3 mb-3 justify-center contents-center">
-                        <a href="/receivers/<%= receiver._id %>/edit" class="px-3 py-2 rounded-md bg-blue-600 hover:drop-shadow-lg hover:bg-blue-700 text-white font-medium text-lg">Edit Details</a>
-                        <form action="/receivers/<%= receiver._id %>?_method=DELETE" method="POST">
-                            <button class="px-3 py-2 rounded-md bg-red-600 hover:drop-shadow-lg hover:bg-red-700 text-white font-medium text-lg">Delete receiver</button>
-                        </form>
-                    </div>
-                    <!-- <div class="grid grid-cols-1 sm:grid-cols-3">
-                        <div class="sm:col-start-1 sm:col-span-1">
-                            <p class="text-md pb-5 text-justify">
+                    <div class="grid p-3 my-2 grid-cols-1 md:grid-cols-2 md:gap-2">
+                        <div class="bg-gray-300 min-h-[4rem] flex items-center justify-center rounded-md md:col-start-1 md:col-span-1">
+                            <h2 class="text-2xl font-medium md:text-4xl">About Us</h2>
+                        </div>
+                        <div class="py-3 text-justify text-md md:col-start-2 md:col-span-1 md:text-lg md:py-0 md:ml-3">
+                            <p>
                                 <%= receiver.receiverDescription %>
                             </p>
+                            <div class="py-3">
+                                <h1 class="font-bold text-lg">Registration No.</h1>
+                                <p>
+                                    <%= receiver.receiverRegistrationNo %>
+                                </p>
+                            </div>
+                            <div class="flex flex-row items-center justify-start">
+                                <a href="<%= receiver.idProofImg %>" class="max-w-max text-blue-700 text-bold text-md md:text-lg">Validation Document </a>
+                                <img src="./public/images/frame.svg" class="w-8" alt="">
+                            </div>
                         </div>
-                        <div id='map' style='height: 300px;' class="w-full mb-4 sm:col-start-2 sm:col-span-2"></div>
-                    </div> -->
-                    <div class="grid grid-cols-1 md:grid-cols-2">
-                        <div>
-                            <h1 class="text-2xl font-bold">About Us</h1>
-                            <p class="text-md p-3 text-justify">
-                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nostrum at veritatis sunt esse assumenda? Laboriosam repellat accusantium illo vitae harum voluptatibus libero sequi exercitationem incidunt corrupti? Inventore nostrum excepturi praesentium?
-                            </p>
-                        </div>
-                        <div id='map' class="ml-auto w-full md:h-80 mb-4 aspect-square"></div>
+                    </div>
+
+                    <div class="flex flex-col gap-4 py-5">
+                        <h1 class="text-2xl font-bold text-center md:text-4xl">Areas of Work</h1>
+                        <ul class="p-2 work flex flex-wrap justify-start gap-2 justify-center items-center">
+                            <% for(let i = 0; i < receiver.receiverAreaOfWork.length; i++) { %>
+                                <li class="bg-white px-2 py-1 rounded-md text-sm md:text-lg">
+                                    <%= receiver.receiverAreaOfWork[i] %>
+                                </li>
+                                <% } %>
+                        </ul>
                     </div>
                 </div>
+
+
+
                 <script>
                     const receiverDetails = <%- JSON.stringify(receiver, (key, value) => {
                     if (typeof value === 'string') {

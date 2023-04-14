@@ -87,6 +87,12 @@
                                 'Trocchi', 'serif'
                             ],
                             'inika': ['Inika', 'serif']
+                        },
+                        screens: {
+                            'sm-micro': '360px'
+                        },
+                        flexGrow: {
+                            2: '2'
                         }
                     }
                 }
@@ -111,6 +117,12 @@
                     <script>
                         function autoAdjustTextarea() {
                             const textarea = document.getElementById("area-of-work");
+                            textarea.style.height = "auto";
+                            textarea.style.height = textarea.scrollHeight + "px";
+                        }
+
+                        function autoAdjustMissionArea() {
+                            const textarea = document.getElementById("mission");
                             textarea.style.height = "auto";
                             textarea.style.height = textarea.scrollHeight + "px";
                         }

@@ -58,6 +58,7 @@ module.exports.receiverSchema = Joi.object({
         city: Joi.string().required(),
         street: Joi.string().required()
     }).required(),
+    receiverDescription: Joi.string().required(),
     password: Joi.string().required(),
     confirmPassword: Joi.ref('password'),
     idProofImg: Joi.string().required()

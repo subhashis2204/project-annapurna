@@ -8,10 +8,11 @@ const { restaurantSchema, restaurantUpdateSchema } = require('../schemas')
 const User = require('../models/User')
 const { isLoggedIn } = require('../middleware')
 const OTP = require('../models/otp')
-const sendVerifyEmail = require('../email')
+const { sendVerifyEmail } = require('../email')
 const speakeasy = require('speakeasy');
 const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding')
 const axios = require('axios')
+
 
 const mapBoxToken = process.env.MAPBOX_TOKEN
 const geocoder = mbxGeocoding({ accessToken: mapBoxToken })

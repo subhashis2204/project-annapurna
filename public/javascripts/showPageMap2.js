@@ -43,7 +43,9 @@ h1.classList.add('font-bold', 'text-sm', 'mb-1')
 const map = new google.maps.Map(document.getElementById("map"), {
     zoom: 18,
     center: myLatLng,
-    disableDefaultUI: true
+    fullscreenControl: true,
+    disableDefaultUI: true,
+    zoomControl: true
 });
 
 const contentString = div

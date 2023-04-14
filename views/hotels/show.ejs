@@ -4,163 +4,230 @@
         <% block('styles', `<script src='https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.js'></script>`) %>
             <% block('styles', `<link href='https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.css' rel='stylesheet' />`) %>
 
-                <div class="p-3 md:p-5 bg-red-200 min-h-screen">
-                    <h1 class="text-3xl text-bold text-center py-5">
-                        <%= restaurant.restaurantName %>
-                    </h1>
 
-                    <div class="mb-5 flex flex-col sm:flex-row items-center justify-center gap-4">
-                        <span>
-                <i class="fa-solid fa-envelope"></i>
-            <%= restaurant.restaurantContactDetails.email %>
-        </span>
+                <div class="bg-red-100">
+                    <div class="grid grid-cols-1 md:grid-cols-2 p-2">
+                        <div id="map" class="rounded-md order-2 h-80 md:h-full md:order-1 mx-1"></div>
+                        <div class="order-1 md:order-2 min-h-40 flex flex-col gap-4 p-3 md:px-5 sm-micro:text-center md:col-start-2 md:col-span-1 md:text-left md:gap-6  rounded-md ">
+                            <h1 class="text-2xl font-bold md:text-4xl">
+                                <%= restaurant.restaurantName %>
+                            </h1>
+                            <div class="flex flex-col gap-2">
+                                <h2 class="text-xl font-bold md:text-2xl">Address Details</h2>
+                                <div>
+                                    <p>
+                                        <%= restaurant.restaurantAddress.street %>
+                                    </p>
+                                    <p>
+                                        <%= restaurant.restaurantAddress.city %>
+                                    </p>
+                                    <p>
+                                        <%= restaurant.restaurantAddress.state %> ,
+                                            <%= restaurant.restaurantAddress.country %> -
+                                                <%= restaurant.restaurantAddress.zip %>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <h2 class="text-xl font-bold md:text-2xl">Contact Details</h2>
+                                <div class="flex flex-col gap-2">
+                                    <div>
+                                        <i class="fa-solid fa-envelope"></i>
+                                        <span><%= restaurant.restaurantContactDetails.email %></span>
+                                    </div>
+                                    <div class="flex flex-row gap-4 sm-micro:justify-center md:justify-start">
+                                        <div>
+                                            <i class="fa-solid fa-phone"></i>
+                                            <span><%= restaurant.restaurantContactDetails.contact1 %></span>
+                                        </div>
 
-                        <div class="flex flex-row gap-4">
-                            <span>
-                <i class="fa-solid fa-phone"></i>
-            <%= restaurant.restaurantContactDetails.contact1 %>
-        </span>
+                                        <% if(restaurant.restaurantContactDetails.contact2) { %>
+                                            <div>
+                                                <i class="fa-solid fa-phone"></i>
+                                                <span><%= restaurant.restaurantContactDetails.contact2 %></span>
+                                            </div>
+                                            <% } %>
 
-                            <% if(restaurant.restaurantContactDetails.contact2) { %>
-                                <span>
-                        <i class="fa-solid fa-phone"></i>
-                        <%= restaurant.restaurantContactDetails.contact2 %>
-                    </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <% if(role === 'donor') { %>
+                                <div class="grid grid-cols-1 gap-4 sm-micro:grid-cols-2 sm-micro:gap-2">
+                                    <a href="/restaurants/<%= restaurant._id %>/edit" class="px-3 py-2 text-white text-center font-medium rounded-md bg-blue-600">Edit Details</a>
+                                    <form action="/restaurants/<%= restaurant._id %>?_method=DELETE" method="POST">
+                                        <button class="w-full px-3 py-2 text-white text-center font-medium rounded-md bg-red-600">Delete Account</button>
+                                    </form>
+                                </div>
                                 <% } %>
                         </div>
                     </div>
 
+                    <div class="bg-red-100">
+                        <img src="images/design 1 (1).svg" class="mx-auto w-20 md:w-32" alt="">
+                    </div>
 
-                    <% if(role === 'donor') { %>
-                        <div class="w-full flex flex-wrap flex-row gap-3 mb-3 justify-center contents-center">
-                            <a href="/restaurants/<%= restaurant._id %>/edit" class="px-3 py-2 rounded-md bg-blue-600 hover:drop-shadow-lg hover:bg-blue-700 text-white font-medium text-lg">Edit Details</a>
-                            <form action="/restaurants/<%= restaurant._id %>?_method=DELETE" method="POST">
-                                <button class="px-3 py-2 rounded-md bg-red-600 hover:drop-shadow-lg hover:bg-red-700 text-white font-medium text-lg">Delete Restaurant</button>
-                            </form>
+                    <div class="grid p-3 my-2 grid-cols-1 md:grid-cols-2 md:gap-2">
+                        <div class="bg-gray-200 md:bg-gradient-to-br md:from-amber-200 md:to-orange-300 min-h-[4rem] flex items-center justify-center rounded-md md:col-start-1 md:col-span-1">
+                            <h2 class="text-2xl font-medium md:text-4xl ">About Us</h2>
                         </div>
-                        <% } %>
-
-                            <p class="text-md pb-5 text-justify">
+                        <div class="py-3 text-justify text-md md:col-start-2 md:col-span-1 md:text-lg md:py-0 md:ml-3">
+                            <p>
                                 <%= restaurant.restaurantDescription %>
                             </p>
+                        </div>
+                    </div>
 
-                            <div id='map' style='height: 300px;' class="w-full mb-4"></div>
+                    <div class="bg-red-100 mb-5">
+                        <img src="images/line.svg" class="mx-auto w-20 md:w-32" alt="">
+                    </div>
 
+                    <div class="grid grid-cols-1 md:grid-cols-2">
+                        <figure class="max-w-screen-md mx-auto text-center p-2 my-auto">
+                            <svg aria-hidden="true" class="w-12 h-12 mx-auto mb-3 text-gray-400 dark:text-gray-600" viewBox="0 0 24 27" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.017 18L14.017 10.609C14.017 4.905 17.748 1.039 23 0L23.995 2.151C21.563 3.068 20 5.789 20 8H24V18H14.017ZM0 18V10.609C0 4.905 3.748 1.038 9 0L9.996 2.151C7.563 3.068 6 5.789 6 8H9.983L9.983 18L0 18Z" fill="currentColor"/></svg>
+                            <blockquote>
+                                <p class="text-2xl italic text-gray-900 ">"If you can't feed a hundred people, then feed just one."</p>
+                            </blockquote>
+                            <figcaption class="flex items-center justify-center mt-6 space-x-3">
+                                <div class="flex items-center divide-x-2 divide-gray-500 dark:divide-gray-700">
+                                    <cite class="pr-3 font-medium text-gray-900 dark:text-white">Mother Teresa</cite>
+                                    <cite class="pl-3 text-sm text-gray-500 dark:text-gray-400">Nobel Peace Prize(1979)</cite>
+                                </div>
+                            </figcaption>
+                        </figure>
+
+                        <div class="p-2 md:col-start-2 md:col-span-1 min-h-[20rem]">
                             <% if(!donationToday) { %>
-                                <% if(role === 'donor') { %>
-                                    <div class="mx-auto p-3 mb-5 bg-white flex flex-col md:flex-row max-w-fit justify-between align-center gap-3 rounded-md border-2 border-gray-700">
-                                        <p class="my-auto text-2xl font-medium text-center justify-content">Do you want to donate today ?
-                                        </p>
-                                        <form action="/restaurants/<%= restaurant._id %>/donate" method="POST" class="inline-block mx-auto">
-                                            <button class="py-1 px-2 bg-blue-600 rounded-md text-white font-bold text-xl text-center">Let's Go</button>
-                                        </form>
-                                        <!-- <button class="bg"></button> -->
+                                <% if(role === 'receiver') { %>
+                                    <div class="p-2 w-full h-full col-start-1 col-span-1 md:col-start-2 md:col-span-1 flex flex-col justify-center items-center bg-white rounded-md">
+                                        <h1 class="text-xl p-2 text-center">This Restaurant is not Donating Currently</h1>
                                     </div>
-                                    <% } else if(role === 'receiver') { %>
-                                        <div class="mx-auto p-3 mb-5 bg-white flex flex-row max-w-fit justify-between align-center gap-3 rounded-md border-2 border-gray-700">
-                                            <p class="my-auto text-2xl font-medium text-center justify-content">This restaurant not donating currently
-                                            </p>
-                                            <!-- <button class="bg"></button> -->
+                                    <% } else if(role === 'donor') { %>
+                                        <div class="w-full h-full col-start-1 col-span-1 md:col-start-2 md:col-span-1">
+                                            <div class="bg-white rounded-lg py-5 flex flex-col justify-around items-center w-full h-full gap-8 md:gap-4">
+                                                <h1 class="text-xl border-2 border-black py-2 px-3 shadow-lg rounded-lg bg-white">Want to donate ? </h1>
+                                                <form action="/restaurants/<%= restaurant._id %>/donate" method="POST" class="inline-block mx-auto">
+                                                    <button class="bg-blue-600 px-3 py-2 rounded-md text-white font-bold">Let's Donate</button>
+                                                </form>
+
+                                            </div>
                                         </div>
                                         <% } %>
                                             <% } %>
                                                 <% if(donationToday) { %>
                                                     <% if(role === 'donor') { %>
-                                                        <div class="mx-auto p-3 mb-5 bg-white flex flex-row max-w-fit justify-between align-center gap-3 rounded-md border-2 border-gray-700">
-                                                            <p class="my-auto text-2xl font-medium text-center">Thank you for Donating Food !
-                                                            </p>
-                                                            <!-- <button class="bg"></button> -->
-                                                        </div>
                                                         <% if(donationToday && donationToday.otpGenerated && !donationToday.otpVerified) { %>
-                                                            <div class="flex flex-col gap-4">
-                                                                <p class="my-auto text-2xl font-medium text-center">Please Enter the OTP Here
+                                                            <div class="p-2 md:col-start-2 md:col-span-1">
+                                                                <div class="flex flex-col bg-white h-full px-2 py-4 justify-center items-center gap-4 rounded-lg">
+                                                                    <p class="rounded-lg text-center text-xl p-2 max-w-max mx-auto">Thank you for donating food 😊</p>
 
                                                                     <form action="/restaurants/<%= restaurant._id %>/verify" id="otp-form" method="POST">
-                                                                        <div class="code-container flex flex-wrap gap-2 mx-auto justify-center items-center">
-                                                                            <input type="number" class="code aspect-square w-20 mx-1 text-center text-2xl text-gray-700 rounded-lg shadow focus:outline-none focus:border-black focus:ring-transparent focus:shadow-2xl font-medium border-2 border-gray-500" placeholder="-" min="0" max="9"
-                                                                                name="otp[0]" required>
-                                                                            <input type="number" class="code aspect-square w-20 mx-1 text-center text-2xl text-gray-700 rounded-lg shadow focus:outline-none focus:border-black focus:ring-transparent focus:shadow-2xl font-medium border-2 border-gray-500" placeholder="-" min="0" max="9"
-                                                                                name="otp[1]" required>
-                                                                            <input type="number" class="code aspect-square w-20 mx-1 text-center text-2xl text-gray-700 rounded-lg shadow focus:outline-none focus:border-black focus:ring-transparent focus:shadow-2xl font-medium border-2 border-gray-500" placeholder="-" min="0" max="9"
-                                                                                name="otp[2]" required>
-                                                                            <input type="number" class="code aspect-square w-20 mx-1 text-center text-2xl text-gray-700 rounded-lg shadow focus:outline-none focus:border-black focus:ring-transparent focus:shadow-2xl font-medium border-2 border-gray-500" placeholder="-" min="0" max="9"
-                                                                                name="otp[3]" required>
-                                                                            <input type="number" class="code aspect-square w-20 mx-1 text-center text-2xl text-gray-700 rounded-lg shadow focus:outline-none focus:border-black focus:ring-transparent focus:shadow-2xl font-medium border-2 border-gray-500" placeholder="-" min="0" max="9"
-                                                                                name="otp[4]" required>
-                                                                            <input type="number" class="code aspect-square w-20 mx-1 text-center text-2xl text-gray-700 rounded-lg shadow focus:outline-none focus:border-black focus:ring-transparent focus:shadow-2xl font-medium border-2 border-gray-500" placeholder="-" min="0" max="9"
-                                                                                name="otp[5]" required>
+                                                                        <div class="code-container flex flex-wrap gap-1 md:gap-2 mx-auto justify-center items-center">
+                                                                            <input type="number" class="code h-9 w-9 sm-micro:w-12 sm-micro:h-12 text-center text-md md:text-2xl text-gray-700 rounded-md md:rounded-lg shadow focus:outline-none focus:border-black focus:ring-transparent focus:shadow-lg font-medium border-2 border-gray-500"
+                                                                                placeholder="-" min="0" max="9" name="otp[0]" required>
+                                                                            <input type="number" class="code h-9 w-9 sm-micro:w-12 sm-micro:h-12 text-center text-md md:text-2xl text-gray-700 rounded-md md:rounded-lg shadow focus:outline-none focus:border-black focus:ring-transparent focus:shadow-lg font-medium border-2 border-gray-500"
+                                                                                placeholder="-" min="0" max="9" name="otp[1]" required>
+                                                                            <input type="number" class="code h-9 w-9 sm-micro:w-12 sm-micro:h-12 text-center text-md md:text-2xl text-gray-700 rounded-md md:rounded-lg shadow focus:outline-none focus:border-black focus:ring-transparent focus:shadow-lg font-medium border-2 border-gray-500"
+                                                                                placeholder="-" min="0" max="9" name="otp[2]" required>
+                                                                            <input type="number" class="code h-9 w-9 sm-micro:w-12 sm-micro:h-12 text-center text-md md:text-2xl text-gray-700 rounded-md md:rounded-lg shadow focus:outline-none focus:border-black focus:ring-transparent focus:shadow-lg font-medium border-2 border-gray-500"
+                                                                                placeholder="-" min="0" max="9" name="otp[3]" required>
+                                                                            <input type="number" class="code h-9 w-9 sm-micro:w-12 sm-micro:h-12 text-center text-md md:text-2xl text-gray-700 rounded-md md:rounded-lg shadow focus:outline-none focus:border-black focus:ring-transparent focus:shadow-lg font-medium border-2 border-gray-500"
+                                                                                placeholder="-" min="0" max="9" name="otp[4]" required>
+                                                                            <input type="number" class="code h-9 w-9 sm-micro:w-12 sm-micro:h-12 text-center text-md md:text-2xl text-gray-700 rounded-md md:rounded-lg shadow focus:outline-none focus:border-black focus:ring-transparent focus:shadow-lg font-medium border-2 border-gray-500"
+                                                                                placeholder="-" min="0" max="9" name="otp[5]" required>
                                                                         </div>
 
-                                                                        <!-- <div class="w-full"> -->
-                                                                        <button class="mx-auto my-3 py-2 px-3 bg-blue-600 rounded-md text-white font-medium text-xl text-center block hover:bg-blue-700 hover:shadow-lg">Verify OTP</button>
-                                                                        <!-- </div> -->
-                                                                    </form>
-                                                            </div>
-                                                            <% } %>
+                                                                        <div class="mt-5 w-full flex justify-center items-center">
+                                                                            <button href="" class="mx-auto bg-blue-600 px-3 py-2 rounded-md text-white font-bold">Verify OTP</button>
+                                                                        </div>
 
-                                                                <div class="w-full text-center flex flex-col mb-3 justify-center align-center gap-3">
-                                                                    <p class="text-xl">
-                                                                        If you feel that there is some problem then you can cancel the donation
-                                                                    </p>
-                                                                    <form action="/restaurants/<%= restaurant._id %>/cancelDonate" method="POST">
-                                                                        <button class="py-2 px-3 bg-red-600 rounded-md text-white font-bold text-xl text-center max-w-max mx-auto">Cancel Donation</button>
                                                                     </form>
+
+                                                                    <div class="flex flex-col justify-center items-center gap-2">
+                                                                        <p class="text-sm text-gray-500 text-center">If you feel that there is some problem you can cancel the donation</p>
+                                                                        <form action="/restaurants/<%= restaurant._id %>/cancelDonate" method="POST">
+                                                                            <button class="max-w-max bg-red-600 font-bold py-2 px-3 rounded-md text-white" type="submit">Cancel Donation</button>
+                                                                        </form>
+                                                                    </div>
+
                                                                 </div>
-                                                                <% } else if(role === 'receiver') { %>
-                                                                    <% if(!fulfilled) { %>
-                                                                        <div class="mx-auto p-3 mb-5 bg-white flex flex-row flex-wrap max-w-fit justify-center md:justify-between items-center gap-3 rounded-md border-2 border-gray-700">
-                                                                            <p class="my-auto text-2xl font-medium text-center">This Restaurant is Donating Food
-                                                                            </p>
-                                                                            <form action="/restaurants/<%= restaurant._id %>/claimed" method="POST">
-                                                                                <button class="py-2 px-3 bg-green-600 rounded-md text-white font-bold text-xl text-center max-w-max mx-auto">Claim Donation</button>
+                                                            </div>
+                                                            <% } else if(donationToday && donationToday.otpGenerated && donationToday.otpVerified) { %>
+
+                                                                <div class="p-2 md:col-start-2 md:col-span-1 h-full">
+                                                                    <div class="flex flex-col bg-white h-full px-2 py-4 justify-around items-center gap-4 rounded-lg">
+                                                                        <p class="rounded-lg text-center text-xl border-2 border-slate-400 shadow-md p-2 max-w-max mx-auto">Thank you for donating food 😊</p>
+
+                                                                        <div class="flex flex-col justify-center items-center gap-2">
+                                                                            <p class="text-sm text-gray-500 text-center">If you feel that there is some problem you can cancel the donation</p>
+
+                                                                            <form action="/restaurants/<%= restaurant._id %>/cancelDonate" method="POST">
+                                                                                <button class="max-w-max bg-red-600 font-bold py-2 px-3 rounded-md text-white" type="submit">Cancel Donation</button>
                                                                             </form>
+
                                                                         </div>
-                                                                        <% } else if(fulfilled) { %>
-                                                                            <div class="mx-auto p-3 mb-5 bg-white flex flex-row max-w-fit justify-between align-center gap-3 rounded-md border-2 border-gray-700">
-                                                                                <p class="my-auto text-2xl font-medium text-center">This Donation has been Claimed
-                                                                                </p>
-                                                                                <!-- <button class="bg"></button> -->
-                                                                            </div>
-                                                                            <% } %>
-                                                                                <% } %>
+
+                                                                    </div>
+                                                                </div>
+                                                                <% } %>
+                                                                    <% } %>
+                                                                        <% if (role === 'receiver') { %>
+                                                                            <% if(fulfilled) { %>
+                                                                                <div class="p-2 w-full h-full col-start-1 col-span-1 md:col-start-2 md:col-span-1">
+                                                                                    <div class="rounded-lg bg-white py-5 flex flex-col justify-around items-center w-full h-full gap-8 md:gap-0">
+                                                                                        <h1 class="text-xl border-2 border-black py-2 px-3 shadow-lg rounded-lg">This donating has been claimed</h1>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <% } else if(!fulfilled) { %>
+                                                                                    <div class="p-2 w-full h-full col-start-1 col-span-1 md:col-start-2 md:col-span-1">
+                                                                                        <div class="rounded-lg bg-white py-5 flex flex-col justify-around items-center w-full h-full gap-8 md:gap-0">
+                                                                                            <h1 class="text-xl border-2 border-black py-2 px-3 shadow-lg rounded-lg">This Restaurant is donating </h1>
+                                                                                            <form action="/restaurants/<%= restaurant._id %>/claimed" method="POST">
+                                                                                                <button class="bg-blue-600 px-3 py-2 rounded-md text-white font-bold">Claim Donation</button>
+                                                                                            </form>
+                                                                                        </div>
+                                                                                    </div>
                                                                                     <% } %>
-
-                                                                                        <% if(donations.length) { %>
-                                                                                            <div class="overflow-x-auto">
-                                                                                                <table class="table w-full border-2 rounded-full">
-                                                                                                    <thead>
-                                                                                                        <tr class="bg-gray-50 border-b border-gray-200">
-                                                                                                            <th class="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                                                                                                            <th class="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Claimed Status</th>
-                                                                                                            <th class="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Donated To</th>
-                                                                                                        </tr>
-                                                                                                    </thead>
-                                                                                                    <tbody class="divide-y divide-x divide-gray-200">
-                                                                                                        <% for(let donation of donations) { %>
-                                                                                                            <tr class="bg-white border-b border-gray-200">
-                                                                                                                <td class="pl-12 py-3 whitespace-nowrap text-gray-800">
-                                                                                                                    <%= new Date(donation.date).toDateString() %>
-                                                                                                                </td>
-                                                                                                                <td class="px-4 py-3 whitespace-nowrap">
-                                                                                                                    <% if(donation.fulfilled) { %>
-                                                                                                                        <span class="px-2 py-1 rounded-md text-green-600 bg-green-200 text-bold">Claimed</span>
-                                                                                                                        <% } else { %>
-                                                                                                                            <span class="px-2 py-1 rounded-md text-yellow-600 bg-yellow-200 text-bold">Unclaimed</span>
-                                                                                                                            <% } %>
-                                                                                                                </td>
-
-                                                                                                                <td class="px-4 py-3 whitespace-nowrap text-center">
-                                                                                                                    <% if(donation.donatedTo) { %>
-                                                                                                                        <%= donation.donatedTo.receiverName %>
-                                                                                                                            <% } %>
-                                                                                                                </td>
-                                                                                                            </tr>
-                                                                                                            <% } %>
-                                                                                                    </tbody>
-                                                                                                </table>
-                                                                                            </div>
-
+                                                                                        <% } %>
                                                                                             <% } %>
+
+                        </div>
+                    </div>
+
+
+                    <% if(donations.length) { %>
+                        <div class="overflow-x-auto p-2">
+                            <table class="table w-full border-2 rounded-full">
+                                <thead>
+                                    <tr class="bg-gray-50 border-b border-gray-200">
+                                        <th class="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                        <th class="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Claimed Status</th>
+                                        <th class="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Donated To</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-x divide-gray-200">
+                                    <% for(let donation of donations) { %>
+                                        <tr class="bg-white border-b border-gray-200">
+                                            <td class="pl-12 py-3 whitespace-nowrap text-gray-800">
+                                                <%= new Date(donation.date).toDateString() %>
+                                            </td>
+                                            <td class="px-4 py-3 whitespace-nowrap">
+                                                <% if(donation.fulfilled) { %>
+                                                    <span class="px-2 py-1 rounded-md text-green-600 bg-green-200 text-bold">Claimed</span>
+                                                    <% } else { %>
+                                                        <span class="px-2 py-1 rounded-md text-yellow-600 bg-yellow-200 text-bold">Unclaimed</span>
+                                                        <% } %>
+                                            </td>
+                                            <td class="px-4 py-3 whitespace-nowrap text-center">
+                                                <% if(donation.donatedTo) { %>
+                                                    <%= donation.donatedTo.receiverName %>
+                                                        <% } %>
+                                            </td>
+                                        </tr>
+                                        <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+                        <% } %>
                 </div>
                 <script>
                     const restaurantDetails = <%- JSON.stringify(restaurant, (key, value) => {
@@ -169,10 +236,8 @@
                     }
                     return value;
                     }) %>;
-
                     console.log(restaurant)
                 </script>
                 <script src="https://maps.googleapis.com/maps/api/js?key=<%= process.env.GOOGLEMAP_TOKEN %>"></script>
-
                 <script src="/javascripts/showPageMap.js"></script>
                 <% block('javascript', `<script src="javascripts/otp.js"></script>`) %>

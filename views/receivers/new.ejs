@@ -48,7 +48,20 @@
                     </div>
                 </div>
 
-                <div class="mb-4">
+                <div class="mb-2">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 " for="area-of-work">
+                         Please Specify Your Goal and Mission
+                        <span  style="color:red"> *</span> 
+                        <!-- <div class="relative inline-block group border-[1px] border-b-black border-x-transparent border-t-transparent border-dotted"><i class="fas fa-info-circle"></i>
+                            <span class="shadow-lg capitalize hidden min-w-max bg-slate-800 text-white text-center py-[5px] px-[10px] absolute -top-1 left-6 group-hover:block rounded-md after:content-[''] after:absolute after:top-[85%] after:right-full after:-mt-4 after:border-[5px] after:border-solid after:border-y-transparent after:border-r-slate-800 after:border-l-transparent">Use comma separated values</span>
+                        </div> -->
+                    </label>
+                    <!-- <span class="block mb-2 text-sm text-gray-500"> Enter comma separated values </span> -->
+
+                    <textarea class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" oninput="autoAdjustMissionArea()" id="mission" name="receiverDescription" type="text" placeholder="Empowering communities for a better tomorrow."></textarea>
+                </div>
+
+                <div class="mb-2">
                     <label class="block mb-2 text-sm font-medium text-gray-900 " for="area-of-work">
                         Areas of Work <span  style="color:red"> *</span>
                         <div class="relative inline-block group border-[1px] border-b-black border-x-transparent border-t-transparent border-dotted"><i class="fas fa-info-circle"></i>
@@ -59,6 +72,7 @@
 
                     <textarea class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" oninput="autoAdjustTextarea()" id="area-of-work" name="receiverAreaOfWork" type="text" placeholder="Child Education, Women Empowerment"></textarea>
                 </div>
+
                 <span class="block mb-4 mt-2 text-md font-bold text-gray-900"> Location Details </span>
                 <div class="mb-4">
                     <label class="block mb-2 text-sm font-medium text-gray-900 " for="address-line-1">

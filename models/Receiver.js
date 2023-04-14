@@ -37,11 +37,12 @@ const receiverSchema = new mongoose.Schema({
             }
         }
     },
+    receiverDescription: String,
     receiverRegistrationNo: String,
     idProofImg: String
 })
 
-receiverSchema.post('save', function (doc) {
+receiverSchema.post('save', function(doc) {
     console.log(doc)
 })
 

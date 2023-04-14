@@ -1,5 +1,90 @@
-<% if(donation.fulfilled) { %>
-    <span><%= donation.donatedTo.receiverName %></span>
-    <% } else { %>
-        <span>N/A</span>
-        <% } %>
+<% if(!donationToday) { %>
+    <% if(role === 'donor') { %>
+        <div class="p-2 w-full h-full col-start-1 col-span-1 md:col-start-2 md:col-span-1 flex flex-col justify-center items-center">
+            <h1 class="text-xl">This Restaurant is not Donating Currently</h1>
+        </div>
+        <% } else if(role === 'restaurant') { %>
+            <div class="p-2 w-full h-full col-start-1 col-span-1 md:col-start-2 md:col-span-1">
+                <div class="rounded-lg bg-white py-5 flex flex-col justify-around items-center w-full h-full gap-8 md:gap-0">
+                    <h1 class="text-xl border-2 border-black py-2 px-3 shadow-lg rounded-lg">Want to donate ? </h1>
+                    <a href="" class="bg-blue-600 px-3 py-2 rounded-md text-white font-bold">Let's Donate</a>
+                </div>
+            </div>
+            <% } %>
+                <% } %>
+                    <% if(donatingToday) { %>
+                        <% if(role === 'donor') { %>
+                            <% if(donatingToday && donationToday.otpGenerated && !donatingToday.otpVerified) { %>
+                                <div class="p-2 md:col-start-2 md:col-span-1">
+                                    <div class="flex flex-col bg-white h-full px-2 py-4 justify-center items-center gap-4 rounded-lg">
+                                        <p class="rounded-lg text-center text-xl border-2 border-slate-400 shadow-md p-2 max-w-max mx-auto">Thank you for donating food 😊</p>
+
+                                        <form action="/restaurants/<%= restaurant._id %>/verify" id="otp-form" method="POST">
+                                            <div class="code-container flex flex-wrap gap-1 md:gap-2 mx-auto justify-center items-center">
+                                                <input type="number" class="code h-9 w-9 sm-micro:w-12 sm-micro:h-12 text-center text-2xl text-gray-700 rounded-md md:rounded-lg shadow focus:outline-none focus:border-black focus:ring-transparent focus:shadow-lg font-medium border-2 border-gray-500"
+                                                    placeholder="-" min="0" max="9" name="otp[0]" required>
+                                                <input type="number" class="code h-9 w-9 sm-micro:w-12 sm-micro:h-12 text-center text-2xl text-gray-700 rounded-md md:rounded-lg shadow focus:outline-none focus:border-black focus:ring-transparent focus:shadow-lg font-medium border-2 border-gray-500"
+                                                    placeholder="-" min="0" max="9" name="otp[1]" required>
+                                                <input type="number" class="code h-9 w-9 sm-micro:w-12 sm-micro:h-12 text-center text-2xl text-gray-700 rounded-md md:rounded-lg shadow focus:outline-none focus:border-black focus:ring-transparent focus:shadow-lg font-medium border-2 border-gray-500"
+                                                    placeholder="-" min="0" max="9" name="otp[2]" required>
+                                                <input type="number" class="code h-9 w-9 sm-micro:w-12 sm-micro:h-12 text-center text-2xl text-gray-700 rounded-md md:rounded-lg shadow focus:outline-none focus:border-black focus:ring-transparent focus:shadow-lg font-medium border-2 border-gray-500"
+                                                    placeholder="-" min="0" max="9" name="otp[3]" required>
+                                                <input type="number" class="code h-9 w-9 sm-micro:w-12 sm-micro:h-12 text-center text-2xl text-gray-700 rounded-md md:rounded-lg shadow focus:outline-none focus:border-black focus:ring-transparent focus:shadow-lg font-medium border-2 border-gray-500"
+                                                    placeholder="-" min="0" max="9" name="otp[4]" required>
+                                                <input type="number" class="code h-9 w-9 sm-micro:w-12 sm-micro:h-12 text-center text-2xl text-gray-700 rounded-md md:rounded-lg shadow focus:outline-none focus:border-black focus:ring-transparent focus:shadow-lg font-medium border-2 border-gray-500"
+                                                    placeholder="-" min="0" max="9" name="otp[5]" required>
+                                            </div>
+
+                                            <!-- <div class="w-full"> -->
+                                            <!-- <button class="mx-auto my-3 py-2 px-3 bg-blue-600 rounded-md text-white font-medium text-xl text-center block hover:bg-blue-700 hover:shadow-lg">Verify OTP</button> -->
+                                            <!-- </div> -->
+                                            <div class="mt-5 w-full flex justify-center items-center">
+                                                <button href="" class="mx-auto bg-blue-600 px-3 py-2 rounded-md text-white font-bold">Verify OTP</button>
+                                            </div>
+
+                                        </form>
+
+                                        <div class="flex flex-col justify-center items-center gap-2">
+                                            <p class="text-sm text-gray-500 text-center">If you feel that there is some problem you can cancel the donation</p>
+                                            <button class="max-w-max bg-red-600 font-bold py-2 px-3 rounded-md text-white">Cancel Donation</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <% } else if(donatingToday && donationToday.otpGenerated && donatingToday.otpVerified) { %>
+                                    <div class="p-2 flex flex-col gap-4 col-start-1 col-span-1 md:col-start-1 md:col-span-1">
+                                        <div class="bg-gray-800 text-white grow flex items-center justify-center rounded-md py-4">
+                                            <h2 class="text-2xl font-bold text-center rounded-lg my-auto">About Us</h2>
+                                        </div>
+                                        <p class="grow-2 flex items-center text-justify p-4 rounded-md text-md md:text-lg">Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem ex ab explicabo sunt doloremque quas earum dolorum provident aperiam tempore, aut ratione unde iure! Consectetur, voluptatibus ut? Magnam, at! Magni?
+                                            Nobis cumque beatae qui nemo tenetur porro repellat id omnis! Assumenda rem sed quidem, molestias alias itaque eos illum nemo at ad? Accusamus odio numquam excepturi. Ipsam maxime distinctio voluptatibus.</p>
+                                    </div>
+
+                                    <div class="p-2 md:col-start-2 md:col-span-1">
+                                        <div class="flex flex-col bg-white h-full px-2 py-4 justify-center items-center gap-4 rounded-lg">
+                                            <p class="rounded-lg text-center text-xl border-2 border-slate-400 shadow-md p-2 max-w-max mx-auto">Thank you for donating food 😊</p>
+
+                                            <div class="flex flex-col justify-center items-center gap-2">
+                                                <p class="text-sm text-gray-500 text-center">If you feel that there is some problem you can cancel the donation</p>
+                                                <button class="max-w-max bg-red-600 font-bold py-2 px-3 rounded-md text-white">Cancel Donation</button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <% } else if (role === 'receiver') { %>
+                                        <% if(fullfilled) { %>
+                                            <div class="p-2 w-full h-full col-start-1 col-span-1 md:col-start-2 md:col-span-1">
+                                                <div class="rounded-lg bg-white py-5 flex flex-col justify-around items-center w-full h-full gap-8 md:gap-0">
+                                                    <h1 class="text-xl border-2 border-black py-2 px-3 shadow-lg rounded-lg">This donating has been claimed</h1>
+                                                </div>
+                                            </div>
+                                            <% } else { %>
+                                                <div class="p-2 w-full h-full col-start-1 col-span-1 md:col-start-2 md:col-span-1">
+                                                    <div class="rounded-lg bg-white py-5 flex flex-col justify-around items-center w-full h-full gap-8 md:gap-0">
+                                                        <h1 class="text-xl border-2 border-black py-2 px-3 shadow-lg rounded-lg">This Restaurant is donating </h1>
+                                                        <a href="" class="bg-blue-600 px-3 py-2 rounded-md text-white font-bold">Claim Donation</a>
+                                                    </div>
+                                                </div>
+                                                <% } %>
+                                                    <% } %>
+                                                        <% } %>
