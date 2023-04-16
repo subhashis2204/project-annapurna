@@ -67,14 +67,6 @@ router.post('/new', upload.single('image'), validateReceiver, catchAsync(async (
     await User.register(newuser, password)
         .then(async user => {
 
-            await req.login(user, (err) => {
-                if (err) {
-                    // req.flash('error', 'Failed to Log You In')
-                    res.redirect('/auth/login')
-                }
-                // req.flash('success', 'Successfully Logged You In')
-            })
-
             await receiver.save()
                 .then(receiver => {
                     req.flash('success', 'Successfully Created Your Profile')
@@ -85,6 +77,14 @@ router.post('/new', upload.single('image'), validateReceiver, catchAsync(async (
                     await removeInvalidCredentialInsertion(req, res, user)
                     throw err
                 })
+
+            req.login(user, (err) => {
+                if (err) {
+                    // req.flash('error', 'Failed to Log You In')
+                    res.redirect('/auth/login')
+                }
+                // req.flash('success', 'Successfully Logged You In')
+            })
         })
         .catch(err => {
             req.flash('error', 'Failed to Create Your Profile')

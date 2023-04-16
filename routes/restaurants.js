@@ -84,14 +84,6 @@ router.post('/new', validateRestaurant, catchAsync(async (req, res) => {
     await User.register(newcredential, password)
         .then(async user => {
 
-            await req.login(user, (err) => {
-                if (err) {
-                    // req.flash('error', 'Failed to Log You In')
-                    res.redirect('/auth/login')
-                }
-                // req.flash('success', 'Successfully Logged You In')
-            })
-
             await restaurant.save()
                 .then(restaurant => {
                     req.flash('success', 'Successfully Created Your Profile')
@@ -102,12 +94,69 @@ router.post('/new', validateRestaurant, catchAsync(async (req, res) => {
                     await removeInvalidCredentialInsertion(req, res, user)
                     throw err
                 })
+
+            req.login(user, (err) => {
+                if (err) {
+                    // req.flash('error', 'Failed to Log You In')
+                    res.redirect('/auth/login')
+                }
+                // req.flash('success', 'Successfully Logged You In')
+            })
         })
         .catch(err => {
             req.flash('error', 'Failed to Create Your Profile')
             res.redirect('/restaurants/new')
             throw err
         })
+    // await User.register(newcredential, password)
+
+    // await User.register(newcredential, password)
+    //     .then(async user => {
+    //         await restaurant.save()
+    //             .then(async restaurant => {
+    //                 req.flash('success', 'Successfully Created Your Profile')
+    //                 res.redirect(`/restaurants/${restaurant._id}`)
+
+    //                 await req.login(user, (err) => {
+    //                     if (err) {
+    //                         res.redirect('/auth/login')
+    //                     }
+    //                 })
+    //             })
+    //             .catch(async err => {
+    //                 delete req.user
+    //                 await removeInvalidCredentialInsertion(req, res, user)
+    //                 throw err
+    //             })
+    //     })
+    //     .catch(err => {
+    //         req.flash('error', 'Failed to Create Your Profile')
+    //         res.redirect('/restaurants/new')
+    //         throw err
+    //     })
+
+    // const user = User.register(newcredential, password)
+    // if (user) {
+    //     const newRestaurant = await restaurant.save()
+    //     if (newRestaurant) {
+    //         await req.login(user, (err) => {
+    //             if (err) {
+    //                 res.redirect('/auth/login')
+    //             }
+    //         })
+
+    //         req.flash('success', 'Successfully Created Your Profile')
+    //         res.redirect(`/restaurants/${newRestaurant._id}`)
+    //     } else {
+    //         delete req.user
+    //         await removeInvalidCredentialInsertion(req, res, user)
+    //         throw err
+    //     }
+    // } else {
+    //     req.flash('error', 'Failed to Create Your Profile')
+    //     res.redirect('/restaurants/new')
+    //     throw err
+    // }
 }))
 
 router.get('/donating', catchAsync(async (req, res) => {

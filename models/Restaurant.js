@@ -69,33 +69,14 @@ restaurantSchema.pre('findOneAndUpdate', async function () {
         key: process.env.GOOGLEMAP_TOKEN
     }
     const response = await axios.get('https://maps.googleapis.com/maps/api/geocode/json', { params: options })
-    // .then(function (request) {
-    //     console.log(request.data)
-    //     const { lat, lng } = request.data.results[0].geometry.location
-    //     const geometry = {
-    //         type: 'Point',
-    //         coordinates: [lng, lat]
-    //     }
-    //     console.log(this)
-    //     this._update.restaurantAddress.geometry = geometry
-    // })
-    // .catch(err => console.log(err))
 
     const { lat, lng } = response.data.results[0].geometry.location
     const geometry = {
         type: 'Point',
         coordinates: [lng, lat]
     }
-    // console.log(this)
     this._update.restaurantAddress.geometry = geometry
-
     console.log(response.data.results[0].geometry)
-    // const geodata = await geocoder.forwardGeocode({
-    //     query: `${address.street}, ${address.city}, ${address.state}, ${address.country}, ${address.zip}`,
-    //     limit: 1
-    // }).send()
-
-    // this._update.restaurantAddress.geometry = geodata.body.features[0].geometry
 })
 
 const Restaurant = mongoose.model('Restaurant', restaurantSchema)
