@@ -1,0 +1,111 @@
+<% layout('layouts/boilerplate') %>
+
+    <div class="bg-slate-800 min-h-screen">
+        <div class="max-w-max mx-auto md:py-7 py-4">
+            <form class="p-7 rounded-lg bg-white max-w-[40rem] mx-2" action="/receivers/<%= receiver._id %>/edit" method="POST" enctype="multipart/form-data">
+                <span class="block w-full text-2xl font-bold mb-5">Register Your Organization</span>
+                <div class="mb-4">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 " for="name">
+                            Organization Name <span  style="color:red"> *</span>
+                        </label>
+                    <input class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="name" type="text" name="receiverName" placeholder="Annapurna Foundation" value="<%= receiver.receiverName%>">
+                </div>
+
+                <div class="mb-4">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 " for="email">
+                        Email <span  style="color:red"> *</span>
+                    </label>
+                    <input class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="email" type="email" name="receiverContactDetails[email]" placeholder="restaurant-name@gmail.com" value="<%= receiver.receiverContactDetails.email %>">
+                </div>
+                <div class="mb-4">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 " for="regno">
+                        Registration Number <span  style="color:red"> *</span>
+                    </label>
+                    <input class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="regno" type="text" name="receiverRegistrationNo" placeholder="R08300VN2022GKW019769" value="<%= receiver.receiverRegistrationNo %>">
+                </div>
+                <div class="mb-4">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 " for="regno">
+                        Website Link 
+                    </label>
+                    <input class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="regno" type="text" name="receiverWebsite" placeholder="https://annapurna.com" value="<%= receiver.receiverWebsite %>">
+                </div>
+
+                <div class="md:mb-4 flex flex-wrap md:gap-4">
+                    <div class="mb-4 md:mb-0 w-full md:w-1/3 md:flex-grow">
+                        <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 ">Contact Number 1 <span  style="color:red"> *</span></label>
+                        <input type="text" class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="phone" name="receiverContactDetails[contact1]" placeholder="911234567890" value="<%= receiver.receiverContactDetails.contact1 %>">
+                    </div>
+                    <div class="mb-4 md:mb-0 w-full md:w-1/3 md:flex-grow">
+                        <label for="mobile" class="block mb-2 text-sm font-medium text-gray-900 ">Contact Number 2</label>
+                        <input type="text" class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="mobile" name="receiverContactDetails[contact2]" placeholder="911234567890" value="<%= receiver.receiverContactDetails.contact2 %>">
+                    </div>
+                </div>
+
+                <div class="mb-2">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 " for="area-of-work">
+                         Please Specify Your Goal and Mission
+                        <span  style="color:red"> *</span> 
+                        <!-- <div class="relative inline-block group border-[1px] border-b-black border-x-transparent border-t-transparent border-dotted"><i class="fas fa-info-circle"></i>
+                            <span class="shadow-lg capitalize hidden min-w-max bg-slate-800 text-white text-center py-[5px] px-[10px] absolute -top-1 left-6 group-hover:block rounded-md after:content-[''] after:absolute after:top-[85%] after:right-full after:-mt-4 after:border-[5px] after:border-solid after:border-y-transparent after:border-r-slate-800 after:border-l-transparent">Use comma separated values</span>
+                        </div> -->
+                    </label>
+                    <!-- <span class="block mb-2 text-sm text-gray-500"> Enter comma separated values </span> -->
+
+                    <textarea class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" oninput="autoAdjustMissionArea()" id="mission" name="receiverDescription" type="text" placeholder="Empowering communities for a better tomorrow."><%= receiver.receiverDescription %></textarea>
+                </div>
+
+                <div class="mb-2">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 " for="area-of-work">
+                        Areas of Work <span  style="color:red"> *</span>
+                        <div class="relative inline-block group border-[1px] border-b-black border-x-transparent border-t-transparent border-dotted"><i class="fas fa-info-circle"></i>
+                            <span class="shadow-lg capitalize hidden min-w-max bg-slate-800 text-white text-center py-[5px] px-[10px] absolute -top-1 left-6 group-hover:block rounded-md after:content-[''] after:absolute after:top-[85%] after:right-full after:-mt-4 after:border-[5px] after:border-solid after:border-y-transparent after:border-r-slate-800 after:border-l-transparent">Use comma separated values</span>
+                        </div>
+                    </label>
+                    <!-- <span class="block mb-2 text-sm text-gray-500"> Enter comma separated values </span> -->
+
+                    <textarea class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" oninput="autoAdjustTextarea()" id="area-of-work" name="receiverAreaOfWork" type="text" placeholder="Child Education, Women Empowerment"><%= receiver.receiverAreaOfWork.join(',') %></textarea>
+                </div>
+
+                <span class="block mb-4 mt-2 text-md font-bold text-gray-900"> Location Details </span>
+                <div class="mb-4">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 " for="address-line-1">
+                        Address Line 1 <span  style="color:red"> *</span>
+                    </label>
+                    <input class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="address-line-1" name="receiverAddress[street]" type="text" placeholder="86, new sitaramdera" value="<%= receiver.receiverAddress.street %>">
+                </div>
+                <div class="md:mb-4 flex flex-wrap md:gap-4">
+                    <div class="mb-4 md:mb-0 w-full md:w-1/3 md:flex-grow">
+                        <label for="country" class="block mb-2 text-sm font-medium text-gray-900 ">Country <span  style="color:red"> *</span> </label>
+                        <input type="text" class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="country" name="receiverAddress[country]" placeholder="India" value="<%= receiver.receiverAddress.country%>">
+                    </div>
+                    <div class="mb-4 md:mb-0 w-full md:w-1/3 md:flex-grow">
+                        <label for="state" class="block mb-2 text-sm font-medium text-gray-900 ">State <span  style="color:red"> *</span> </label>
+                        <input type="text" class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="state" name="receiverAddress[state]" placeholder="Jharkhand" value="<%= receiver.receiverAddress.state %>">
+                    </div>
+                </div>
+                <div class="md:mb-4 flex flex-wrap md:gap-4">
+                    <div class="mb-4 md:mb-0 w-full md:w-1/3 md:flex-grow">
+                        <label for="city" class="block mb-2 text-sm font-medium text-gray-900 ">City <span  style="color:red"> *</span> </label>
+                        <input type="text" class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="city" name="receiverAddress[city]" placeholder="Jamshedpur" value="<%= receiver.receiverAddress.city %>">
+                    </div>
+
+                    <div class="mb-4 md:mb-0 w-full md:w-1/3 md:flex-grow">
+                        <label for="zip" class="block mb-2 text-sm font-medium text-gray-900 ">Zip Code <span  style="color:red"> *</span> </label>
+                        <input type="text" class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="zip" name="receiverAddress[zip]" placeholder="831009" value="<%= receiver.receiverAddress.zip %>">
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload a valid ID proof bearing the name of your organization <span  style="color:red"> *</span> </label>
+                    <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file" name="image">
+                </div>
+
+
+                <div class="mt-5 flex items-center justify-between w-100">
+                    <button class="bg-blue-500 w-full hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                            Update Details
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>

@@ -51,15 +51,25 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="grid grid-cols-1 gap-4 sm-micro:grid-cols-2 sm-micro:gap-2">
-                                <a href="" class="px-3 py-2 text-white text-center font-medium rounded-md bg-blue-600">Edit Details</a>
-                                <a href="" class="px-3 py-2 text-white text-center font-medium rounded-md bg-red-600">Delete Account</a>
-                            </div>
+
+                            <% if(user.email.toString() === receiver.username.toString()) { %>
+                                <div class="grid grid-cols-1 gap-4 sm-micro:grid-cols-2 sm-micro:gap-2">
+                                    <a href="/receivers/<%= receiver._id %>/edit" class="px-3 py-2 text-white text-center font-medium rounded-md bg-blue-600">Edit Details</a>
+                                    <form action="/receivers/<%= receiver._id %>?_method=DELETE" method="POST">
+                                        <button href="/receivers/<%= receiver._id %>" class="w-full px-3 py-2 text-white text-center font-medium rounded-md bg-red-600">Delete Account</button>
+                                    </form>
+                                </div>
+                                <% } %>
+
                         </div>
                     </div>
 
+                    <div class="bg-red-100">
+                        <img src="images/design 1 (1).svg" class="mx-auto w-20 md:w-32" alt="">
+                    </div>
+
                     <div class="grid p-3 my-2 grid-cols-1 md:grid-cols-2 md:gap-2">
-                        <div class="bg-gray-300 min-h-[4rem] flex items-center justify-center rounded-md md:col-start-1 md:col-span-1">
+                        <div class="bg-gray-200 md:bg-gradient-to-br md:from-amber-200 md:to-orange-300 min-h-[4rem] flex items-center justify-center rounded-md md:col-start-1 md:col-span-1">
                             <h2 class="text-2xl font-medium md:text-4xl">About Us</h2>
                         </div>
                         <div class="py-3 text-justify text-md md:col-start-2 md:col-span-1 md:text-lg md:py-0 md:ml-3">
@@ -73,10 +83,14 @@
                                 </p>
                             </div>
                             <div class="flex flex-row items-center justify-start">
-                                <a href="<%= receiver.idProofImg %>" class="max-w-max text-blue-700 text-bold text-md md:text-lg">Validation Document </a>
+                                <a href="<%= receiver.idProofImg.url %>" class="max-w-max text-blue-700 text-bold text-md md:text-lg">Validation Document </a>
                                 <img src="./public/images/frame.svg" class="w-8" alt="">
                             </div>
                         </div>
+                    </div>
+
+                    <div class="bg-red-100 mb-5">
+                        <img src="images/line.svg" class="mx-auto w-20 md:w-32" alt="">
                     </div>
 
                     <div class="flex flex-col gap-4 py-5">

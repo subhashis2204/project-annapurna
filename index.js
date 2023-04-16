@@ -67,6 +67,11 @@ passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser())
 passport.deserializeUser(User.deserializeUser());
 
+// app.use((req, res, next) => {
+//     console.log(req.body)
+
+//     next()
+// })
 
 app.use((req, res, next) => {
     res.locals.user = req.user || null
@@ -75,6 +80,11 @@ app.use((req, res, next) => {
     res.locals.error = req.flash('error')
     next()
 })
+
+// app.use((req, res, next) => {
+//     console.log()
+// })
+
 
 app.use((req, res, next) => {
     const originalUrl = req.originalUrl

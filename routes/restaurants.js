@@ -6,16 +6,11 @@ const ExpressError = require('../utils/ExpressError')
 const catchAsync = require('../utils/CatchAsync')
 const { restaurantSchema, restaurantUpdateSchema } = require('../schemas')
 const User = require('../models/User')
-const { isLoggedIn } = require('../middleware')
+const { isLoggedIn, isRestaurant } = require('../middleware')
 const OTP = require('../models/otp')
 const { sendVerifyEmail } = require('../email')
 const speakeasy = require('speakeasy');
-const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding')
 const axios = require('axios')
-
-
-const mapBoxToken = process.env.MAPBOX_TOKEN
-const geocoder = mbxGeocoding({ accessToken: mapBoxToken })
 
 const removeInvalidCredentialInsertion = async (req, res, user) => {
     if (user)
@@ -39,24 +34,18 @@ const sendOTP = async (id) => {
 }
 
 const validateRestaurant = (req, res, next) => {
-    // console.log(req.body)
     const { error } = restaurantSchema.validate(req.body)
     if (error) {
-        // console.log(error)
         const message = error.details.map(detail => detail.message).join(',')
-        // const message = 'there is some error here'
         throw new ExpressError(message, 400)
     } else {
         next()
     }
 }
 const validateRestaurantUpdate = (req, res, next) => {
-    // console.log(req.body)
     const { error } = restaurantUpdateSchema.validate(req.body)
     if (error) {
-        // console.log(error)
         const message = error.details.map(detail => detail.message).join(',')
-        // const message = 'there is some error here'
         throw new ExpressError(message, 400)
     } else {
         next()
@@ -84,13 +73,6 @@ router.post('/new', validateRestaurant, catchAsync(async (req, res) => {
         key: process.env.GOOGLEMAP_TOKEN
     }
     const response = await axios.get('https://maps.googleapis.com/maps/api/geocode/json', { params })
-
-    // const geodata = await geocoder.forwardGeocode({
-    //     query: `${address.street}, ${address.city}, ${address.state}, ${address.country}, ${address.zip}`,
-    //     limit: 1
-    // }).send()
-
-    // restaurant.restaurantAddress.geometry = geodata.body.features[0].geometry
 
     const { lat, lng } = response.data.results[0].geometry.location
     const geometry = {
@@ -132,7 +114,7 @@ router.get('/donating', catchAsync(async (req, res) => {
     const presentDate = new Date().toISOString().slice(0, 10);
     const donatingRestaurants = await Donor.find({ donating: true, date: new Date(presentDate).toISOString() }).populate({ path: 'restaurantId', select: 'restaurantName restaurantDescription' })
 
-    // console.log(donatingRestaurants)
+    console.log(donatingRestaurants)
     res.render('hotels/donating', { donatingRestaurants })
 }))
 
@@ -218,15 +200,15 @@ router.get('/:id', isLoggedIn, catchAsync(async (req, res) => {
     const presentDate = new Date().toISOString().slice(0, 10);
     const donations = await Donor.find({ restaurantId: restaurant._id }).sort({ date: -1 }).populate('donatedTo', 'receiverName')
 
-    const donationToday = await Donor.findOne({ restaurantId: id, date: presentDate }) || null
-    const fulfilled = donationToday ? donationToday.fulfilled : false
+    const donatingToday = await Donor.findOne({ restaurantId: id, date: presentDate }) || null
+    const fulfilled = donatingToday ? donatingToday.fulfilled : false
 
-    if (donationToday)
-        donationToday.otpGenerated = true
-    res.render('hotels/show', { restaurant, donations, donationToday, fulfilled })
+    if (donatingToday)
+        donatingToday.otpGenerated = true
+    res.render('hotels/show', { restaurant, donations, donatingToday, fulfilled })
 }))
 
-router.get('/:id/edit', catchAsync(async (req, res, next) => {
+router.get('/:id/edit', isLoggedIn, isRestaurant, catchAsync(async (req, res, next) => {
     const { id } = req.params
     const restaurant = await Restaurant.findById(id)
 
@@ -238,7 +220,7 @@ router.get('/:id/edit', catchAsync(async (req, res, next) => {
     res.render('hotels/edit', { restaurant })
 }))
 
-router.put('/:id/edit', validateRestaurantUpdate, catchAsync(async (req, res, next) => {
+router.put('/:id/edit', isLoggedIn, isRestaurant, validateRestaurantUpdate, catchAsync(async (req, res, next) => {
     const { id } = req.params
 
     await Restaurant.findByIdAndUpdate(id, { ...req.body }, { runValidators: true })
@@ -252,7 +234,7 @@ router.put('/:id/edit', validateRestaurantUpdate, catchAsync(async (req, res, ne
         })
 }))
 
-router.delete('/:id', catchAsync(async (req, res) => {
+router.delete('/:id', isLoggedIn, isRestaurant, catchAsync(async (req, res) => {
     const { id } = req.params
 
     const restaurant = await Restaurant.findByIdAndDelete(id)
@@ -270,29 +252,6 @@ router.delete('/:id', catchAsync(async (req, res) => {
     })
     req.flash('success', 'Deleted a Restaurant')
     res.redirect('/')
-
-    // await Restaurant.findByIdAndDelete(id)
-    //     .then(async restaurant => {
-    //         if (!restaurant) throw new Error('No restaurant Found')
-
-    //         await User.findOneAndDelete({ email: restaurant.username })
-    //             .then(() => {
-    //                 console.log('hello')
-    //                 req.logout(err => { if (err) console.log(err) })
-    //                 req.flash('success', 'Deleted a Restaurant')
-    //             })
-    //             .catch(async err => {
-    //                 console.log(err)
-    //                 req.flash('error', 'Could not delete Restaurant')
-    //                 await restaurant.save()
-    //                 throw err
-    //             })
-    //         res.redirect('/')
-    //     })
-    //     .catch(err => {
-    //         console.log(err)
-    //         res.redirect('/restaurants/' + id)
-    //     })
 }))
 
 module.exports = router

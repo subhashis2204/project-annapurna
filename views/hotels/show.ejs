@@ -51,7 +51,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <% if(role === 'donor') { %>
+                            <% if(user.email.toString() === restaurant.username.toString()) { %>
                                 <div class="grid grid-cols-1 gap-4 sm-micro:grid-cols-2 sm-micro:gap-2">
                                     <a href="/restaurants/<%= restaurant._id %>/edit" class="px-3 py-2 text-white text-center font-medium rounded-md bg-blue-600">Edit Details</a>
                                     <form action="/restaurants/<%= restaurant._id %>?_method=DELETE" method="POST">
@@ -96,99 +96,97 @@
                         </figure>
 
                         <div class="p-2 md:col-start-2 md:col-span-1 min-h-[20rem]">
-                            <% if(!donationToday) { %>
-                                <% if(role === 'receiver') { %>
-                                    <div class="p-2 w-full h-full col-start-1 col-span-1 md:col-start-2 md:col-span-1 flex flex-col justify-center items-center bg-white rounded-md">
-                                        <h1 class="text-xl p-2 text-center">This Restaurant is not Donating Currently</h1>
-                                    </div>
-                                    <% } else if(role === 'donor') { %>
-                                        <div class="w-full h-full col-start-1 col-span-1 md:col-start-2 md:col-span-1">
-                                            <div class="bg-white rounded-lg py-5 flex flex-col justify-around items-center w-full h-full gap-8 md:gap-4">
-                                                <h1 class="text-xl border-2 border-black py-2 px-3 shadow-lg rounded-lg bg-white">Want to donate ? </h1>
-                                                <form action="/restaurants/<%= restaurant._id %>/donate" method="POST" class="inline-block mx-auto">
-                                                    <button class="bg-blue-600 px-3 py-2 rounded-md text-white font-bold">Let's Donate</button>
+                            <% if(user.email.toString() === restaurant.username) { %>
+                                <% if(donatingToday) { %>
+                                    <% if(donatingToday.otpGenerated && !donatingToday.otpVerified) { %>
+                                        <div class="p-2 md:col-start-2 md:col-span-1">
+                                            <div class="flex flex-col bg-white h-full px-2 py-4 justify-center items-center gap-4 rounded-lg">
+                                                <p class="rounded-lg text-center text-xl p-2 max-w-max mx-auto">Thank you for donating food 😊</p>
+
+                                                <form action="/restaurants/<%= restaurant._id %>/verify" id="otp-form" method="POST">
+                                                    <div class="code-container flex flex-wrap gap-1 md:gap-2 mx-auto justify-center items-center">
+                                                        <input type="number" class="code h-9 w-9 sm-micro:w-12 sm-micro:h-12 text-center text-md md:text-2xl text-gray-700 rounded-md md:rounded-lg shadow focus:outline-none focus:border-black focus:ring-transparent focus:shadow-lg font-medium border-2 border-gray-500"
+                                                            placeholder="-" min="0" max="9" name="otp[0]" required>
+                                                        <input type="number" class="code h-9 w-9 sm-micro:w-12 sm-micro:h-12 text-center text-md md:text-2xl text-gray-700 rounded-md md:rounded-lg shadow focus:outline-none focus:border-black focus:ring-transparent focus:shadow-lg font-medium border-2 border-gray-500"
+                                                            placeholder="-" min="0" max="9" name="otp[1]" required>
+                                                        <input type="number" class="code h-9 w-9 sm-micro:w-12 sm-micro:h-12 text-center text-md md:text-2xl text-gray-700 rounded-md md:rounded-lg shadow focus:outline-none focus:border-black focus:ring-transparent focus:shadow-lg font-medium border-2 border-gray-500"
+                                                            placeholder="-" min="0" max="9" name="otp[2]" required>
+                                                        <input type="number" class="code h-9 w-9 sm-micro:w-12 sm-micro:h-12 text-center text-md md:text-2xl text-gray-700 rounded-md md:rounded-lg shadow focus:outline-none focus:border-black focus:ring-transparent focus:shadow-lg font-medium border-2 border-gray-500"
+                                                            placeholder="-" min="0" max="9" name="otp[3]" required>
+                                                        <input type="number" class="code h-9 w-9 sm-micro:w-12 sm-micro:h-12 text-center text-md md:text-2xl text-gray-700 rounded-md md:rounded-lg shadow focus:outline-none focus:border-black focus:ring-transparent focus:shadow-lg font-medium border-2 border-gray-500"
+                                                            placeholder="-" min="0" max="9" name="otp[4]" required>
+                                                        <input type="number" class="code h-9 w-9 sm-micro:w-12 sm-micro:h-12 text-center text-md md:text-2xl text-gray-700 rounded-md md:rounded-lg shadow focus:outline-none focus:border-black focus:ring-transparent focus:shadow-lg font-medium border-2 border-gray-500"
+                                                            placeholder="-" min="0" max="9" name="otp[5]" required>
+                                                    </div>
+                                                    <div class="mt-5 w-full flex justify-center items-center">
+                                                        <button href="" class="mx-auto bg-blue-600 px-3 py-2 rounded-md text-white font-bold">Verify OTP</button>
+                                                    </div>
                                                 </form>
+
+                                                <div class="flex flex-col justify-center items-center gap-2">
+                                                    <p class="text-sm text-gray-500 text-center">If you feel that there is some problem you can cancel the donation</p>
+                                                    <form action="/restaurants/<%= restaurant._id %>/cancelDonate" method="POST">
+                                                        <button class="max-w-max bg-red-600 font-bold py-2 px-3 rounded-md text-white" type="submit">Cancel Donation</button>
+                                                    </form>
+                                                </div>
 
                                             </div>
                                         </div>
-                                        <% } %>
+                                        <% } else if(donatingToday.otpGenerated && donatingToday.otpVerified) { %>
+                                            <div class="p-2 md:col-start-2 md:col-span-1 h-full">
+                                                <div class="flex flex-col bg-white h-full px-2 py-4 justify-around items-center gap-4 rounded-lg">
+                                                    <p class="rounded-lg text-center text-xl border-2 border-slate-400 shadow-md p-2 max-w-max mx-auto">Thank you for donating food 😊</p>
+                                                    <div class="flex flex-col justify-center items-center gap-2">
+                                                        <p class="text-sm text-gray-500 text-center">If you feel that there is some problem you can cancel the donation</p>
+                                                        <form action="/restaurants/<%= restaurant._id %>/cancelDonate" method="POST">
+                                                            <button class="max-w-max bg-red-600 font-bold py-2 px-3 rounded-md text-white" type="submit">Cancel Donation</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <% } %>
-                                                <% if(donationToday) { %>
-                                                    <% if(role === 'donor') { %>
-                                                        <% if(donationToday && donationToday.otpGenerated && !donationToday.otpVerified) { %>
-                                                            <div class="p-2 md:col-start-2 md:col-span-1">
-                                                                <div class="flex flex-col bg-white h-full px-2 py-4 justify-center items-center gap-4 rounded-lg">
-                                                                    <p class="rounded-lg text-center text-xl p-2 max-w-max mx-auto">Thank you for donating food 😊</p>
-
-                                                                    <form action="/restaurants/<%= restaurant._id %>/verify" id="otp-form" method="POST">
-                                                                        <div class="code-container flex flex-wrap gap-1 md:gap-2 mx-auto justify-center items-center">
-                                                                            <input type="number" class="code h-9 w-9 sm-micro:w-12 sm-micro:h-12 text-center text-md md:text-2xl text-gray-700 rounded-md md:rounded-lg shadow focus:outline-none focus:border-black focus:ring-transparent focus:shadow-lg font-medium border-2 border-gray-500"
-                                                                                placeholder="-" min="0" max="9" name="otp[0]" required>
-                                                                            <input type="number" class="code h-9 w-9 sm-micro:w-12 sm-micro:h-12 text-center text-md md:text-2xl text-gray-700 rounded-md md:rounded-lg shadow focus:outline-none focus:border-black focus:ring-transparent focus:shadow-lg font-medium border-2 border-gray-500"
-                                                                                placeholder="-" min="0" max="9" name="otp[1]" required>
-                                                                            <input type="number" class="code h-9 w-9 sm-micro:w-12 sm-micro:h-12 text-center text-md md:text-2xl text-gray-700 rounded-md md:rounded-lg shadow focus:outline-none focus:border-black focus:ring-transparent focus:shadow-lg font-medium border-2 border-gray-500"
-                                                                                placeholder="-" min="0" max="9" name="otp[2]" required>
-                                                                            <input type="number" class="code h-9 w-9 sm-micro:w-12 sm-micro:h-12 text-center text-md md:text-2xl text-gray-700 rounded-md md:rounded-lg shadow focus:outline-none focus:border-black focus:ring-transparent focus:shadow-lg font-medium border-2 border-gray-500"
-                                                                                placeholder="-" min="0" max="9" name="otp[3]" required>
-                                                                            <input type="number" class="code h-9 w-9 sm-micro:w-12 sm-micro:h-12 text-center text-md md:text-2xl text-gray-700 rounded-md md:rounded-lg shadow focus:outline-none focus:border-black focus:ring-transparent focus:shadow-lg font-medium border-2 border-gray-500"
-                                                                                placeholder="-" min="0" max="9" name="otp[4]" required>
-                                                                            <input type="number" class="code h-9 w-9 sm-micro:w-12 sm-micro:h-12 text-center text-md md:text-2xl text-gray-700 rounded-md md:rounded-lg shadow focus:outline-none focus:border-black focus:ring-transparent focus:shadow-lg font-medium border-2 border-gray-500"
-                                                                                placeholder="-" min="0" max="9" name="otp[5]" required>
+                                                <% } else { %>
+                                                    <div class="w-full h-full col-start-1 col-span-1 md:col-start-2 md:col-span-1">
+                                                        <div class="bg-white rounded-lg py-5 flex flex-col justify-around items-center w-full h-full gap-8 md:gap-4">
+                                                            <h1 class="text-xl border-2 border-black py-2 px-3 shadow-lg rounded-lg bg-white">Want to donate ? </h1>
+                                                            <form action="/restaurants/<%= restaurant._id %>/donate" method="POST" class="inline-block mx-auto">
+                                                                <button class="bg-blue-600 px-3 py-2 rounded-md text-white font-bold">Let's Donate</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                    <% } %>
+                                                        <% } else { %>
+                                                            <% if(donatingToday) { %>
+                                                                <% if(fulfilled) { %>
+                                                                    <div class="p-2 w-full h-full col-start-1 col-span-1 md:col-start-2 md:col-span-1">
+                                                                        <div class="rounded-lg bg-white py-5 flex flex-col justify-around items-center w-full h-full gap-8 md:gap-0">
+                                                                            <h1 class="text-xl border-2 border-black py-2 px-3 shadow-lg rounded-lg">This donating has been claimed</h1>
                                                                         </div>
-
-                                                                        <div class="mt-5 w-full flex justify-center items-center">
-                                                                            <button href="" class="mx-auto bg-blue-600 px-3 py-2 rounded-md text-white font-bold">Verify OTP</button>
-                                                                        </div>
-
-                                                                    </form>
-
-                                                                    <div class="flex flex-col justify-center items-center gap-2">
-                                                                        <p class="text-sm text-gray-500 text-center">If you feel that there is some problem you can cancel the donation</p>
-                                                                        <form action="/restaurants/<%= restaurant._id %>/cancelDonate" method="POST">
-                                                                            <button class="max-w-max bg-red-600 font-bold py-2 px-3 rounded-md text-white" type="submit">Cancel Donation</button>
-                                                                        </form>
                                                                     </div>
-
-                                                                </div>
-                                                            </div>
-                                                            <% } else if(donationToday && donationToday.otpGenerated && donationToday.otpVerified) { %>
-
-                                                                <div class="p-2 md:col-start-2 md:col-span-1 h-full">
-                                                                    <div class="flex flex-col bg-white h-full px-2 py-4 justify-around items-center gap-4 rounded-lg">
-                                                                        <p class="rounded-lg text-center text-xl border-2 border-slate-400 shadow-md p-2 max-w-max mx-auto">Thank you for donating food 😊</p>
-
-                                                                        <div class="flex flex-col justify-center items-center gap-2">
-                                                                            <p class="text-sm text-gray-500 text-center">If you feel that there is some problem you can cancel the donation</p>
-
-                                                                            <form action="/restaurants/<%= restaurant._id %>/cancelDonate" method="POST">
-                                                                                <button class="max-w-max bg-red-600 font-bold py-2 px-3 rounded-md text-white" type="submit">Cancel Donation</button>
-                                                                            </form>
-
-                                                                        </div>
-
-                                                                    </div>
-                                                                </div>
-                                                                <% } %>
-                                                                    <% } %>
-                                                                        <% if (role === 'receiver') { %>
-                                                                            <% if(fulfilled) { %>
+                                                                    <% } else { %>
+                                                                        <% if(role === 'receiver') { %>
+                                                                            <div class="p-2 w-full h-full col-start-1 col-span-1 md:col-start-2 md:col-span-1">
+                                                                                <div class="rounded-lg bg-white py-5 flex flex-col justify-around items-center w-full h-full gap-8 md:gap-0">
+                                                                                    <h1 class="text-xl border-2 border-black py-2 px-3 shadow-lg rounded-lg">This Restaurant is donating </h1>
+                                                                                    <form action="/restaurants/<%= restaurant._id %>/claimed" method="POST">
+                                                                                        <button class="bg-blue-600 px-3 py-2 rounded-md text-white font-bold">Claim Donation</button>
+                                                                                    </form>
+                                                                                </div>
+                                                                            </div>
+                                                                            <% } else if (role === 'donor') { %>
                                                                                 <div class="p-2 w-full h-full col-start-1 col-span-1 md:col-start-2 md:col-span-1">
                                                                                     <div class="rounded-lg bg-white py-5 flex flex-col justify-around items-center w-full h-full gap-8 md:gap-0">
-                                                                                        <h1 class="text-xl border-2 border-black py-2 px-3 shadow-lg rounded-lg">This donating has been claimed</h1>
+                                                                                        <h1 class="text-xl border-2 border-black py-2 px-3 shadow-lg rounded-lg">This Restaurant is donating </h1>
                                                                                     </div>
                                                                                 </div>
-                                                                                <% } else if(!fulfilled) { %>
-                                                                                    <div class="p-2 w-full h-full col-start-1 col-span-1 md:col-start-2 md:col-span-1">
-                                                                                        <div class="rounded-lg bg-white py-5 flex flex-col justify-around items-center w-full h-full gap-8 md:gap-0">
-                                                                                            <h1 class="text-xl border-2 border-black py-2 px-3 shadow-lg rounded-lg">This Restaurant is donating </h1>
-                                                                                            <form action="/restaurants/<%= restaurant._id %>/claimed" method="POST">
-                                                                                                <button class="bg-blue-600 px-3 py-2 rounded-md text-white font-bold">Claim Donation</button>
-                                                                                            </form>
-                                                                                        </div>
-                                                                                    </div>
+                                                                                <% } %>
                                                                                     <% } %>
-                                                                                        <% } %>
+                                                                                        <% } else { %>
+                                                                                            <div class="p-2 w-full h-full col-start-1 col-span-1 md:col-start-2 md:col-span-1 flex flex-col justify-center items-center bg-white rounded-md">
+                                                                                                <h1 class="text-xl p-2 text-center">This Restaurant is not Donating Currently</h1>
+                                                                                            </div>
                                                                                             <% } %>
+                                                                                                <% } %>
 
                         </div>
                     </div>
@@ -207,10 +205,10 @@
                                 <tbody class="divide-y divide-x divide-gray-200">
                                     <% for(let donation of donations) { %>
                                         <tr class="bg-white border-b border-gray-200">
-                                            <td class="pl-12 py-3 whitespace-nowrap text-gray-800">
+                                            <td class="py-3 whitespace-nowrap text-gray-800 text-center">
                                                 <%= new Date(donation.date).toDateString() %>
                                             </td>
-                                            <td class="px-4 py-3 whitespace-nowrap">
+                                            <td class="px-4 py-3 whitespace-nowrap text-center">
                                                 <% if(donation.fulfilled) { %>
                                                     <span class="px-2 py-1 rounded-md text-green-600 bg-green-200 text-bold">Claimed</span>
                                                     <% } else { %>
@@ -219,8 +217,11 @@
                                             </td>
                                             <td class="px-4 py-3 whitespace-nowrap text-center">
                                                 <% if(donation.donatedTo) { %>
-                                                    <%= donation.donatedTo.receiverName %>
-                                                        <% } %>
+                                                    <a href="/receivers/<%= donation.donatedTo._id %>">
+                                                        <% console.log(donation) %>
+                                                            <%= donation.donatedTo.receiverName %>
+                                                    </a>
+                                                    <% } %>
                                             </td>
                                         </tr>
                                         <% } %>

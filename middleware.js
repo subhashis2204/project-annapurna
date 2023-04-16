@@ -1,3 +1,6 @@
+const Receiver = require("./models/Receiver")
+const Restaurant = require("./models/Restaurant")
+
 module.exports.isLoggedIn = (req, res, next) => {
     if (!req.isAuthenticated()) {
         req.flash('error', 'Please Login Before Claiming Donation')
@@ -5,17 +8,23 @@ module.exports.isLoggedIn = (req, res, next) => {
     }
     next()
 }
-module.exports.isReceiver = (req, res, next) => {
-    if (req.user.role !== 'receiver') {
-        req.flash('error', 'Restaurants Are Not Allowed')
-        return res.redirect('/')
+
+module.exports.isReceiver = async (req, res, next) => {
+    const { id } = req.params
+    const receiver = await Receiver.findById(id)
+    if (req.user.email !== receiver.username) {
+        req.flash('error', 'You do not have required permissions')
+        return res.redirect('/receivers/' + id)
     }
     next()
 }
-module.exports.isDonor = (req, res, next) => {
-    if (req.user.role !== 'donor') {
-        req.flash('error', 'Receivers Are Not Allowed')
-        return res.redirect('/')
+
+module.exports.isRestaurant = async (req, res, next) => {
+    const { id } = req.params
+    const restaurant = await Restaurant.findById(id)
+    if (req.user.email !== restaurant.username) {
+        req.flash('error', 'You do not have required permissions')
+        return res.redirect('/restaurants/' + id)
     }
     next()
 }
