@@ -24,9 +24,9 @@ mongoose.set('strictQuery', false);
 let db_url = ''
 
 // if (process.env.NODE_ENV == "development")
-db_url = process.env.MONGODB_URL
+// db_url = process.env.MONGODB_URL
 // else
-// db_url = 'mongodb://localhost:27017/restaurants'
+db_url = 'mongodb://localhost:27017/restaurants'
 
 mongoose.connect(db_url)
     .then(() => {
@@ -74,6 +74,7 @@ passport.deserializeUser(User.deserializeUser());
 // })
 
 app.use((req, res, next) => {
+    console.log(req.user)
     res.locals.user = req.user || null
     res.locals.role = req.user && req.user.role ? req.user.role : null;
     res.locals.success = req.flash('success')

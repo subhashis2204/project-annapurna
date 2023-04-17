@@ -62,35 +62,23 @@ router.post('/new', upload.single('image'), validateReceiver, catchAsync(async (
     }
     receiver.receiverAddress.geometry = geometry
 
-    const newuser = new User({ email: receiverEmail, role: 'receiver', documentReferenceId: receiver._id })
+    const user = new User({ email: receiverEmail, role: 'receiver', documentReferenceId: receiver._id })
 
-    await User.register(newuser, password)
-        .then(async user => {
+    try {
+        const newuser = await User.register(user, password)
+        const newReceiver = await receiver.save()
 
-            await receiver.save()
-                .then(receiver => {
-                    req.flash('success', 'Successfully Created Your Profile')
-                    res.redirect('/receivers/' + receiver._id)
-                })
-                .catch(async err => {
-                    delete req.user
-                    await removeInvalidCredentialInsertion(req, res, user)
-                    throw err
-                })
+        req.login(newuser, function (err) {
+            if (err) { return next(err) }
 
-            req.login(user, (err) => {
-                if (err) {
-                    // req.flash('error', 'Failed to Log You In')
-                    res.redirect('/auth/login')
-                }
-                // req.flash('success', 'Successfully Logged You In')
-            })
+            req.flash('success', 'Created a restaurant successfully')
+            return res.redirect('/receivers/' + newReceiver._id)
         })
-        .catch(err => {
-            req.flash('error', 'Failed to Create Your Profile')
-            res.redirect('/receivers/new')
-            throw err
-        })
+
+    } catch (err) {
+        req.flash('error', 'Receiver could not be registered')
+        return res.redirect('/receivers/new')
+    }
 }))
 
 router.get('/:id', isLoggedIn, catchAsync(async (req, res) => {

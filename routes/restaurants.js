@@ -65,7 +65,7 @@ router.post('/new', validateRestaurant, catchAsync(async (req, res) => {
     const { restaurantContactDetails, password } = req.body
     const restaurantEmail = restaurantContactDetails.email
     const restaurant = new Restaurant({ username: restaurantEmail, ...req.body })
-    const newcredential = new User({ email: restaurantEmail, documentReferenceId: restaurant._id, role: 'donor' })
+    const user = new User({ email: restaurantEmail, documentReferenceId: restaurant._id, role: 'donor' })
     const address = req.body.restaurantAddress
 
     const params = {
@@ -81,82 +81,21 @@ router.post('/new', validateRestaurant, catchAsync(async (req, res) => {
     }
     restaurant.restaurantAddress.geometry = geometry
 
-    await User.register(newcredential, password)
-        .then(async user => {
+    try {
+        const newuser = await User.register(user, password)
+        const newRestaurant = await restaurant.save()
 
-            await restaurant.save()
-                .then(restaurant => {
-                    req.flash('success', 'Successfully Created Your Profile')
-                    res.redirect(`/restaurants/${restaurant._id}`)
-                })
-                .catch(async err => {
-                    delete req.user
-                    await removeInvalidCredentialInsertion(req, res, user)
-                    throw err
-                })
+        req.login(newuser, function (err) {
+            if (err) { return next(err) }
 
-            req.login(user, (err) => {
-                if (err) {
-                    // req.flash('error', 'Failed to Log You In')
-                    res.redirect('/auth/login')
-                }
-                // req.flash('success', 'Successfully Logged You In')
-            })
+            req.flash('success', 'Created a restaurant successfully')
+            return res.redirect('/restaurants/' + newRestaurant._id)
         })
-        .catch(err => {
-            req.flash('error', 'Failed to Create Your Profile')
-            res.redirect('/restaurants/new')
-            throw err
-        })
-    // await User.register(newcredential, password)
 
-    // await User.register(newcredential, password)
-    //     .then(async user => {
-    //         await restaurant.save()
-    //             .then(async restaurant => {
-    //                 req.flash('success', 'Successfully Created Your Profile')
-    //                 res.redirect(`/restaurants/${restaurant._id}`)
-
-    //                 await req.login(user, (err) => {
-    //                     if (err) {
-    //                         res.redirect('/auth/login')
-    //                     }
-    //                 })
-    //             })
-    //             .catch(async err => {
-    //                 delete req.user
-    //                 await removeInvalidCredentialInsertion(req, res, user)
-    //                 throw err
-    //             })
-    //     })
-    //     .catch(err => {
-    //         req.flash('error', 'Failed to Create Your Profile')
-    //         res.redirect('/restaurants/new')
-    //         throw err
-    //     })
-
-    // const user = User.register(newcredential, password)
-    // if (user) {
-    //     const newRestaurant = await restaurant.save()
-    //     if (newRestaurant) {
-    //         await req.login(user, (err) => {
-    //             if (err) {
-    //                 res.redirect('/auth/login')
-    //             }
-    //         })
-
-    //         req.flash('success', 'Successfully Created Your Profile')
-    //         res.redirect(`/restaurants/${newRestaurant._id}`)
-    //     } else {
-    //         delete req.user
-    //         await removeInvalidCredentialInsertion(req, res, user)
-    //         throw err
-    //     }
-    // } else {
-    //     req.flash('error', 'Failed to Create Your Profile')
-    //     res.redirect('/restaurants/new')
-    //     throw err
-    // }
+    } catch (err) {
+        req.flash('error', 'Restaurant could not be registered')
+        return res.redirect('/restaurants/new')
+    }
 }))
 
 router.get('/donating', catchAsync(async (req, res) => {
