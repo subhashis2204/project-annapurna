@@ -5,23 +5,20 @@ window.addEventListener("load", function () {
 });
 
 codes.forEach((code, idx) => {
-    code.addEventListener('keydown', (e) => {
-        if (e.key >= 0 && e.key <= 9) {
-            codes[idx].value = '';
-        } else if (e.key === 'Backspace') {
-            codes[idx].value = '';
-            setTimeout(() => codes[idx - 1].focus(), 10);
-        } else {
-            e.preventDefault();
+    code.addEventListener('input', (e) => {
+        const nextIdx = idx + 1;
+        if (nextIdx < codes.length) {
+            codes[nextIdx].focus();
         }
     });
 
-    code.addEventListener('keyup', (e) => {
-        if (e.key >= 0 && e.key <= 9) {
-            setTimeout(() => codes[idx + 1].focus(), 10);
+    code.addEventListener('keydown', (e) => {
+        if (e.key === 'Backspace') {
+            setTimeout(() => codes[idx - 1].focus(), 10);
         }
     });
 });
+
 // const form = document.getElementById('otp-form');
 // form.addEventListener('submit', (event) => {
 //     event.preventDefault(); // Prevent the default form submission behavior

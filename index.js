@@ -86,7 +86,6 @@ app.use((req, res, next) => {
 //     console.log()
 // })
 
-
 app.use((req, res, next) => {
     const originalUrl = req.originalUrl
     if (!originalUrl.startsWith('/auth/') || !originalUrl === '/') {
@@ -94,7 +93,6 @@ app.use((req, res, next) => {
     }
     next()
 })
-
 
 restaurantRouter.use(express.static(path.join(__dirname, 'public')))
 authRouter.use(express.static(path.join(__dirname, 'public')))
