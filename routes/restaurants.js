@@ -156,7 +156,7 @@ router.post('/:id/verify', catchAsync(async (req, res) => {
 
     if (!otp) {
         req.flash('error', 'This donation has not been claimed')
-        res.redirect('/restaurants/' + id)
+        return res.redirect('/restaurants/' + id)
     }
 
     const receivedOtp = req.body.otp.join('')
