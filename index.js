@@ -112,7 +112,7 @@ app.get('/contacts', (req, res) => {
 
 app.post('/contacts', CatchAsync(async (req, res) => {
     const { name, email, message } = req.body
-    await sendMessageNodemailer('the.annapurna.project@outlook.com', 'subhashispaul2204@gmail.com', email, name, message)
+    await sendMessage(process.env.SENDER_MAIL, process.env.CONTACTS_EMAIL, email, name, message)
         .then(() => {
             console.log('Send Successfully')
             req.flash('success', 'Message has been delivered successfully')
