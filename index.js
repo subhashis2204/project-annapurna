@@ -24,9 +24,9 @@ mongoose.set('strictQuery', false);
 let db_url = ''
 
 // if (process.env.NODE_ENV == "development")
-db_url = process.env.MONGODB_URL
+// db_url = process.env.MONGODB_URL
 // else
-// db_url = 'mongodb://localhost:27017/restaurants'
+db_url = 'mongodb://localhost:27017/restaurants'
 
 mongoose.connect(db_url)
     .then(() => {
@@ -74,7 +74,7 @@ passport.deserializeUser(User.deserializeUser());
 // })
 
 app.use((req, res, next) => {
-    console.log(req.user)
+    // console.log(req.user)
     res.locals.user = req.user || null
     res.locals.role = req.user && req.user.role ? req.user.role : null;
     res.locals.success = req.flash('success')
@@ -98,7 +98,7 @@ restaurantRouter.use(express.static(path.join(__dirname, 'public')))
 authRouter.use(express.static(path.join(__dirname, 'public')))
 receiverRouter.use(express.static(path.join(__dirname, 'public')))
 
-app.get('/', async (req, res) => {
+app.get('/', async(req, res) => {
     res.render('home')
 })
 
@@ -110,7 +110,7 @@ app.get('/contacts', (req, res) => {
     res.render('contacts')
 })
 
-app.post('/contacts', CatchAsync(async (req, res) => {
+app.post('/contacts', CatchAsync(async(req, res) => {
     const { name, email, message } = req.body
     await sendMessage(process.env.SENDER_MAIL, process.env.CONTACTS_EMAIL, email, name, message)
         .then(() => {
@@ -137,7 +137,7 @@ app.use((err, req, res, next) => {
     const { statusCode = 500 } = err
     if (!err.message) err.message = 'Oh No ! Something went wrong'
     console.log(err)
-    // res.render('error')
+        // res.render('error')
     res.status(statusCode).send(err)
 })
 app.listen(port, () => {

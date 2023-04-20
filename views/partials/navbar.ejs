@@ -12,24 +12,20 @@
             </svg>
         </button>
         <div class="hidden flex-col gap-1 sm:flex-row sm:block w-full p-2 mt-2 sm:my-0 sm:w-auto bg-gray-50 sm:bg-transparent rounded-lg" id="nav-content">
-            <a href="/" class="block sm:inline-block font-medium text-md sm:text-sm text-gray-700 px-3 py-2 rounded-md hover:bg-gray-100 hover:text-gray-800 sm:mx-2 sm:my-0">Home</a>
-            <a href="/about" class="block sm:inline-block font-medium text-md sm:text-sm text-gray-700 px-3 py-2 rounded-md hover:bg-gray-100 hover:text-gray-800 sm:mx-2 sm:my-0">About</a>
-            <a href="/contacts" class="block sm:inline-block font-medium text-md sm:text-sm text-gray-700 px-3 py-2 rounded-md hover:bg-gray-100 hover:text-gray-800 sm:mx-2 sm:my-0">Contacts</a>
+            <a href="/" class="block sm:inline-block font-medium text-md sm:text-sm text-gray-700 px-3 py-2 rounded-md hover:bg-gray-100 hover:text-gray-800 sm:mx-1 md:mx-2 sm:my-0">Home</a>
+            <a href="/about" class="block sm:inline-block font-medium text-md sm:text-sm text-gray-700 px-3 py-2 rounded-md hover:bg-gray-100 hover:text-gray-800 sm:mx-1 md:mx-2 sm:my-0">About</a>
+            <a href="/contacts" class="block sm:inline-block font-medium text-md sm:text-sm text-gray-700 px-3 py-2 rounded-md hover:bg-gray-100 hover:text-gray-800 sm:mx-1 md:mx-2 sm:my-0">Contacts</a>
 
             <% if(user && role == 'receiver') {%>
-                <a href="/receivers/<%= user.documentReferenceId %>" class="block sm:inline-block font-medium text-md sm:text-sm text-gray-700 px-3 py-2 rounded-md hover:bg-gray-100 hover:text-gray-800 sm:mx-2 sm:my-0">My Profile</a>
+                <a href="/receivers/<%= user.documentReferenceId %>" class="block sm:inline-block font-medium text-md sm:text-sm text-gray-700 px-3 py-2 rounded-md hover:bg-gray-100 hover:text-gray-800 sm:mx-1 md:mx-2 sm:my-0">My Profile</a>
                 <% } else if(user && role == 'donor') { %>
-                    <a href="/restaurants/<%= user.documentReferenceId %>" class="block sm:inline-block font-medium text-md sm:text-sm text-gray-700 px-3 py-2 rounded-md hover:bg-gray-100 hover:text-gray-800 sm:mx-2 sm:my-0">My Profile</a>
+                    <a href="/restaurants/<%= user.documentReferenceId %>" class="block sm:inline-block font-medium text-md sm:text-sm text-gray-700 px-3 py-2 rounded-md hover:bg-gray-100 hover:text-gray-800 sm:mx-1 md:mx-2 sm:my-0">My Profile</a>
                     <% } %>
-
-                        <% if(role === 'receiver') { %>
-                            <a href="/restaurants" class="block sm:inline-block font-medium text-md sm:text-sm text-gray-700 px-3 py-2 rounded-md hover:bg-gray-100 hover:text-gray-800 sm:mx-2 sm:my-0">Restaurants</a>
-                            <% } %>
-                                <% if(user) { %>
-                                    <a href="/auth/logout" class="block sm:hidden font-medium text-md sm:text-sm text-gray-700 px-3 py-2 rounded-md hover:bg-gray-100 hover:text-gray-800 sm:mx-2 sm:my-0">Sign Out</a>
-                                    <% } else { %>
-                                        <a href="/auth/login" class="block sm:hidden font-medium text-md sm:text-sm text-gray-700 px-3 py-2 rounded-md hover:bg-gray-100 hover:text-gray-800 sm:mx-2 sm:my-0">Sign In</a>
-                                        <% } %>
+                        <% if(user) { %>
+                            <a href="/auth/logout" class="block sm:hidden font-medium text-md sm:text-sm text-gray-700 px-3 py-2 rounded-md hover:bg-gray-100 hover:text-gray-800 sm:mx-1 md:mx-2 sm:my-0">Sign Out</a>
+                            <% } else { %>
+                                <a href="/auth/login" class="block sm:hidden font-medium text-md sm:text-sm text-gray-700 px-3 py-2 rounded-md hover:bg-gray-100 hover:text-gray-800 sm:mx-1 md:mx-2 sm:my-0">Sign In</a>
+                                <% } %>
         </div>
         <% if(user) { %>
             <a href="/auth/logout" class="hidden sm:block">

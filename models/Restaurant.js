@@ -51,6 +51,7 @@ const restaurantSchema = new mongoose.Schema({
     restaurantDescription: String
 });
 
+restaurantSchema.index({ 'restaurantAddress.geometry': '2dsphere' });
 
 // restaurantSchema.pre('save', function (next) {
 //     // this.restaurantWebsite = null
@@ -60,7 +61,7 @@ const restaurantSchema = new mongoose.Schema({
 //     next(new Error('some error occured'))
 // })
 
-restaurantSchema.pre('findOneAndUpdate', async function () {
+restaurantSchema.pre('findOneAndUpdate', async function() {
     console.log(this._update)
     const address = this._update.restaurantAddress
 

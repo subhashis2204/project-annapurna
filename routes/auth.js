@@ -18,20 +18,20 @@ router.get('/login', (req, res) => {
     res.render('auth/login')
 })
 
-router.post('/login', setReturnUrl, passport.authenticate('local', { failureFlash: true, failureMessage: true, failureRedirect: '/auth/login' }), catchAsync(async (req, res) => {
+router.post('/login', passport.authenticate('local', { failureFlash: true, failureMessage: true, failureRedirect: '/auth/login' }), catchAsync(async(req, res) => {
 
-    const redirectUrl = res.locals.returnTo || '/'
-    console.log(redirectUrl)
-    const { email } = req.body
+    // const redirectUrl = res.locals.returnTo || '/'
+    // console.log(redirectUrl)
+    // const { email } = req.body
 
-    await User.findOne({ email })
-        .then(async (doc) => {
-            console.log(doc)
-            const Model = doc.role === 'donor' ? Restaurant : Receiver
+    // await User.findOne({ email })
+    //     .then(async (doc) => {
+    //         console.log(doc)
+    //         const Model = doc.role === 'donor' ? Restaurant : Receiver
 
-            const foundObject = await Model.findOne({ username: doc.email })
-            console.log(foundObject)
-        })
+    //         const foundObject = await Model.findOne({ username: doc.email })
+    //         console.log(foundObject)
+    //     })
 
     // delete req.redirectTo
     // console.log(req)
@@ -39,14 +39,14 @@ router.post('/login', setReturnUrl, passport.authenticate('local', { failureFlas
     // console.log(req.user)
 
     req.flash('success', 'Logged in successfully')
-    res.redirect(redirectUrl)
+    res.redirect('/')
 }))
 
 router.get('/roles', (req, res) => {
     res.render('auth/roles')
 })
 
-router.get('/logout', catchAsync(async (req, res) => {
+router.get('/logout', catchAsync(async(req, res) => {
     req.logout(err => {
         if (err) return next(err)
         req.flash('success', 'logged out successfully')
