@@ -27,15 +27,10 @@ This is a food donation application that connects NGOs and restaurants. The purp
 Features 🚀
 
 - **Restaurant Donation:** Restaurants can donate surplus food to NGOs through the platform.
-- 
-- **NGO Partnership:** NGOs can receive food donations from restaurants and distribute them to people in need.
-- 
+- **NGO Partnership:** NGOs can receive food donations from restaurants and distribute them to people in need
 - **Google Geocoding:** Integration with Google Geocoding API for accurate location services.
-- 
-- **Email OTP Notifications:** Users receive One-Time Password (OTP) notifications via email for secure authentication.
-- 
+- **Email OTP Notifications:** Users receive One-Time Password (OTP) notifications via email for secure authentication. 
 - **Contact Us Page:** Users can contact the support team or administration through the contact us page.
-- 
 - **Authentication:** Implement authentication functionality to ensure secure access to the application's features and user data. This can include user registration, login, and session management, using techniques such as username/password or social media authentication. Authentication adds an extra layer of security and allows personalized user experiences within the platform.
 
 ## Tech Stacks 💻
