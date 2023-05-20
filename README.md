@@ -1,19 +1,18 @@
 # Annapurna 🙌
 <div align="center">
   <br>
-  <img src="https://img.shields.io/github/repo-size/subhashis2204/project-annapurna?style=for-the-badge" />
-  <img src="https://img.shields.io/github/issues/subhashis2204/project-annapurna?style=for-the-badge" />
-  <img src="https://img.shields.io/github/issues-closed-raw/subhashis2204/project-annapurna?style=for-the-badge" />
+  <img src="https://img.shields.io/github/repo-size/Clueless-Community/scrape-up?style=for-the-badge" />
+  <img src="https://img.shields.io/github/issues/Clueless-Community/scrape-up?style=for-the-badge" />
+  <img src="https://img.shields.io/github/issues-closed-raw/Clueless-Community/scrape-up?style=for-the-badge" />
   <br>
-  <img src="https://img.shields.io/github/forks/subhashis2204/project-annapurna?style=for-the-badge" />
-  <img src="https://img.shields.io/github/issues-pr/subhashis2204/project-annapurna?style=for-the-badge" />
-  <img src="https://img.shields.io/github/issues-pr-closed-raw/subhashis2204/project-annapurna?style=for-the-badge" />
+  <img src="https://img.shields.io/github/forks/Clueless-Community/scrape-up?style=for-the-badge" />
+  <img src="https://img.shields.io/github/issues-pr/Clueless-Community/scrape-up?style=for-the-badge" />
+  <img src="https://img.shields.io/github/issues-pr-closed-raw/Clueless-Community/scrape-up?style=for-the-badge" />
   <br>
-  <img src="https://img.shields.io/github/stars/subhashis2204/project-annapurna?style=for-the-badge" />
-  <img src="https://img.shields.io/github/contributors/subhashis2204/project-annapurna?style=for-the-badge" />
-  <img src="https://img.shields.io/github/last-commit/subhashis2204/project-annapurna?style=for-the-badge" />
+  <img src="https://img.shields.io/github/stars/Clueless-Community/scrape-up?style=for-the-badge" />
+  <img src="https://img.shields.io/github/last-commit/Clueless-Community/scrape-up?style=for-the-badge" />
+  <img src="https://img.shields.io/github/commit-activity/y/Clueless-Community/scrape-up?style=for-the-badge" />
 </div>
-
 
 # Food Donation Application 🤝
 
@@ -21,16 +20,25 @@
 
 This is a food donation application that connects NGOs and restaurants. The purpose of this platform is to enable restaurants to donate surplus food to people in need through partnering NGOs. The application includes features such as Google geocoding for location services 🌍, email OTP notifications ✉️ for secure authentication, and a contact us page 📞 for users to reach out with any inquiries or concerns.
 
-## Features 🚀
+Features 🚀
 
 - **Restaurant Donation:** Restaurants can donate surplus food to NGOs through the platform.
+- 
 - **NGO Partnership:** NGOs can receive food donations from restaurants and distribute them to people in need.
+- 
 - **Google Geocoding:** Integration with Google Geocoding API for accurate location services.
+- 
 - **Email OTP Notifications:** Users receive One-Time Password (OTP) notifications via email for secure authentication.
+- 
 - **Contact Us Page:** Users can contact the support team or administration through the contact us page.
+- 
+- **Authentication:** Implement authentication functionality to ensure secure access to the application's features and user data. This can include user registration, login, and session management, using techniques such as username/password or social media authentication. Authentication adds an extra layer of security and allows personalized user experiences within the platform.
 
 ## Tech Stacks 💻
 
+- **MongoDB:** NoSQL database used for storing and retrieving data.
+- **Express:** Web application framework for building server-side applications.
+- **Node.js:** Runtime environment for executing JavaScript code on the server.
 - **EJS (Embedded JavaScript):** A templating engine that generates HTML markup with JavaScript.
 - **JavaScript:** Programming language used for the application's logic and functionality.
 - **HTML:** Markup language for creating the structure and content of web pages.
