@@ -1,18 +1,22 @@
 # Annapurna 🙌
+Website: [Annapurna](https://project-annapurna.azurewebsites.net/)
+
+
 <div align="center">
   <br>
-  <img src="https://img.shields.io/github/repo-size/Clueless-Community/scrape-up?style=for-the-badge" />
-  <img src="https://img.shields.io/github/issues/Clueless-Community/scrape-up?style=for-the-badge" />
-  <img src="https://img.shields.io/github/issues-closed-raw/Clueless-Community/scrape-up?style=for-the-badge" />
+  <img src="https://img.shields.io/github/repo-size/subhashis2204/project-annapurna?style=for-the-badge" />
+  <img src="https://img.shields.io/github/issues/subhashis2204/project-annapurna?style=for-the-badge" />
+  <img src="https://img.shields.io/github/issues-closed-raw/subhashis2204/project-annapurna?style=for-the-badge" />
   <br>
-  <img src="https://img.shields.io/github/forks/Clueless-Community/scrape-up?style=for-the-badge" />
-  <img src="https://img.shields.io/github/issues-pr/Clueless-Community/scrape-up?style=for-the-badge" />
-  <img src="https://img.shields.io/github/issues-pr-closed-raw/Clueless-Community/scrape-up?style=for-the-badge" />
+  <img src="https://img.shields.io/github/forks/subhashis2204/project-annapurna?style=for-the-badge" />
+  <img src="https://img.shields.io/github/issues-pr/subhashis2204/project-annapurna?style=for-the-badge" />
+  <img src="https://img.shields.io/github/issues-pr-closed-raw/subhashis2204/project-annapurna?style=for-the-badge" />
   <br>
-  <img src="https://img.shields.io/github/stars/Clueless-Community/scrape-up?style=for-the-badge" />
-  <img src="https://img.shields.io/github/last-commit/Clueless-Community/scrape-up?style=for-the-badge" />
-  <img src="https://img.shields.io/github/commit-activity/y/Clueless-Community/scrape-up?style=for-the-badge" />
+  <img src="https://img.shields.io/github/stars/subhashis2204/project-annapurna?style=for-the-badge" />
+  <img src="https://img.shields.io/github/last-commit/subhashis2204/project-annapurna?style=for-the-badge" />
+  <img src="https://img.shields.io/github/commit-activity/y/subhashis2204/project-annapurna?style=for-the-badge" />
 </div>
+
 
 # Food Donation Application 🤝
 
@@ -52,8 +56,8 @@ To set up and deploy the application, follow these steps:
 2. Install dependencies: `npm install`
 3. Configure environment variables for APIs and services (e.g., Google Geocoding API key).
 4. Start the application: `npm start`
-5. Access the application in a web browser at `http://localhost:3000`.
-6. 
+5.
+6.  Access the application in a web browser at `http://localhost:3000`. 
 If you have any questions or need further clarification, please feel free to reach out. We appreciate your contribution to making the Food Donation Application a success!
 
 # contributors 
