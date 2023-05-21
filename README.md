@@ -1,7 +1,6 @@
 # Annapurna 🙌
 Website: [Annapurna](https://project-annapurna.azurewebsites.net/)
 
-
 <div align="center">
   <br>
   <img src="https://img.shields.io/github/repo-size/subhashis2204/project-annapurna?style=for-the-badge" />
@@ -37,21 +36,23 @@ Features 🚀
 
 The following environment variable are necessary for configuring the project on your local - 
 
-- **Azure:** You must have an azure storage account for the project. Images are stored as a **blob** in azure. So we need to have a blob container which we would access through our **access keys**
+- **Azure** 
+
+You must have an azure storage account for the project. Images are stored as a **blob** in azure. So we need to have a blob container which we would access through our **access keys**
 
 If you are a student then you can sign up for a $100 free credit on azure [here](https://azure.microsoft.com/en-in/free/students/)
 
-![storage account search](https://github.com/subhashis2204/project-annapurna/blob/main/assets/azure_sa_img.png)
+![azure_sa_img](https://github.com/subhashis2204/project-annapurna/assets/76895635/1bd490ac-cf36-42df-ae52-091ff8e6bcc3)
 
 After selecting the storage account. We need to create a new resource.
 
-![create storage account](https://github.com/subhashis2204/project-annapurna/blob/main/assets/azure_sa_aks.png)
+![azure_sa_create](https://github.com/subhashis2204/project-annapurna/assets/76895635/8b68b18f-b0eb-4fc4-8aed-60e092920ae9)
 
 A form is displayed. You only need to fill the type of subscription and the name of storage account. Leave rest to default.
 
 Then go to the resource and search for access keys.
 
-![search for access keys](https://github.com/subhashis2204/project-annapurna/blob/main/assets/azure_sa_aks.png)
+![azure_sa_aks](https://github.com/subhashis2204/project-annapurna/assets/76895635/95f17ab5-c14f-4e63-b3ea-3cdfd4be5989)
 
 There you will find **storage account name** and **connection string** (there are 2 of them, choose any one) 
 
@@ -59,7 +60,7 @@ As a final step in the resource page you have to setup the container where we wo
 
 In your newly created storage acc dashboard, click on the blob storage
 
-![azure storage dashboard](https://github.com/subhashis2204/project-annapurna/blob/main/assets/azure_sa_dashbrd.png)
+![azure_sa_dashbrd](https://github.com/subhashis2204/project-annapurna/assets/76895635/769dbe7e-9718-4ea5-aac0-5829528642db)
 
 You must see a page where you can create a new container. **Remember this name as we need it**
 
