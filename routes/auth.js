@@ -1,15 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const mongoose = require('mongoose')
-const Restaurant = require('../models/Restaurant')
-const Quantity = require('../models/Quantity')
-const Food = require('../models/Food')
-const Donor = require('../models/Donor')
-const Receiver = require('../models/Receiver')
-const upload = require('../utils/imageUpload')
 const catchAsync = require('../utils/CatchAsync')
-const AuthCredential = require('../models/auth')
-const { setReturnUrl } = require('../middleware')
 
 const passport = require('passport')
 const User = require('../models/User')
@@ -19,25 +10,6 @@ router.get('/login', (req, res) => {
 })
 
 router.post('/login', passport.authenticate('local', { failureFlash: true, failureMessage: true, failureRedirect: '/auth/login' }), catchAsync(async(req, res) => {
-
-    // const redirectUrl = res.locals.returnTo || '/'
-    // console.log(redirectUrl)
-    // const { email } = req.body
-
-    // await User.findOne({ email })
-    //     .then(async (doc) => {
-    //         console.log(doc)
-    //         const Model = doc.role === 'donor' ? Restaurant : Receiver
-
-    //         const foundObject = await Model.findOne({ username: doc.email })
-    //         console.log(foundObject)
-    //     })
-
-    // delete req.redirectTo
-    // console.log(req)
-
-    // console.log(req.user)
-
     req.flash('success', 'Logged in successfully')
     res.redirect('/')
 }))

@@ -1,16 +1,19 @@
 const sgMail = require('@sendgrid/mail')
+
+require('dotenv').config()
+
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 const nodemailer = require('nodemailer')
 const transporter = nodemailer.createTransport({
-    service: "Outlook365",
-    auth: {
-        user: 'the.annapurna.project@outlook.com',
-        pass: 'Annapurna2204'
-    }
-})
-// const Mailgen = require('mailgen')
+        service: "Outlook365",
+        auth: {
+            user: 'the.annapurna.project@outlook.com',
+            pass: 'Annapurna2204'
+        }
+    })
+    // const Mailgen = require('mailgen')
 
-module.exports.sendVerifyEmail = async function (emailFrom, emailTo, generatedOTP) {
+module.exports.sendVerifyEmail = async function(emailFrom, emailTo, generatedOTP) {
     const message = {
         "from": emailFrom,
         "template_id": 'd-7127419b67fb4ceba594cc8df68100ce',
@@ -35,7 +38,7 @@ module.exports.sendVerifyEmail = async function (emailFrom, emailTo, generatedOT
         })
 }
 
-module.exports.sendMessage = async function (emailFrom, emailTo, replyTo, senderName, messageText) {
+module.exports.sendMessage = async function(emailFrom, emailTo, replyTo, senderName, messageText) {
     const message = {
         "from": emailFrom,
         "replyTo": {
@@ -63,7 +66,7 @@ module.exports.sendMessage = async function (emailFrom, emailTo, replyTo, sender
         })
 }
 
-module.exports.sendMessageNodemailer = async function (emailFrom, emailTo, replyTo, senderName, messageText) {
+module.exports.sendMessageNodemailer = async function(emailFrom, emailTo, replyTo, senderName, messageText) {
     const emailOptions = {
         from: emailFrom,
         to: {
