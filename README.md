@@ -41,17 +41,17 @@ The following environment variable are necessary for configuring the project on 
 
 If you are a student then you can sign up for a $100 free credit on azure [here](https://azure.microsoft.com/en-in/free/students/)
 
-![storage account search](./assets/azure_sa_img.png)
+![storage account search](https://github.com/subhashis2204/project-annapurna/assets/azure_sa_img.png)
 
 After selecting the storage account. We need to create a new resource.
 
-![create storage account](./assets/azure_sa_aks.png)
+![create storage account](https://github.com/subhashis2204/project-annapurna/assets/azure_sa_aks.png)
 
 A form is displayed. You only need to fill the type of subscription and the name of storage account. Leave rest to default.
 
 Then go to the resource and search for access keys.
 
-![search for access keys](./assets/azure_sa_aks.png)
+![search for access keys](https://github.com/subhashis2204/project-annapurna/assets/azure_sa_aks.png)
 
 There you will find **storage account name** and **connection string** (there are 2 of them, choose any one) 
 
@@ -59,7 +59,7 @@ As a final step in the resource page you have to setup the container where we wo
 
 In your newly created storage acc dashboard, click on the blob storage
 
-![azure storage dashboard](./assets/azure_sa_dashbrd.png)
+![azure storage dashboard](https://github.com/subhashis2204/project-annapurna/assets/azure_sa_dashbrd.png)
 
 You must see a page where you can create a new container. **Remember this name as we need it**
 
