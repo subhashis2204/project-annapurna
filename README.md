@@ -69,6 +69,54 @@ The env variable are -
 `CONTAINER_NAME = <your container name goes here>` <br/>
 `CONNECTION_STRING = <your connection string goes here>`
 
+- **Sendgrid email notification**
+
+Sendgrid is a bulk emailing service. This project uses Sendgrid along with nodemailer to send transactional emails.
+
+To get started you must have a sendgrid account. You can create one [here](https://sendgrid.com/). You can opt for the free tier. It does not require any credit card.
+
+After signup you need to create an API key. **copy the api key and save it somewhere since you won't be able to see it again**.
+
+Since, we have reached this far. One final step is that we have to setup an email which would be authorized to send emails using sendgrid. 
+Go to the dashboard and on the left pane go to **settings** --> **sender authentication** --> **single sender verification** --> click on **create new sender**
+
+![sendgrid_auth2](https://github.com/subhashis2204/project-annapurna/assets/76895635/b8a52663-6c70-4ec6-b73a-a3eb62c52409)
+
+Fill in the necessary details and then you can start sending email using sendgrid. 
+
+`CONTACTS_EMAIL_NAME = <name of the person who would be receiving the contact us messages>` <br>
+`CONTACTS_EMAIL = <email where you would receive the messages from contact us page>` <br>
+`SENDER_MAIL = <your sendgrid verified email>` <br>
+`SENDGRID_API_KEY = <your API key goes here>`
+
+- **Mongodb**
+For running our application we need a DB. This project uses mongodb as the database. You can create a free account on the mongodb website and create a db in the cloud.
+
+First you have to create a **project**, then after creating a project you can create a DB.
+
+Go to the dashboard and on the **left pane** search **deployments**, then click **Build a database**
+
+![db_deploy](https://github.com/subhashis2204/project-annapurna/assets/76895635/9f4386b6-4f03-4dfd-8721-d728e00f7252)
+
+You would be redirected to a page where you have to choose the config of database. Choose **free tier** and choose a cloud provider and **any region of your choice** and **choose a cluster name**
+
+You would be provided a **username** and **password**. Note them down somewhere.
+
+Scroll down to the IP access list. Add **0.0.0.0** as the ip. This would enable global access to your db. Click on **close**
+![ip_access](https://github.com/subhashis2204/project-annapurna/assets/76895635/86e4a223-170f-4d32-ab7b-6551104a9a30)
+
+A typical mongodb url string looks like this : mongodb+srv://\<username\>:\<password\>@cluster345.hy4gkmn.mongodb.net/
+
+The **username** is already given. You need to replace the **password** in the connection string. This gives the full connection string.
+
+`MONGODB_URL = <mongodb connection string>`
+
+- **Google Maps API (OPTIONAL)**
+
+To show the google maps in the profile pages of restaurants and NGO we need to sign up for a google map API. This project specifically uses **GOOGLE maps Javascript API**.
+
+`GOOGLEMAP_TOKEN = <YOUR API KEY GOES HERE>`
+
 ## Tech Stacks 💻
 
 - **MongoDB:** NoSQL database used for storing and retrieving data.
