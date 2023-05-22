@@ -32,6 +32,53 @@ Features 🚀
 - **Contact Us Page:** Users can contact the support team or administration through the contact us page.
 - **Authentication:** Implement authentication functionality to ensure secure access to the application's features and user data. This can include user registration, login, and session management, using techniques such as username/password or social media authentication. Authentication adds an extra layer of security and allows personalized user experiences within the platform.
 
+## 🔖Steps to Contribute
+
+Following are the steps to guide you:
+
+Step 1: Fork the repo and Go to your Git terminal and clone it on your machine.
+```
+git clone https://github.com/<your_github_username>/project-annapurna.git
+cd project-annapurna
+```
+
+Step 2: Add an upstream link to the main branch in your cloned repo
+```
+git remote add upstream https://github.com/<your_github_username>/project-annapurna.git
+```
+
+Step 3: Keep your cloned repo up to date by pulling from upstream (this will also avoid any merge conflicts while committing new changes)
+```
+git pull upstream main
+```
+
+Step 4: Create your feature branch (This is a necessary step, so don't skip it)
+```
+git checkout -b <branch-name>
+```
+
+Step 5: Track and stage your changes.
+```
+# Track the changes
+ git status
+
+ # After adding required changes
+ git add .
+```
+
+Step 6: Commit all the changes (Write commit message as "Small Message")
+```
+git commit -m "<your-commit-message>"
+```
+
+Step 7: Push the changes for review
+```
+git push origin <branch-name>
+```
+
+Step 8: Create a PR on Github. (Don't just hit the create a pull request button, you must write a PR message to clarify why and what are you contributing)
+
+
 ## Configuring the .env file 
 
 The following environment variable are necessary for configuring the project on your local - 
