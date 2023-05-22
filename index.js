@@ -63,7 +63,6 @@ passport.serializeUser(User.serializeUser())
 passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
-    // console.log(req.user)
     res.locals.user = req.user || null
     res.locals.role = req.user && req.user.role ? req.user.role : null;
     res.locals.success = req.flash('success')
@@ -97,7 +96,7 @@ app.get('/contacts', (req, res) => {
 
 app.post('/contacts', CatchAsync(async (req, res) => {
     const { name, email, message } = req.body
-    await sendMessage(process.env.SENDER_MAIL, process.env.CONTACTS_EMAIL, email, name, message)
+    await sendMessage(email, name, message)
         .then(() => {
             console.log('Send Successfully')
             req.flash('success', 'Message has been delivered successfully')
