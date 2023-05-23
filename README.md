@@ -1,3 +1,5 @@
+
+
 # Annapurna 🙌
 Website: [Annapurna](https://project-annapurna.azurewebsites.net/)
 
@@ -83,86 +85,86 @@ Step 8: Create a PR on Github. (Don't just hit the create a pull request button,
 
 The following environment variable are necessary for configuring the project on your local - 
 
-- **Azure** 
+- ### **Azure** 
 
-You must have an azure storage account for the project. Images are stored as a **blob** in azure. So we need to have a blob container which we would access through our **access keys**
+1. You must have an azure storage account for the project. Images are stored as a **blob** in azure. So we need to have a blob container which we would access through our **access keys**
 
-If you are a student then you can sign up for a $100 free credit on azure [here](https://azure.microsoft.com/en-in/free/students/)
+> If you are a student then you can sign up for a $100 free credit on azure [here](https://azure.microsoft.com/en-in/free/students/)
 
 ![azure_sa_img](https://github.com/subhashis2204/project-annapurna/assets/76895635/1bd490ac-cf36-42df-ae52-091ff8e6bcc3)
 
-After selecting the storage account. We need to create a new resource.
+2. After selecting the storage account. We need to create a new resource.
 
 ![azure_sa_create](https://github.com/subhashis2204/project-annapurna/assets/76895635/8b68b18f-b0eb-4fc4-8aed-60e092920ae9)
 
-A form is displayed. You only need to fill the type of subscription and the name of storage account. Leave rest to default.
+3. A form is displayed. You only need to fill in the type of subscription and the name of storage account. Leave rest to default. Then go to the resource and search for access keys.
 
-Then go to the resource and search for access keys.
+![azure_sa_aks](https://github.com/subhashis2204/project-annapurna/assets/76895635/1acef25e-a733-4c3c-806d-67a7451bda58)
 
-![azure_sa_aks](https://github.com/subhashis2204/project-annapurna/assets/76895635/95f17ab5-c14f-4e63-b3ea-3cdfd4be5989)
+4. After clicking the *access keys*, we can see our **storage account name** and **connection string** (there are two of them, choose anyone) 
 
-There you will find **storage account name** and **connection string** (there are 2 of them, choose any one) 
-
-As a final step in the resource page you have to setup the container where we would store the images.
-
+5. As a last step in the resource page, you have to set up the container where we would store the images. <br>
 In your newly created storage acc dashboard, click on the blob storage
 
-![azure_sa_dashbrd](https://github.com/subhashis2204/project-annapurna/assets/76895635/769dbe7e-9718-4ea5-aac0-5829528642db)
+6. You must see a page where you can create a new container. **Remember this name as we need it**
 
-You must see a page where you can create a new container. **Remember this name as we need it**
+> Environment variables to configure azure storage:
+>
+     CONTAINER_NAME = <BLOB STORAGE CONTAINER NAME>
+     CONNECTION_STRING = <CONNECTION STRING FOR STORAGE ACCOUNT>
 
-The env variable are - 
+-  ### **Sendgrid email notification**
 
-`CONTAINER_NAME = <your container name goes here>` <br/>
-`CONNECTION_STRING = <your connection string goes here>`
+>Sendgrid is a bulk emailing service. This project uses Sendgrid along with nodemailer to send transactional emails.
 
-- **Sendgrid email notification**
 
-Sendgrid is a bulk emailing service. This project uses Sendgrid along with nodemailer to send transactional emails.
+1. To get started you must have a sendgrid account. You can create one [here](https://sendgrid.com/). You can opt for the free tier. It does not require any credit card.
 
-To get started you must have a sendgrid account. You can create one [here](https://sendgrid.com/). You can opt for the free tier. It does not require any credit card.
+2. After signup you need to create an API key. **copy the api key and save it somewhere since you won't be able to see it again**.
 
-After signup you need to create an API key. **copy the api key and save it somewhere since you won't be able to see it again**.
-
-Since, we have reached this far. One final step is that we have to setup an email which would be authorized to send emails using sendgrid. 
-Go to the dashboard and on the left pane go to **settings** --> **sender authentication** --> **single sender verification** --> click on **create new sender**
+3. Since, we have reached this far. One final step is that we have to setup an email which would be authorized to send emails using sendgrid. 
+ 
+Go to the dashboard and on the left pane go to **_settings_** --> **_sender authentication_** --> **_single sender verification_** --> click on **_create new sender_**
+Fill in the necessary details and then you can start sending email using sendgrid. 
 
 ![sendgrid_auth2](https://github.com/subhashis2204/project-annapurna/assets/76895635/b8a52663-6c70-4ec6-b73a-a3eb62c52409)
 
-Fill in the necessary details and then you can start sending email using sendgrid. 
+> Environment variables to configure azure storage:
+>
+     CONTACTS_EMAIL_NAME = <CONTACT RECEIPIENT'S NAME>
+     CONTACTS_EMAIL = <CONTACT US PAGE EMAIL>
+     SENDER_MAIL = <SENDGRID VERIFIED EMAIL>
+     SENDGRID_API_KEY = <YOUR API KEY>
 
-`CONTACTS_EMAIL_NAME = <name of the person who would be receiving the contact us messages>` <br>
-`CONTACTS_EMAIL = <email where you would receive the messages from contact us page>` <br>
-`SENDER_MAIL = <your sendgrid verified email>` <br>
-`SENDGRID_API_KEY = <your API key goes here>`
+- ### **Mongodb**
 
-- **Mongodb**
-For running our application we need a DB. This project uses mongodb as the database. You can create a free account on the mongodb website and create a db in the cloud.
+>For running our application we need a DB. This project uses mongodb as the database. You can create a free account on the mongodb website and create a db in the cloud.
 
-First you have to create a **project**, then after creating a project you can create a DB.
+1. First you have to create a **project**, then after creating a project you can create a DB.
 
-Go to the dashboard and on the **left pane** search **deployments**, then click **Build a database**
+2. Go to the dashboard and on the **left pane** search **deployments**, then click **Build a database**
 
 ![db_deploy](https://github.com/subhashis2204/project-annapurna/assets/76895635/9f4386b6-4f03-4dfd-8721-d728e00f7252)
 
-You would be redirected to a page where you have to choose the config of database. Choose **free tier** and choose a cloud provider and **any region of your choice** and **choose a cluster name**
+3. You would be redirected to a page where you have to choose the config of database. Choose **free tier** and choose a cloud provider and **any region of your choice** and **choose a cluster name**
 
-You would be provided a **username** and **password**. Note them down somewhere.
+4. You would be provided a **username** and **password**. Note them down somewhere.
 
-Scroll down to the IP access list. Add **0.0.0.0** as the ip. This would enable global access to your db. Click on **close**
+5. Scroll down to the IP access list. Add **0.0.0.0** as the ip. This would enable global access to your db. Click on **close**
+
 ![ip_access](https://github.com/subhashis2204/project-annapurna/assets/76895635/86e4a223-170f-4d32-ab7b-6551104a9a30)
 
-A typical mongodb url string looks like this : mongodb+srv://\<username\>:\<password\>@cluster345.hy4gkmn.mongodb.net/
+> A typical mongodb url string looks like this : **_mongodb+srv://\<username\>:\<password\>@cluster345.hy4gkmn.mongodb.net/_**
 
 The **username** is already given. You need to replace the **password** in the connection string. This gives the full connection string.
 
-`MONGODB_URL = <mongodb connection string>`
+    `MONGODB_URL = <DB CONNECTION STRING>`
 
 - **Google Maps API (OPTIONAL)**
 
-To show the google maps in the profile pages of restaurants and NGO we need to sign up for a google map API. This project specifically uses **GOOGLE maps Javascript API**.
+>To show the google maps in the profile pages of restaurants and NGO we need to sign up for a google map API. This project specifically uses **GOOGLE maps Javascript API**.
 
-`GOOGLEMAP_TOKEN = <YOUR API KEY GOES HERE>`
+    GOOGLEMAP_TOKEN = <YOUR API KEY GOES HERE>`
 
 ## Tech Stacks 💻
 
