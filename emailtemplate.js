@@ -349,7 +349,6 @@ exports.createMessageEmailBody = function (replyTo, senderName, messageText) {
             }
         }
     </style>
-
 </head>
 
 <body>
@@ -391,11 +390,15 @@ exports.createMessageEmailBody = function (replyTo, senderName, messageText) {
                                                                             <div>
                                                                                 <div style="font-family: inherit"><span style="font-size: 14px">Dear Annapurna Team,</span></div>
                                                                                 <div style="font-family: inherit"><br></div>
-                                                                                <div style="font-family: inherit"><span style="font-size: 14px">This request has been asked by <strong>${senderName}</strong> &lt;${replyTo}&gt;</span></div>
+                                                                                <div style="font-family: inherit"><span style="font-size: 14px">We have a message</span></div>
                                                                                 <div style="font-family: inherit"><br></div>
-                                                                                <div style="font-family: inherit"><span style="font-size: 16px"><strong>${messageText}</strong></span></div>
+                                                                                <div style="font-family: inherit"><strong>Sender Name : </strong><span style="font-family: arial, helvetica, sans-serif; font-size: 16px">${senderName}</span></div>
                                                                                 <div style="font-family: inherit"><br></div>
-                                                                                <div style="font-family: inherit"><span style="font-size: 14px">Reply to this email directly to email the sender directly.</span></div>
+                                                                                <div style="font-family: inherit"><strong>Sender Email : </strong><span style="font-family: arial, helvetica, sans-serif; font-size: 16px">${replyTo}</span></div>
+                                                                                <div style="font-family: inherit"><br></div>
+                                                                                <div style="font-family: inherit"><strong>Message : </strong><span style="font-family: arial, helvetica, sans-serif; font-size: 16px">${messageText}</span></div>
+                                                                                <div style="font-family: inherit"><br></div>
+                                                                                <div style="font-family: inherit"><span style="font-family: arial, helvetica, sans-serif; font-size: 14px">Reply to this email directly to email the sender directly.</span></div>
                                                                                 <div></div>
                                                                             </div>
                                                                         </td>
