@@ -39,8 +39,13 @@ const validate = {
   },
 
   "restaurantAddress[country]": (value) => {
+    if(!value) return true;
     return value.length < 4 ? true : false;
   },
+
+  "restaurantAddress[state]": (value)=>(!value)? true: false ,
+  "restaurantAddress[city]": (value)=>(!value)? true: false ,
+  "restaurantAddress[zip]": (value)=>(!value)? true: false ,
 
   password: (value) => {
     return passwordRegex.test(value) ? false : true;

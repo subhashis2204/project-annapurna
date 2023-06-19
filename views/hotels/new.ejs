@@ -133,18 +133,21 @@
                     </div>
                     <div class="mb-4 md:mb-0 w-full md:w-1/3 md:flex-grow">
                         <label for="state" class="block mb-2 text-sm font-medium text-gray-900 ">State <span  style="color:red"> *</span> </label>
-                        <input type="text" class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="state" name="restaurantAddress[state]" placeholder="Jharkhand" required>
+                        <input onkeyup="handleRegisterChange(event)" type="text" class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="state" name="restaurantAddress[state]" placeholder="Jharkhand" required>
+                        <p class="text-red-500 hidden text-sm m-1 restaurantRegisterError" id="restaurantAddress[state]Error">Please fill this field</p>
                     </div>
                 </div>
                 <div class="md:mb-4 flex flex-wrap md:gap-4">
                     <div class="mb-4 md:mb-0 w-full md:w-1/3 md:flex-grow">
                         <label for="city" class="block mb-2 text-sm font-medium text-gray-900 ">City <span  style="color:red"> *</span> </label>
-                        <input type="text" class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="city" name="restaurantAddress[city]" placeholder="Jamshedpur" required>
+                        <input onkeyup="handleRegisterChange(event)" type="text" class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="city" name="restaurantAddress[city]" placeholder="Jamshedpur" required>
+                        <p class="text-red-500 hidden text-sm m-1 restaurantRegisterError" id="restaurantAddress[city]Error">Please fill this field</p>
                     </div>
 
                     <div class="mb-4 md:mb-0 w-full md:w-1/3 md:flex-grow">
                         <label for="zip" class="block mb-2 text-sm font-medium text-gray-900 ">Zip Code <span  style="color:red"> *</span> </label>
-                        <input type="text" class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="zip" name="restaurantAddress[zip]" placeholder="831009" required>
+                        <input onkeyup="handleRegisterChange(event)" type="text" class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="zip" name="restaurantAddress[zip]" placeholder="831009" required>
+                        <p class="text-red-500 hidden text-sm m-1 restaurantRegisterError" id="restaurantAddress[zip]Error">Please fill this field</p>
                     </div>
                 </div>
 
