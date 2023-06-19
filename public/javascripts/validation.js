@@ -2,7 +2,7 @@ const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[@$%#^&*])(?=.*[0-9]).{8,}$/;
 const emailRegex =
   /^\w+([\.-]?\w+)*@(gmail\.com|yahoo\.com|hotmail\.com|aol\.com|outlook\.com)$/;
 const phoneRegex = /^(0|91)?[6-9][0-9]{9}$/;
-const websiteRegex = /https?:\/\/[\w\-]+(\.[\w\-]+)+[/#?]?.*/i;
+const websiteRegex = /https?:\/\/[\w\-]+(\.[\w\-]{2,})+[/#?]?.*/i;
 
 const validate = {
   restaurantName: (value) => {
@@ -20,6 +20,7 @@ const validate = {
   },
 
   "restaurantContactDetails[contact2]": (value) => {
+    if(!value) return false
     return phoneRegex.test(value) ? false : true;
   },
 
@@ -34,13 +35,7 @@ const validate = {
   },
 
   "restaurantAddress[street]": (value) => {
-    const numOfWords = value.split(" ").length;
-
-    if (numOfWords < 10 || numOfWords > 30) {
-      return true;
-    } else {
-      return false;
-    }
+      return (!value)? true: false;
   },
 
   "restaurantAddress[country]": (value) => {
