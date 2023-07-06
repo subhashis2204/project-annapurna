@@ -1,6 +1,5 @@
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[@$%#^&*])(?=.*[0-9]).{8,}$/;
-const emailRegex =
-  /^\w+([\.-]?\w+)*@(gmail\.com|yahoo\.com|hotmail\.com|aol\.com|outlook\.com)$/;
+const emailRegex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b/;
 const phoneRegex = /^(0|91)?[6-9][0-9]{9}$/;
 const pincodeRegex = /^\d{6}$/;
 const websiteRegex = /https?:\/\/[\w\-]+(\.[\w\-]{2,})+[/#?]?.*/i;
@@ -72,11 +71,13 @@ const validate = {
     } else {
       return false;
     }
+  },
+  name: (value)=>{
+    return (!value)? true: false 
   }
 };
 
 validate.email = validate["restaurantContactDetails[email]"];
-validate.name = validate.restaurantName;
 validate.message = validate.restaurantDescription;
 validate.receiverName = validate.restaurantName;
 validate["receiverContactDetails[email]"] = validate["restaurantContactDetails[email]"];
