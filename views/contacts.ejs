@@ -32,19 +32,22 @@
                         </div>
                     </div>
                 </div>
-                <form action="/contacts" method="POST" class="bg-gray-800 p-4 rounded-md flex flex-col gap-4">
+                <form action="/contacts" method="POST" class="bg-gray-800 p-4 rounded-md flex flex-col gap-4" id="contactForm">
                     <div>
                         <label for="name" class="block text-white">Name</label>
-                        <input type="text" id="name" name="name" class="mt-2 w-full p-2 rounded-sm focus:ring-0 focus:outline-none">
+                        <input type="text" id="name" name="name" class="mt-2 w-full p-2 rounded-sm focus:ring-0 focus:outline-none" onkeyup="handleChange(event)" required>
+                        <p class="text-red-500 hidden text-sm m-1 contactError" id="nameError">Name must be atleast 6 characters long.</p>
                     </div>
                     <div>
                         <label for="email" class="block text-white">Email</label>
-                        <input type="email" id="email" name="email" class="mt-2 w-full p-2 rounded-sm focus:ring-0 focus:outline-none">
+                        <input type="email" id="email" name="email" class="mt-2 w-full p-2 rounded-sm focus:ring-0 focus:outline-none" onkeyup="handleChange(event)" required>
+                        <p class="text-red-500 hidden text-sm m-1 contactError" id="emailError">Enter Valid Email.</p>
                     </div>
                     <div>
                         <label for="message" class="block text-white">Message</label>
                         <!-- <input type="text" class="mt-2 w-full p-2 capitalize rounded-sm focus:ring-0 focus:outline-none"> -->
-                        <textarea name="message" id="message" rows="5" class="mt-2 w-full p-2 rounded-sm focus:ring-0 focus:outline-none"></textarea>
+                        <textarea name="message" id="message" rows="5" class="mt-2 w-full p-2 rounded-sm focus:ring-0 focus:outline-none" onkeyup="handleChange(event)" required></textarea>
+                        <p class="text-red-500 hidden text-sm m-1 contactError" id="messageError">Describe your message within 15 to 100 words</p>
                     </div>
                     <button class="bg-gray-300 py-2 rounded-sm">Submit</button>
                 </form>

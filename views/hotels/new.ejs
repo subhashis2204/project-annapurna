@@ -59,7 +59,7 @@
                     <label class="block mb-2 text-sm font-medium text-gray-900 " for="name">
                             Restaurant Name <span  style="color:red"> *</span>
                         </label>
-                    <input onkeyup="handleRegisterChange(event)" class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="name" type="text" name="restaurantName" placeholder="Annapurna Foundation" required>
+                    <input onkeyup="handleChange(event)" class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="name" type="text" name="restaurantName" placeholder="Annapurna Foundation" required>
                     <p class="text-red-500 hidden text-sm m-1 restaurantRegisterError" id="restaurantNameError">Restaurant Name must be atleast 6 characters long.</p>
                 </div>
 
@@ -74,7 +74,7 @@
                     <label class="block mb-2 text-sm font-medium text-gray-900 " for="email">
                         Email <span  style="color:red"> *</span>
                     </label>
-                    <input class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="email" type="email" name="restaurantContactDetails[email]" placeholder="restaurant-name@gmail.com" onkeyup="handleRegisterChange(event)" required>
+                    <input class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="email" type="email" name="restaurantContactDetails[email]" placeholder="restaurant-name@gmail.com" onkeyup="handleChange(event)" required>
                     <p class="text-red-500 hidden text-sm m-1 restaurantRegisterError" id="restaurantContactDetails[email]Error">Enter Valid Email</p>
                 </div>
 
@@ -89,19 +89,19 @@
                     <label class="block mb-2 text-sm font-medium text-gray-900 " for="weblink">
                         Website Link 
                     </label>
-                    <input onkeyup="handleRegisterChange(event)" class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="weblink" type="text" name="restaurantWebsite" placeholder="https://annapurna.com" required>
+                    <input onkeyup="handleChange(event)" class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="weblink" type="text" name="restaurantWebsite" placeholder="https://annapurna.com" required>
                     <p class="text-red-500 hidden text-sm m-1 restaurantRegisterError" id="restaurantWebsiteError">Enter Valid Website link</p>
                 </div>
 
                 <div class="md:mb-4 flex flex-wrap md:gap-4">
                     <div class="mb-4 md:mb-0 w-full md:w-1/3 md:flex-grow">
                         <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 ">Contact Number 1 <span  style="color:red"> *</span></label>
-                        <input onkeyup="handleRegisterChange(event)" type="text" class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="phone" name="restaurantContactDetails[contact1]" placeholder="911234567890" required>
+                        <input onkeyup="handleChange(event)" type="text" class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="phone" name="restaurantContactDetails[contact1]" placeholder="911234567890" required>
                     <p class="text-red-500 hidden text-sm m-1 restaurantRegisterError" id="restaurantContactDetails[contact1]Error">Enter Valid Phone Number</p>
                     </div>
                     <div class="mb-4 md:mb-0 w-full md:w-1/3 md:flex-grow">
                         <label for="mobile" class="block mb-2 text-sm font-medium text-gray-900 ">Contact Number 2</label>
-                        <input onkeyup="handleRegisterChange(event)" type="text" class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="mobile" name="restaurantContactDetails[contact2]" placeholder="911234567890">
+                        <input onkeyup="handleChange(event)" type="text" class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="mobile" name="restaurantContactDetails[contact2]" placeholder="911234567890">
                     <p class="text-red-500 hidden text-sm m-1 restaurantRegisterError" id="restaurantContactDetails[contact2]Error">Enter Valid Phone Number</p>
                     </div>
                 </div>
@@ -113,7 +113,7 @@
                             <span class="shadow-lg capitalize hidden min-w-max bg-slate-800 text-white text-center py-[5px] px-[10px] absolute -top-1 left-6 group-hover:block rounded-md after:content-[''] after:absolute after:top-[85%] after:right-full after:-mt-4 after:border-[5px] after:border-solid after:border-y-transparent after:border-r-slate-800 after:border-l-transparent">Use comma separated values</span>
                         </div>
                     </label>
-                    <textarea class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" oninput="autoAdjustTextarea()" onkeyup="handleRegisterChange(event)" id="area-of-work" name="restaurantDescription" type="text" placeholder="We Serve Good Food" required></textarea>
+                    <textarea class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" oninput="autoAdjustTextarea()" onkeyup="handleChange(event)" id="area-of-work" name="restaurantDescription" type="text" placeholder="We Serve Good Food" required></textarea>
                     <p class="text-red-500 hidden text-sm m-1 restaurantRegisterError" id="restaurantDescriptionError">Describe your restaurant within 15 to 100 words</p>
                 </div>
 
@@ -122,32 +122,32 @@
                     <label class="block mb-2 text-sm font-medium text-gray-900 " for="address-line-1">
                         Address Line 1 <span  style="color:red"> *</span>
                     </label>
-                    <input onkeyup="handleRegisterChange(event)" class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="address-line-1" name="restaurantAddress[street]" type="text" placeholder="86, new sitaramdera" required>
+                    <input onkeyup="handleChange(event)" class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="address-line-1" name="restaurantAddress[street]" type="text" placeholder="86, new sitaramdera" required>
                     <p class="text-red-500 hidden text-sm m-1 restaurantRegisterError" id="restaurantAddress[street]Error">Please fill this field</p>
                 </div>
                 <div class="md:mb-4 flex flex-wrap md:gap-4">
                     <div class="mb-4 md:mb-0 w-full md:w-1/3 md:flex-grow">
                         <label for="country" class="block mb-2 text-sm font-medium text-gray-900 ">Country <span  style="color:red"> *</span> </label>
-                        <input onkeyup="handleRegisterChange(event)" type="text" class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="country" name="restaurantAddress[country]" placeholder="India" required>
+                        <input onkeyup="handleChange(event)" type="text" class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="country" name="restaurantAddress[country]" placeholder="India" required>
                     <p class="text-red-500 hidden text-sm m-1 restaurantRegisterError" id="restaurantAddress[country]Error">Enter Valid Country</p>
                     </div>
                     <div class="mb-4 md:mb-0 w-full md:w-1/3 md:flex-grow">
                         <label for="state" class="block mb-2 text-sm font-medium text-gray-900 ">State <span  style="color:red"> *</span> </label>
-                        <input onkeyup="handleRegisterChange(event)" type="text" class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="state" name="restaurantAddress[state]" placeholder="Jharkhand" required>
+                        <input onkeyup="handleChange(event)" type="text" class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="state" name="restaurantAddress[state]" placeholder="Jharkhand" required>
                         <p class="text-red-500 hidden text-sm m-1 restaurantRegisterError" id="restaurantAddress[state]Error">Please fill this field</p>
                     </div>
                 </div>
                 <div class="md:mb-4 flex flex-wrap md:gap-4">
                     <div class="mb-4 md:mb-0 w-full md:w-1/3 md:flex-grow">
                         <label for="city" class="block mb-2 text-sm font-medium text-gray-900 ">City <span  style="color:red"> *</span> </label>
-                        <input onkeyup="handleRegisterChange(event)" type="text" class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="city" name="restaurantAddress[city]" placeholder="Jamshedpur" required>
+                        <input onkeyup="handleChange(event)" type="text" class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="city" name="restaurantAddress[city]" placeholder="Jamshedpur" required>
                         <p class="text-red-500 hidden text-sm m-1 restaurantRegisterError" id="restaurantAddress[city]Error">Please fill this field</p>
                     </div>
 
                     <div class="mb-4 md:mb-0 w-full md:w-1/3 md:flex-grow">
                         <label for="zip" class="block mb-2 text-sm font-medium text-gray-900 ">Zip Code <span  style="color:red"> *</span> </label>
-                        <input onkeyup="handleRegisterChange(event)" type="text" class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="zip" name="restaurantAddress[zip]" placeholder="831009" required>
-                        <p class="text-red-500 hidden text-sm m-1 restaurantRegisterError" id="restaurantAddress[zip]Error">Please fill this field</p>
+                        <input onkeyup="handleChange(event)" type="text" class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="zip" name="restaurantAddress[zip]" placeholder="831009" required>
+                        <p class="text-red-500 hidden text-sm m-1 restaurantRegisterError" id="restaurantAddress[zip]Error">Enter Valid Zip Code</p>
                     </div>
                 </div>
 
@@ -156,7 +156,7 @@
                     <label class="block mb-2 text-sm font-medium text-gray-900 " for="password">
                             Password <span  style="color:red"> *</span>
                         </label>
-                    <input onkeyup="handleRegisterChange(event)" class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="password" type="password" name="password" placeholder="••••••••" required>
+                    <input onkeyup="handleChange(event)" class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="password" type="password" name="password" placeholder="••••••••" required>
                     <p class="text-red-500 hidden text-sm m-1 restaurantRegisterError" id="passwordError">Minimum 8 characters, 1 uppercase, 1 lowercase, 1 symbol (@$%#^&*), 1 number (0-9)</p>
                 </div>
 
@@ -165,7 +165,7 @@
                     <label class="block mb-2 text-sm font-medium text-gray-900 " for="confirm-password">
                             Confirm Password <span  style="color:red"> *</span>
                         </label>
-                    <input onkeyup="handleRegisterChange(event)" class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="confirm-password" name="confirmPassword" type="password" placeholder="••••••••" required>
+                    <input onkeyup="handleChange(event)" class="bg-gray-50 border-1 border-gray-300 text-gray-900 rounded-md w-full py-2 px-3 focus:ring-black focus:border-black" id="confirm-password" name="confirmPassword" type="password" placeholder="••••••••" required>
                     <p class="text-red-500 hidden text-sm m-1 restaurantRegisterError" id="confirmPasswordError">Password Does not Match</p>
                   
                 </div>

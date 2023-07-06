@@ -2,11 +2,14 @@ const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[@$%#^&*])(?=.*[0-9]).{8,}$/;
 const emailRegex =
   /^\w+([\.-]?\w+)*@(gmail\.com|yahoo\.com|hotmail\.com|aol\.com|outlook\.com)$/;
 const phoneRegex = /^(0|91)?[6-9][0-9]{9}$/;
+const pincodeRegex = /^\d{6}$/;
 const websiteRegex = /https?:\/\/[\w\-]+(\.[\w\-]{2,})+[/#?]?.*/i;
+const orgRegNumRegex = /^([L|U|l|u]{1})([0-9]{5})([A-Z]{2})([0-9]{4})([A-Z]{3})([0-9]{6})$/;
+
 
 const validate = {
   restaurantName: (value) => {
-    return value.length < 6 ? true : false;
+    return value.trim().length < 6 ? true : false;
   },
   "restaurantContactDetails[email]": (value) => {
     return emailRegex.test(value) ? false : true;
@@ -25,7 +28,7 @@ const validate = {
   },
 
   restaurantDescription: (value) => {
-    const numOfWords = value.split(" ").length;
+    const numOfWords = value.trim().split(/\s+/).length;
 
     if (numOfWords < 15 || numOfWords > 100) {
       return true;
@@ -40,12 +43,14 @@ const validate = {
 
   "restaurantAddress[country]": (value) => {
     if(!value) return true;
-    return value.length < 4 ? true : false;
+    return value.trim().length < 4 ? true : false;
   },
 
   "restaurantAddress[state]": (value)=>(!value)? true: false ,
   "restaurantAddress[city]": (value)=>(!value)? true: false ,
-  "restaurantAddress[zip]": (value)=>(!value)? true: false ,
+  "restaurantAddress[zip]": (value)=>{
+    return pincodeRegex.test(value) ? false : true;
+  } ,
 
   password: (value) => {
     return passwordRegex.test(value) ? false : true;
@@ -55,12 +60,37 @@ const validate = {
     const password = document.getElementById("password").value;
     if(password === value) return false;
     else return true;
+  },
+  receiverRegistrationNo: (value)=>{
+    return orgRegNumRegex.test(value) ? false : true;
+  },
+  receiverAreaOfWork: (value)=>{
+    const numOfWorks = value.trim().split(", ").length;
+
+    if (numOfWorks < 2) {
+      return true;
+    } else {
+      return false;
+    }
   }
 };
 
-const properName = {};
+validate.email = validate["restaurantContactDetails[email]"];
+validate.name = validate.restaurantName;
+validate.message = validate.restaurantDescription;
+validate.receiverName = validate.restaurantName;
+validate["receiverContactDetails[email]"] = validate["restaurantContactDetails[email]"];
+validate.receiverWebsite = validate.restaurantWebsite;
+validate["receiverContactDetails[contact1]"] = validate["restaurantContactDetails[contact1]"];
+validate["receiverContactDetails[contact2]"] = validate["restaurantContactDetails[contact2]"];
+validate.receiverDescription = validate.restaurantDescription;
+validate["receiverAddress[street]"] = validate["restaurantAddress[street]"];
+validate["receiverAddress[country]"] = validate["restaurantAddress[country]"];
+validate["receiverAddress[state]"] = validate["restaurantAddress[state]"];
+validate["receiverAddress[city]"] = validate["restaurantAddress[city]"];
+validate["receiverAddress[zip]"] = validate["restaurantAddress[zip]"];
 
-function handleRegisterChange(e) {
+function handleChange(e) {
   console.log(e.target.value);
   const error = validate[`${e.target.name}`](e.target.value);
   const errorMessage = document.getElementById(`${e.target.name}Error`);
@@ -71,22 +101,44 @@ function handleRegisterChange(e) {
   }
 }
 
-const form = document.getElementById("restaurantRegisterForm");
+const restaurantForm = document.getElementById("restaurantRegisterForm");
+const loginForm = document.getElementById("loginForm");
+const contactForm = document.getElementById("contactForm");
+const organizationForm = document.getElementById("organizationForm");
 
-form.addEventListener("submit", (e)=>{
+(restaurantForm)? restaurantForm.addEventListener("submit", (e)=>{
     e.preventDefault();
-    let submitable = true;
-    const error = [...document.getElementsByClassName("restaurantRegisterError")];
-    error.forEach(elem=>{
-      if(!elem.classList.contains("hidden")){
-        submitable = false;
-        return;
-      }
-    })
+     errorCheck(restaurantForm, "restaurantRegisterError")
+}): null;
 
-    if(submitable){
-    form.submit()
-    }else{
-        alert("Please enter valid values")
+(loginForm)?loginForm.addEventListener("submit", (e)=>{
+  e.preventDefault();
+   errorCheck(loginForm, "loginError")
+}):null;
+
+(contactForm)?contactForm.addEventListener("submit", (e)=>{
+  e.preventDefault();
+   errorCheck(contactForm, "contactError")
+}):null;
+
+(organizationForm)?organizationForm.addEventListener("submit", (e)=>{
+  e.preventDefault();
+   errorCheck(organizationForm, "oraganizationError")
+}):null;
+
+ function errorCheck(form, errorClassName){
+  let submitable = true;
+  const error = [...document.getElementsByClassName(errorClassName)];
+  error.forEach(elem=>{
+    if(!elem.classList.contains("hidden")){
+      submitable = false;
+      return;
     }
-})
+  })
+
+  if(submitable){
+  form.submit()
+  }else{
+      alert("Please enter valid values")
+  }
+}
