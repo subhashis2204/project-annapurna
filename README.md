@@ -8,7 +8,7 @@
 } -->
 
 <div align = "center">
-
+ 
 # [Annapurna 🙌](https://project-annapurna.azurewebsites.net/)
 ![project-annapurna](https://socialify.git.ci/subhashis2204/project-annapurna/image?description=1&descriptionEditable=A%20Food%20Donation%20Application%20that%20connects%20NGOs%20and%20restaurants&font=Jost&forks=1&issues=1&language=1&logo=https%3A%2F%2Fwww.nicepng.com%2Fpng%2Ffull%2F14-145168_plate-knife-and-fork-png-clipart-plate-and.png&name=1&owner=1&pattern=Solid&pulls=1&stargazers=1&theme=Dark)
 
